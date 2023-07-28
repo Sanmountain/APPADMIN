@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import { signIn, signUp } from "../API/API";
@@ -17,6 +17,7 @@ export default function Login() {
   const [userCode, setUserCode] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [company, setCompany] = useState("SLX");
+  const [checkedId, setCheckedId] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,7 +52,6 @@ export default function Login() {
       } else {
         console.log(response.data);
         localStorage.setItem("userCompany", response.data.company);
-        localStorage.setItem("userId", response.data.user_id);
         localStorage.setItem("userPw", response.data.user_pw);
         navigate("/notice/list");
       }
@@ -91,6 +91,27 @@ export default function Login() {
       } catch (err) {
         console.error(err);
       }
+    }
+  };
+
+  useEffect(() => {
+    const savedId = localStorage.getItem("userId");
+    const savedCheckboxStatus = localStorage.getItem("checkboxChecked");
+
+    if (savedId) setUserId(savedId); // ID를 가져와서 userId 상태에 설정
+    if (savedCheckboxStatus === "true") setCheckedId(true);
+  }, []);
+
+  const handleRememberIdChange = (e) => {
+    setCheckedId(e.target.checked);
+    if (e.target.checked) {
+      // 체크박스가 선택된 경우 아이디를 저장합니다.
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("checkboxChecked", "true");
+    } else {
+      // 체크박스가 선택되지 않은 경우 아이디를 제거합니다.
+      localStorage.removeItem("userId");
+      localStorage.setItem("checkboxChecked", "false");
     }
   };
 
@@ -230,7 +251,12 @@ export default function Login() {
             </div>
           </div>
           <label className='checkbox-container'>
-            <input type='checkbox' id='remember-check' />
+            <input
+              type='checkbox'
+              id='remember-check'
+              checked={checkedId}
+              onChange={handleRememberIdChange}
+            />
             ID 저장
           </label>
           <button className='loginBtn' onClick={handleLogin}>

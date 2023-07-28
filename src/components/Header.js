@@ -12,7 +12,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userCompany");
-    localStorage.removeItem("userId");
+    // localStorage.removeItem("userId");
     localStorage.removeItem("userPw");
     navigator("/");
   };
