@@ -1,0 +1,83 @@
+.appInfoFormDiv {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 1100px;
+  max-width: 100%;
+  min-height: 750px;
+  margin-top: 7%;
+}
+
+h2.tm-block-title {
+  text-align: center;
+}
+
+input {
+  height: 32px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+.appInfoHeader > div {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 2%;
+}
+.appInfoHeader > div:first-child {
+  background-color: #f8f9fa;
+  font-weight: 400;
+}
+.appInfoHeader > div > li {
+  list-style-type: none;
+  flex: 1;
+}
+
+/* input */
+.appInfoObject {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.appInfoInput {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+.appInfoInput .program {
+  width: 150px;
+}
+
+.appInfoInput .app_ver {
+  width: 100px;
+}
+
+.appInfoInput .apk_url {
+  width: 400px;
+}
+
+.appInfoInput .user_id {
+  width: 150px;
+}
+
+.commonAppBtn {
+  height: 30px;
+  width: 50px;
+  text-align: center;
+  align-items: center;
+  padding: 5px;
+}
