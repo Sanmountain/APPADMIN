@@ -142,13 +142,18 @@ form {
 }
 
 .checkbox-container {
-  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  align-self: self-start;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+  font-size: 1rem;
   font-size: 13px;
 }
 
 .checkbox-container input[type="checkbox"] {
-  order: -1;
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
 .container.right-panel-active .sign-in-container {

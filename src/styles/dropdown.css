@@ -5,4 +5,51 @@
   position: absolute;
   width: 100%;
   z-index: 1;
+
+  text-align: center;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.btnMenu {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #ff4b2b;
+  border-radius: 0.6em;
+  color: #ff4b2b;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  margin: 10px;
+  padding: 1em 2em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+.btnMenu:hover,
+.btnMenu:focus {
+  color: white;
+  outline: 0;
+  box-shadow: 0 0 40px 40px #ff4b2b inset;
+}
+
+.btnMenu {
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.dropdownMenu:hover {
+  color: #ff4b2b;
+}
+.dropdownMenu p {
+  font-weight: 600;
+  color: black;
+}
+.dropdownMenu p:hover {
+  color: #ff4b2b;
 }

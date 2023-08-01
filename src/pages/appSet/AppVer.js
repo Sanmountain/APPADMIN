@@ -93,15 +93,12 @@ export default function AppVer() {
 
   return (
     <div className='appInfoFormDiv'>
-      <h2 className='tm-block-title'>현재 버전 정보</h2>
+      <div className='appInfoTitle'>현재 버전 정보</div>
       <div className='appInfoHeader'>
-        <div>
-          <li>프로그램</li>
-          <li>버전</li>
-          <li>APK다운로드</li>
-          <li>등록인</li>
-          <li></li>
-        </div>
+        <div className='headerItem'>프로그램</div>
+        <div className='headerItem'>버전</div>
+        <div className='headerItem'>APK다운로드</div>
+        <div className='headerItem'>등록인</div>
       </div>
       {appinfo.map((item) => (
         <div className='appInfoObject' key={item.id}>
@@ -149,19 +146,19 @@ export default function AppVer() {
               value={item.user_id}
               readOnly
             />
+            <button
+              className='commonAppBtn'
+              onClick={() => handleAppMod(item.program)}
+            >
+              수정
+            </button>
+            <button
+              className='commonAppBtn'
+              onClick={() => handleAppDel(item.program)}
+            >
+              삭제
+            </button>
           </div>
-          <button
-            className='commonAppBtn'
-            onClick={() => handleAppMod(item.program)}
-          >
-            수정
-          </button>
-          <button
-            className='commonAppBtn'
-            onClick={() => handleAppDel(item.program)}
-          >
-            삭제
-          </button>
         </div>
       ))}
       <div className='appInfoObject'>
@@ -187,6 +184,7 @@ export default function AppVer() {
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
           />
+          <input className='hiddenUserid' />
           <button className='commonAppBtn' onClick={handleAppRegist}>
             등록
           </button>

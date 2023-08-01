@@ -1,4 +1,8 @@
 .appInfoFormDiv {
+  display: grid;
+  grid-template-rows: 60px 40px repeat(auto-fill, 40px);
+  grid-template-columns: repeat(5, 1fr);
+
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -9,12 +13,42 @@
   min-height: 750px;
   margin-top: 7%;
 }
+.appInfoTitle {
+  grid-column: 1/6;
+  align-self: center;
 
-h2.tm-block-title {
   text-align: center;
+  font-size: 20px;
+  font-weight: 800;
 }
 
-input {
+.appInfoHeader {
+  grid-column: 1/6;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 2fr;
+
+  background-color: #f8f9fa;
+  font-weight: 400;
+  border-radius: 5px;
+}
+.headerItem {
+  justify-self: center;
+  align-self: center;
+}
+
+.appInfoObject {
+  grid-column: 1/6;
+}
+.appInfoInput {
+  display: grid;
+  grid-template-columns: 140px 140px 340px 120px 100px 100px;
+
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.appInfoInput > input {
   height: 32px;
   border: 0;
   border-radius: 15px;
@@ -22,61 +56,11 @@ input {
   padding-left: 10px;
   background-color: rgb(233, 233, 233);
 }
-
-.appInfoHeader > div {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 2%;
+.appInfoInput > .hiddenUserid {
+  visibility: hidden;
 }
-.appInfoHeader > div:first-child {
-  background-color: #f8f9fa;
-  font-weight: 400;
-}
-.appInfoHeader > div > li {
-  list-style-type: none;
-  flex: 1;
-}
-
-/* input */
-.appInfoObject {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.appInfoInput {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-  margin-right: 20px;
-  margin-bottom: 10px;
-}
-.appInfoInput .program {
-  width: 150px;
-}
-
-.appInfoInput .app_ver {
-  width: 100px;
-}
-
-.appInfoInput .apk_url {
-  width: 400px;
-}
-
-.appInfoInput .user_id {
-  width: 150px;
-}
-
 .commonAppBtn {
   height: 30px;
-  width: 50px;
   text-align: center;
   align-items: center;
   padding: 5px;
