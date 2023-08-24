@@ -3,7 +3,7 @@ import "../styles/login.css";
 import { BiUser, BiPhone, BiRename, BiUserCircle } from "react-icons/bi";
 import { BsBuilding, BsBoxSeam } from "react-icons/bs";
 import { MdKeyOff, MdKey } from "react-icons/md";
-import { adminModify, adminInfo } from "../API/API";
+import { adminModify, adminInfo } from "../api/API";
 import { useEffect, useState } from "react";
 
 export default function UserEdit() {

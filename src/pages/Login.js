@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
-import { signIn, signUp } from "../API/API";
+import { signIn, signUp } from "../api/API";
 import Swal from "sweetalert2";
 import { BiUser, BiKey, BiPhone, BiRename, BiUserCircle } from "react-icons/bi";
 import { BsBuilding, BsBoxSeam } from "react-icons/bs";
@@ -118,165 +118,165 @@ export default function Login() {
   return (
     <div
       className={`container ${isRightPanelActive ? "right-panel-active" : ""}`}
-      id='container'
+      id="container"
     >
-      <div className='form-container sign-up-container'>
-        <form action='#'>
+      <div className="form-container sign-up-container">
+        <form action="#">
           <h1>회원 가입</h1>
           <span>정보를 입력해주세요.</span>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <select
-              name='company'
-              placeholder='택배사'
+              name="company"
+              placeholder="택배사"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
             >
-              <option value='SLX'>SLX</option>
-              <option value='LOGEN'>로젠택배</option>
-              <option value='UPLOGIS'>유피로지스</option>
+              <option value="SLX">SLX</option>
+              <option value="LOGEN">로젠택배</option>
+              <option value="UPLOGIS">유피로지스</option>
             </select>
-            <div className='idIcon'>
+            <div className="idIcon">
               <BsBuilding />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='text'
-              placeholder='아이디'
+              type="text"
+              placeholder="아이디"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiUser />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='text'
-              placeholder='이름'
+              type="text"
+              placeholder="이름"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiRename />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='text'
-              placeholder='전화번호'
+              type="text"
+              placeholder="전화번호"
               value={userPhone}
               onChange={(e) => setUserPhone(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiPhone />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='text'
-              placeholder='점소코드'
+              type="text"
+              placeholder="점소코드"
               value={placeCode}
               onChange={(e) => setPlaceCode(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BsBoxSeam />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='text'
-              placeholder='사원코드'
+              type="text"
+              placeholder="사원코드"
               value={userCode}
               onChange={(e) => setUserCode(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiUserCircle />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='password'
-              placeholder='비밀번호'
+              type="password"
+              placeholder="비밀번호"
               value={userPw}
               onChange={(e) => setUserPw(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <MdKey />
             </div>
           </div>
-          <div className='container-icon2'>
+          <div className="container-icon2">
             <input
-              type='password'
-              placeholder='비밀번호 확인'
+              type="password"
+              placeholder="비밀번호 확인"
               value={confirmPw}
               onChange={(e) => setConfirmPw(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <MdKeyOff />
             </div>
             {userPw && confirmPw && userPw !== confirmPw && (
               <p>비밀번호가 일치하지 않습니다.</p>
             )}
           </div>
-          <button className='loginBtn' onClick={handleSubmit}>
+          <button className="loginBtn" onClick={handleSubmit}>
             회원가입
           </button>
         </form>
       </div>
-      <div className='form-container sign-in-container'>
+      <div className="form-container sign-in-container">
         <form>
           <h1>LOGIN</h1>
           <span>로그인 정보를 입력해주세요.</span>
-          <div className='container-icon'>
+          <div className="container-icon">
             <input
-              type='text'
-              placeholder='아이디'
+              type="text"
+              placeholder="아이디"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiUser />
             </div>
           </div>
-          <div className='container-icon'>
+          <div className="container-icon">
             <input
-              type='password'
-              placeholder='비밀번호'
+              type="password"
+              placeholder="비밀번호"
               value={userPw}
               onChange={(e) => setUserPw(e.target.value)}
             />
-            <div className='idIcon'>
+            <div className="idIcon">
               <BiKey />
             </div>
           </div>
-          <label className='checkbox-container'>
+          <label className="checkbox-container">
             <input
-              type='checkbox'
-              id='remember-check'
+              type="checkbox"
+              id="remember-check"
               checked={checkedId}
               onChange={handleRememberIdChange}
             />
             ID 저장
           </label>
-          <button className='loginBtn' onClick={handleLogin}>
+          <button className="loginBtn" onClick={handleLogin}>
             로그인
           </button>
         </form>
       </div>
-      <div className='overlay-container'>
-        <div className='overlay'>
-          <div className='overlay-panel overlay-left'>
+      <div className="overlay-container">
+        <div className="overlay">
+          <div className="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
             <p>이미 계정이 있으신가요?</p>
-            <button className='ghost' id='signIn' onClick={togglePanel}>
+            <button className="ghost" id="signIn" onClick={togglePanel}>
               로그인
             </button>
           </div>
-          <div className='overlay-panel overlay-right'>
+          <div className="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
             <p>계정이 없으신가요?</p>
-            <button className='ghost' id='signUp' onClick={togglePanel}>
+            <button className="ghost" id="signUp" onClick={togglePanel}>
               회원가입
             </button>
           </div>

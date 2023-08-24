@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../styles/appVer.css";
 import axios from "axios";
-import { appDelete, appRegist, appModify } from "../../API/API";
+import { appDelete, appRegist, appModify } from "../../api/API";
 
 export default function AppVer() {
   const [appinfo, setAppinfo] = useState([]);
@@ -23,7 +23,7 @@ export default function AppVer() {
         "http://13.124.129.107:8080/AppAdmin/appinfo/list",
         {
           company: company,
-        }
+        },
       );
       console.log(response.data);
       setAppinfo(response.data.list);
@@ -33,7 +33,7 @@ export default function AppVer() {
           ...obj,
           [item.program]: { app_ver: item.app_ver, apk_url: item.apk_url },
         }),
-        {}
+        {},
       );
       setAppinfoEdit(initialEditState);
     } catch (err) {
@@ -92,28 +92,28 @@ export default function AppVer() {
   };
 
   return (
-    <div className='appInfoFormDiv'>
-      <div className='appInfoTitle'>현재 버전 정보</div>
-      <div className='appInfoHeader'>
-        <div className='headerItem'>프로그램</div>
-        <div className='headerItem'>버전</div>
-        <div className='headerItem'>APK다운로드</div>
-        <div className='headerItem'>등록인</div>
+    <div className="appInfoFormDiv">
+      <div className="appInfoTitle">현재 버전 정보</div>
+      <div className="appInfoHeader">
+        <div className="headerItem">프로그램</div>
+        <div className="headerItem">버전</div>
+        <div className="headerItem">APK다운로드</div>
+        <div className="headerItem">등록인</div>
       </div>
       {appinfo.map((item) => (
-        <div className='appInfoObject' key={item.id}>
-          <div className='appInfoInput'>
+        <div className="appInfoObject" key={item.id}>
+          <div className="appInfoInput">
             <input
-              type='text'
-              className='form-control validate program'
-              name='program'
+              type="text"
+              className="form-control validate program"
+              name="program"
               value={item.program}
               readOnly
             />
             <input
-              type='text'
-              className='form-control validate app_ver'
-              name='app_ver'
+              type="text"
+              className="form-control validate app_ver"
+              name="app_ver"
               value={appinfoEdit[item.program].app_ver}
               onChange={(e) =>
                 setAppinfoEdit({
@@ -126,9 +126,9 @@ export default function AppVer() {
               }
             />
             <input
-              type='text'
-              className='form-control validate apk_url'
-              name='apk_url'
+              type="text"
+              className="form-control validate apk_url"
+              name="apk_url"
               value={appinfoEdit[item.program].apk_url}
               onChange={(e) =>
                 setAppinfoEdit({
@@ -141,19 +141,19 @@ export default function AppVer() {
               }
             />
             <input
-              type='text'
-              className='form-control validate user_id'
+              type="text"
+              className="form-control validate user_id"
               value={item.user_id}
               readOnly
             />
             <button
-              className='commonAppBtn'
+              className="commonAppBtn"
               onClick={() => handleAppMod(item.program)}
             >
               수정
             </button>
             <button
-              className='commonAppBtn'
+              className="commonAppBtn"
               onClick={() => handleAppDel(item.program)}
             >
               삭제
@@ -161,31 +161,31 @@ export default function AppVer() {
           </div>
         </div>
       ))}
-      <div className='appInfoObject'>
-        <div className='appInfoInput'>
+      <div className="appInfoObject">
+        <div className="appInfoInput">
           <input
-            type='text'
-            className='form-control validate program'
-            name='program'
+            type="text"
+            className="form-control validate program"
+            name="program"
             value={programInput}
             onChange={(e) => setProgramInput(e.target.value)}
           />
           <input
-            type='text'
-            className='form-control validate app_ver'
-            name='app_ver'
+            type="text"
+            className="form-control validate app_ver"
+            name="app_ver"
             value={appverInput}
             onChange={(e) => setAppverInput(e.target.value)}
           />
           <input
-            type='text'
-            className='form-control validate apk_url'
-            name='apk_url'
+            type="text"
+            className="form-control validate apk_url"
+            name="apk_url"
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
           />
-          <input className='hiddenUserid' />
-          <button className='commonAppBtn' onClick={handleAppRegist}>
+          <input className="hiddenUserid" />
+          <button className="commonAppBtn" onClick={handleAppRegist}>
             등록
           </button>
         </div>
