@@ -42,14 +42,14 @@ const Header = () => {
           <DropdownMenu
             buttonLabel="MMS"
             menuItems={["MMS전송내역", "알림톡내역"]}
-            menuPaths={["/mms/mmssend", "/mms/talksend"]}
+            menuPaths={["/mms/mmsSend", "/mms/talkSend"]}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
           <DropdownMenu
             buttonLabel="사진확인"
             menuItems={["배송사진"]}
-            menuPaths={["/photocheck"]}
+            menuPaths={["/photoCheck"]}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
