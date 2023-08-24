@@ -54,13 +54,9 @@ export const GlobalStyles = createGlobalStyle`
 		border-spacing: 0;
 	}
 	html {
-		font-size: 62.5%;
         font-family: "Montserrat", sans-serif;
 		overflow-y: scroll;
 		overflow-x: hidden;
-	}
-	* {
-		font-size: 62.5%;
 	}
 	img {
 		width: 100%;

@@ -2,23 +2,31 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/header.css";
 import DropdownMenu from "./DropdownMenu";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { loginState } from "../../stores/loginState";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(null);
+  const [login, setLogin] = useRecoilState(loginState);
+  const resetLogin = useResetRecoilState(loginState);
+
   const location = useLocation();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   if (location.pathname === "/") return null;
 
   const handleLogout = () => {
-    localStorage.removeItem("userCompany");
-    // localStorage.removeItem("userId");
-    localStorage.removeItem("userPw");
-    navigator("/");
+    if (login.isUserIdStored) {
+      setLogin({ ...login, isLogin: false, userName: "" });
+    } else if (!login.isUserIdStored) {
+      resetLogin();
+    }
+
+    navigate("/");
   };
 
   const handleUserEdit = () => {
-    navigator("/useredit");
+    navigate("/useredit");
   };
 
   return (
