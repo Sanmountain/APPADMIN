@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "../styles/dropdown.css";
 
 function DropdownMenu({
@@ -16,15 +16,15 @@ function DropdownMenu({
   };
 
   return (
-    <div className='dropdown' ref={node}>
+    <div className="dropdown" ref={node}>
       <div
-        className='btnMenu'
+        className="btnMenu"
         onClick={() => setIsOpen(isOpen === buttonLabel ? null : buttonLabel)}
       >
         {buttonLabel}
       </div>
       {isOpen === buttonLabel && (
-        <div className='dropdownMenu'>
+        <div className="dropdownMenu">
           {menuItems.map((item, index) => (
             <Link to={menuPaths[index]} key={index} onClick={handleLinkClick}>
               <p>{item}</p>
