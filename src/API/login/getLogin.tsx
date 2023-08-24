@@ -22,6 +22,7 @@ export const getLogin = (userId: string, userPw: string) => {
             isLogin: true,
             userId: data.user_id,
             userName: data.user_name,
+            company: data.company,
           });
           navigate("/notice/list");
         } else if (data.result === "05") {

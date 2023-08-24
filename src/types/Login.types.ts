@@ -3,6 +3,7 @@ export interface ILoginState {
   isUserIdStored: boolean;
   userId: string;
   userName: string;
+  company: string;
 }
 
 export interface ILoginResponse {

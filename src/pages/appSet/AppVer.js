@@ -1,94 +1,52 @@
+import "../../styles/appSet/appVer.css";
 import { useEffect, useState } from "react";
-import "../../styles/appVer.css";
-import axios from "axios";
-import { appDelete, appRegist, appModify } from "../../api/API";
+import { getAppInfoList } from "../../api/appSet/getAppInfoList";
+import { getAppInfoRegist } from "../../api/appSet/getAppInfoRegist";
+import { getAppInfoDelete } from "../../api/appSet/getAppInfoDelete";
+import { getAppInfoModify } from "../../api/appSet/getAppInfoModify";
 
 export default function AppVer() {
-  const [appinfo, setAppinfo] = useState([]);
+  // NOTE appInfoList
+  const [appInfo, setAppInfo] = useState([]);
+  const [appInfoEdit, setAppInfoEdit] = useState({});
+
   const [programInput, setProgramInput] = useState("");
-  const [appverInput, setAppverInput] = useState("");
+  const [appVerInput, setAppVerInput] = useState("");
   const [urlInput, setUrlInput] = useState("");
-  const [appinfoEdit, setAppinfoEdit] = useState({});
-  const company = localStorage.getItem("userCompany");
-  const userId = localStorage.getItem("userId");
+
+  const { mutate: appInfoListMutate } = getAppInfoList(
+    setAppInfo,
+    setAppInfoEdit,
+  );
+  const { mutate: appInfoRegist } = getAppInfoRegist(
+    appVerInput,
+    programInput,
+    urlInput,
+    setProgramInput,
+    setAppVerInput,
+    setUrlInput,
+    appInfoListMutate,
+  );
 
   useEffect(() => {
-    appinfoCheck();
+    appInfoListMutate();
   }, []);
-
-  /* 조회 */
-  const appinfoCheck = async () => {
-    try {
-      const response = await axios.post(
-        "http://13.124.129.107:8080/AppAdmin/appinfo/list",
-        {
-          company: company,
-        },
-      );
-      console.log(response.data);
-      setAppinfo(response.data.list);
-
-      const initialEditState = response.data.list.reduce(
-        (obj, item) => ({
-          ...obj,
-          [item.program]: { app_ver: item.app_ver, apk_url: item.apk_url },
-        }),
-        {},
-      );
-      setAppinfoEdit(initialEditState);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   /* 등록 */
   const handleAppRegist = async () => {
-    try {
-      const response = await appRegist({
-        app_ver: appverInput,
-        program: programInput,
-        apk_url: urlInput,
-        company: company,
-        user_id: userId,
-      });
-      console.log(response.data);
-      setProgramInput("");
-      setAppverInput("");
-      setUrlInput("");
-      appinfoCheck();
-    } catch (err) {
-      console.error(err);
-    }
+    appInfoRegist();
   };
 
   /* 삭제 */
   const handleAppDel = async (program) => {
-    try {
-      const response = await appDelete({
-        program: program,
-      });
-      console.log(response.data);
-      appinfoCheck();
-    } catch (err) {
-      console.error(err);
-    }
+    const { mutate: appInfoDeleteMutate } = getAppInfoDelete(program);
+    appInfoDeleteMutate();
   };
 
   /* 수정 */
   const handleAppMod = async (program) => {
-    try {
-      const response = await appModify({
-        program: program,
-        app_ver: appinfoEdit[program].app_ver,
-        apk_url: appinfoEdit[program].apk_url,
-        company: company,
-        user_id: userId,
-      });
-      console.log(response.data);
-      appinfoCheck();
-    } catch (err) {
-      console.error(err);
-    }
+    const { mutate: appInfoModifyMutate } = getAppInfoModify(program);
+    appInfoModifyMutate();
   };
 
   return (
@@ -100,7 +58,7 @@ export default function AppVer() {
         <div className="headerItem">APK다운로드</div>
         <div className="headerItem">등록인</div>
       </div>
-      {appinfo.map((item) => (
+      {appInfo.map((item) => (
         <div className="appInfoObject" key={item.id}>
           <div className="appInfoInput">
             <input
@@ -114,12 +72,12 @@ export default function AppVer() {
               type="text"
               className="form-control validate app_ver"
               name="app_ver"
-              value={appinfoEdit[item.program].app_ver}
+              value={appInfoEdit[item.program].app_ver}
               onChange={(e) =>
-                setAppinfoEdit({
-                  ...appinfoEdit,
+                setAppInfoEdit({
+                  ...appInfoEdit,
                   [item.program]: {
-                    ...appinfoEdit[item.program],
+                    ...appInfoEdit[item.program],
                     app_ver: e.target.value,
                   },
                 })
@@ -129,12 +87,12 @@ export default function AppVer() {
               type="text"
               className="form-control validate apk_url"
               name="apk_url"
-              value={appinfoEdit[item.program].apk_url}
+              value={appInfoEdit[item.program].apk_url}
               onChange={(e) =>
-                setAppinfoEdit({
-                  ...appinfoEdit,
+                setAppInfoEdit({
+                  ...appInfoEdit,
                   [item.program]: {
-                    ...appinfoEdit[item.program],
+                    ...appInfoEdit[item.program],
                     apk_url: e.target.value,
                   },
                 })
@@ -174,8 +132,8 @@ export default function AppVer() {
             type="text"
             className="form-control validate app_ver"
             name="app_ver"
-            value={appverInput}
-            onChange={(e) => setAppverInput(e.target.value)}
+            value={appVerInput}
+            onChange={(e) => setAppVerInput(e.target.value)}
           />
           <input
             type="text"
