@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getNoticeList } from "../../api/notice/getNoticeList";
-import * as S from "../../styles/notice/noticeList.styles";
+import * as S from "../../styles/notice/NoticeList.styles";
 import { INoticeListData } from "../../types/notice/noticeList.types";
 
 export default function NoticeList() {
