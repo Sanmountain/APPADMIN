@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import { getNoticeList } from "../../api/notice/getNoticeList";
 import * as S from "../../styles/notice/NoticeList.styles";
 import { INoticeListData } from "../../types/notice/noticeList.types";
+import { useNavigate } from "react-router";
 
 export default function NoticeList() {
   const [noticeList, setNoticeList] = useState<INoticeListData[]>([]);
 
   const { mutate: noticeListMutate } = getNoticeList(0, setNoticeList);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     noticeListMutate();
   }, []);
+
+  const onClickNotice = (noticeId: string) => {
+    navigate(`/notice/${noticeId}`);
+  };
 
   return (
     <S.Container>
@@ -25,7 +32,10 @@ export default function NoticeList() {
 
       <S.ContentsListContainer>
         {noticeList?.map((item) => (
-          <S.ContentsContainer key={item.id}>
+          <S.ContentsContainer
+            key={item.id}
+            onClick={() => onClickNotice(item.id)}
+          >
             <S.Contents>{item.id}</S.Contents>
             <S.Contents>{item.title}</S.Contents>
             <S.Contents>{item.reg_date}</S.Contents>

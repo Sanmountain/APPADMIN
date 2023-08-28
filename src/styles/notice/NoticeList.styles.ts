@@ -49,6 +49,7 @@ export const ContentsContainer = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 40px;
+  cursor: pointer;
 `;
 
 export const Contents = styled.div`
