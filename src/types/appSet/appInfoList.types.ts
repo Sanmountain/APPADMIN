@@ -32,3 +32,10 @@ export interface IAppInfoDeleteResponse {
   success_list: string[];
   fail_list: string[];
 }
+
+export interface IAppInfoEdit {
+  [program: string]: {
+    app_ver: string;
+    apk_url: string;
+  };
+}

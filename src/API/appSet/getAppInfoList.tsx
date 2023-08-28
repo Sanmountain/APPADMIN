@@ -1,12 +1,15 @@
 import { useMutation } from "react-query";
 import { instance } from "../instance";
-import { IAppInfoListResponse } from "../../types/appSet/appInfoList.types";
+import {
+  IAppInfoListData,
+  IAppInfoListResponse,
+} from "../../types/appSet/appInfoList.types";
 import { loginState } from "../../stores/loginState";
 import { useRecoilValue } from "recoil";
 import { Dispatch, SetStateAction } from "react";
 
 export const getAppInfoList = (
-  setAppInfo: Dispatch<SetStateAction<any[]>>,
+  setAppInfo: Dispatch<SetStateAction<IAppInfoListData[]>>,
   setAppInfoEdit: Dispatch<SetStateAction<{}>>,
 ) => {
   const login = useRecoilValue(loginState);

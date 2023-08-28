@@ -1,4 +1,4 @@
-import { UseMutateFunction, useMutation } from "react-query";
+import { MutateOptions, useMutation } from "react-query";
 import { instance } from "../instance";
 import {
   IAppInfoListResponse,
@@ -16,12 +16,12 @@ export const getAppInfoRegist = (
   setProgramInput: Dispatch<SetStateAction<string>>,
   setAppVerInput: Dispatch<SetStateAction<string>>,
   setUrlInput: Dispatch<SetStateAction<string>>,
-  appInfoListMutate: UseMutateFunction<
-    IAppInfoListResponse,
-    unknown,
-    void,
-    unknown
-  >,
+  appInfoListMutate: (
+    variables: void,
+    options?:
+      | MutateOptions<IAppInfoListResponse, unknown, void, unknown>
+      | undefined,
+  ) => void,
 ) => {
   const login = useRecoilValue(loginState);
 

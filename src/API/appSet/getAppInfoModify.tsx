@@ -1,4 +1,4 @@
-import { UseMutateFunction, useMutation } from "react-query";
+import { MutateOptions, useMutation } from "react-query";
 import { instance } from "../instance";
 import {
   IAppInfoDeleteResponse,
@@ -9,20 +9,19 @@ import { loginState } from "../../stores/loginState";
 import { useRecoilValue } from "recoil";
 
 export const getAppInfoModify = (
-  program: string,
   appInfoEdit: any,
-  appInfoListMutate: UseMutateFunction<
-    IAppInfoListResponse,
-    unknown,
-    void,
-    unknown
-  >,
+  appInfoListMutate: (
+    variables: void,
+    options?:
+      | MutateOptions<IAppInfoListResponse, unknown, void, unknown>
+      | undefined,
+  ) => void,
 ) => {
   const login = useRecoilValue(loginState);
 
-  return useMutation<IAppInfoDeleteResponse, unknown, void, unknown>(
+  return useMutation<IAppInfoDeleteResponse, unknown, any, unknown>(
     "getAppInfoModify",
-    () =>
+    (program: any) =>
       instance.post("/appinfo/modify", {
         program,
         app_ver: appInfoEdit[program].app_ver,
@@ -33,13 +32,13 @@ export const getAppInfoModify = (
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          appInfoListMutate();
-
           Swal.fire({
             icon: "success",
             title: "수정되었습니다",
             confirmButtonText: "확인",
           });
+
+          appInfoListMutate();
         }
       },
       onError: (error) => {

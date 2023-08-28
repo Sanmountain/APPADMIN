@@ -1,4 +1,4 @@
-import { UseMutateFunction, useMutation } from "react-query";
+import { MutateOptions, useMutation } from "react-query";
 import { instance } from "../instance";
 import {
   IAppInfoDeleteResponse,
@@ -7,30 +7,29 @@ import {
 import Swal from "sweetalert2";
 
 export const getAppInfoDelete = (
-  program: string,
-  appInfoListMutate: UseMutateFunction<
-    IAppInfoListResponse,
-    unknown,
-    void,
-    unknown
-  >,
+  appInfoListMutate: (
+    variables: void,
+    options?:
+      | MutateOptions<IAppInfoListResponse, unknown, void, unknown>
+      | undefined,
+  ) => void,
 ) => {
-  return useMutation<IAppInfoDeleteResponse, unknown, void, unknown>(
+  return useMutation<IAppInfoDeleteResponse, unknown, any, unknown>(
     "getAppInfoDelete",
-    () =>
+    (program: string) =>
       instance.post("/appinfo/delete", {
         program,
       }),
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          appInfoListMutate();
-
           Swal.fire({
             icon: "success",
             title: "삭제되었습니다",
             confirmButtonText: "확인",
           });
+
+          appInfoListMutate();
         }
       },
       onError: (error) => {
