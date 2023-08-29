@@ -8,6 +8,7 @@ import {
   IAppInfoEdit,
   IAppInfoListData,
 } from "../../types/appSet/appInfoList.types";
+import CommonButton from "../../components/common/CommonButton";
 
 export default function AppVer() {
   const [isAppVerAuthorized, setIsAppVerAuthorized] = useState(false);
@@ -48,8 +49,8 @@ export default function AppVer() {
 
   // NOTE list 불러오기
   useEffect(() => {
-    appInfoListMutate();
-  }, []);
+    if (isAppVerAuthorized) appInfoListMutate();
+  }, [isAppVerAuthorized]);
 
   // NOTE 버전관리 비밀번호 onChange
   const handlePasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -145,18 +146,15 @@ export default function AppVer() {
                 value={item.user_id}
                 readOnly
               />
-              <button
-                className="commonAppBtn"
-                onClick={() => handleAppMod(item.program)}
-              >
-                수정
-              </button>
-              <button
-                className="commonAppBtn"
-                onClick={() => handleAppDelete(item.program)}
-              >
-                삭제
-              </button>
+              <div />
+              <CommonButton
+                contents="수정"
+                onClickFn={() => handleAppMod(item.program)}
+              />
+              <CommonButton
+                contents="삭제"
+                onClickFn={() => handleAppDelete(item.program)}
+              />
             </div>
           </div>
         ))}
@@ -184,9 +182,8 @@ export default function AppVer() {
               onChange={(e) => setUrlInput(e.target.value)}
             />
             <input className="hiddenUserid" />
-            <button className="commonAppBtn" onClick={handleAppRegist}>
-              등록
-            </button>
+            <div />
+            <CommonButton contents="등록" onClickFn={handleAppRegist} />
           </div>
         </div>
       </div>
