@@ -1,9 +1,9 @@
 import { MutateOptions, useMutation } from "react-query";
-import { instance } from "../instance";
+import { instance } from "../../instance";
 import {
   IAppInfoDeleteResponse,
   IAppInfoListResponse,
-} from "../../types/appSet/appInfoList.types";
+} from "../../../types/appSet/appInfoList.types";
 import Swal from "sweetalert2";
 
 export const getAppInfoDelete = (

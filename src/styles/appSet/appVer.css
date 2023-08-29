@@ -63,23 +63,30 @@
 .appInfoHeader {
   grid-column: 1/6;
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 2fr;
-
+  grid-template-columns: 230px 80px 400px 120px 80px 80px;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
   background-color: #f8f9fa;
   font-weight: 400;
   border-radius: 5px;
+  padding-left: 10px;
 }
 .headerItem {
-  justify-self: center;
-  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  font-weight: 600;
 }
 
 .appInfoObject {
-  grid-column: 1/6;
+  grid-column: 1/7;
 }
 .appInfoInput {
   display: grid;
-  grid-template-columns: 140px 140px 340px 120px 100px 100px;
+  grid-template-columns: 230px 80px 400px 120px 20px 80px 80px;
 
   gap: 10px;
   align-items: center;
@@ -96,10 +103,4 @@
 }
 .appInfoInput > .hiddenUserid {
   visibility: hidden;
-}
-.commonAppBtn {
-  height: 30px;
-  text-align: center;
-  align-items: center;
-  padding: 5px;
 }

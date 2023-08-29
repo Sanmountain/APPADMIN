@@ -1,10 +1,10 @@
 import { useMutation } from "react-query";
-import { instance } from "../instance";
+import { instance } from "../../instance";
 import {
   IAppInfoListData,
   IAppInfoListResponse,
-} from "../../types/appSet/appInfoList.types";
-import { loginState } from "../../stores/loginState";
+} from "../../../types/appSet/appInfoList.types";
+import { loginState } from "../../../stores/loginState";
 import { useRecoilValue } from "recoil";
 import { Dispatch, SetStateAction } from "react";
 

@@ -14,6 +14,7 @@ import { getNoticeDetail } from "../../api/notice/getNoticeDetail";
 import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
 import { useLocation, useParams } from "react-router";
 import { getNoticeModify } from "../../api/notice/getNoticeModify";
+import CommonButton from "../../components/common/CommonButton";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -121,11 +122,10 @@ export default function NoticeWrite() {
         />
       </S.EditorContainer>
       <S.ButtonContainer>
-        <S.WriteButton
-          onClick={EDIT_PAGE ? onClickEditButton : onClickWriteButton}
-        >
-          {EDIT_PAGE ? "수정하기" : "작성하기"}
-        </S.WriteButton>
+        <CommonButton
+          contents={EDIT_PAGE ? "수정하기" : "작성하기"}
+          onClickFn={EDIT_PAGE ? onClickEditButton : onClickWriteButton}
+        />
       </S.ButtonContainer>
     </S.Container>
   );

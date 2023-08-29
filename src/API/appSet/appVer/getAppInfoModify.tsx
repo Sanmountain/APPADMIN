@@ -1,11 +1,11 @@
 import { MutateOptions, useMutation } from "react-query";
-import { instance } from "../instance";
+import { instance } from "../../instance";
 import {
   IAppInfoDeleteResponse,
   IAppInfoListResponse,
-} from "../../types/appSet/appInfoList.types";
+} from "../../../types/appSet/appInfoList.types";
 import Swal from "sweetalert2";
-import { loginState } from "../../stores/loginState";
+import { loginState } from "../../../stores/loginState";
 import { useRecoilValue } from "recoil";
 
 export const getAppInfoModify = (
