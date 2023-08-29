@@ -14,5 +14,5 @@ export default function Layout() {
 }
 
 const OutletContainer = styled.div`
-  margin-top: 60px;
+  margin-top: 130px;
 `;
