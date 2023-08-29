@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../../styles/appSet/AppTitle.styles";
 import { getMainWord } from "../../api/appSet/appTitle/getMainWord";
 import { getMainWordWrite } from "../../api/appSet/appTitle/getMainWordWrite";
+import CommonButton from "../../components/common/CommonButton";
 
 export default function AppTitle() {
   const [mainWord, setMainWord] = useState("");
@@ -36,7 +37,7 @@ export default function AppTitle() {
         <S.Title>변경할 메인 문구</S.Title>
         <S.ChangeInputContainer>
           <S.ChangeInput type="text" onChange={handleChangeMainWord} />
-          <S.ChangeButton onClick={onClickChangeButton}>변경</S.ChangeButton>
+          <CommonButton contents="변경" onClickFn={onClickChangeButton} />
         </S.ChangeInputContainer>
       </S.TitleInputContainer>
     </S.Container>

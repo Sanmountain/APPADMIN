@@ -69,20 +69,3 @@ export const ChangeInput = styled.input`
     outline: 1px solid #ff435e;
   }
 `;
-
-export const ChangeButton = styled.button`
-  font-size: 18px;
-  font-weight: 600;
-  color: black;
-  padding: 5px 10px;
-  background-color: transparent;
-  border: 1px solid gray;
-  border-radius: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ff435e;
-    color: #fff;
-    border: none;
-  }
-`;

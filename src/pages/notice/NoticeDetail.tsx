@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Viewer } from "@toast-ui/react-editor";
 import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
 import { getNoticeDelete } from "../../api/notice/getNoticeDelete";
+import CommonButton from "../../components/common/CommonButton";
 
 export default function NoticeDetail() {
   const [contents, setContents] = useState<INoticeDetailResponse>();
@@ -44,15 +45,9 @@ export default function NoticeDetail() {
             <S.Info>{contents?.reg_date}</S.Info>
           </S.InfoContainer>
           <S.ButtonContainer>
-            <S.EditDeleteButton onClick={onClickEditNotice}>
-              수정
-            </S.EditDeleteButton>
-            <S.EditDeleteButton onClick={onClickDeleteNotice}>
-              삭제
-            </S.EditDeleteButton>
-            <S.EditDeleteButton onClick={onClickMoveToList}>
-              목록
-            </S.EditDeleteButton>
+            <CommonButton contents="수정" onClickFn={onClickEditNotice} />
+            <CommonButton contents="삭제" onClickFn={onClickDeleteNotice} />
+            <CommonButton contents="목록" onClickFn={onClickMoveToList} />
           </S.ButtonContainer>
         </S.TopContainer>
       </S.HeadContainer>
