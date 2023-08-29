@@ -3,11 +3,13 @@ import { getNoticeList } from "../../api/notice/getNoticeList";
 import * as S from "../../styles/notice/NoticeList.styles";
 import { INoticeListData } from "../../types/notice/noticeList.types";
 import { useNavigate } from "react-router";
+import Pagination from "../../components/common/Pagination";
 
 export default function NoticeList() {
   const [noticeList, setNoticeList] = useState<INoticeListData[]>([]);
+  const [page, setPage] = useState(1);
 
-  const { mutate: noticeListMutate } = getNoticeList(0, setNoticeList);
+  const { mutate: noticeListMutate } = getNoticeList(page, setNoticeList);
 
   const navigate = useNavigate();
 
@@ -46,7 +48,9 @@ export default function NoticeList() {
         ))}
       </S.ContentsListContainer>
 
-      <S.PaginationContainer></S.PaginationContainer>
+      <S.PaginationContainer>
+        <Pagination total={10} page={page} setPage={setPage} />
+      </S.PaginationContainer>
     </S.Container>
   );
 }
