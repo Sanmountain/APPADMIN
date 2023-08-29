@@ -15,6 +15,7 @@ import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
 import { useLocation, useParams } from "react-router";
 import { getNoticeModify } from "../../api/notice/getNoticeModify";
 import CommonButton from "../../components/common/CommonButton";
+import { getFileUpload } from "../../api/getFileUpload";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -62,24 +63,17 @@ export default function NoticeWrite() {
   // NOTE Editor에 이미지 업로드 시 이미지 업로드 API
   const handleImageUpload = async (
     blob: Blob | File,
-    callback: (url: string) => void,
+    callback: (url: string, alt: string) => void,
   ) => {
     const formData = new FormData();
-    formData.append("file", blob);
+    formData.append("image", blob);
+
+    const formDataArray = [];
+    formDataArray.push(formData);
 
     try {
-      const response = await fetch("/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.url && typeof data.url === "string") {
-        callback(data.url);
-      } else {
-        console.error("Invalid URL received from server");
-      }
+      const res = await getFileUpload(formDataArray);
+      callback(res.data.url, "공지사항 이미지");
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
