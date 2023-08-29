@@ -12,6 +12,7 @@ export const loginState = atom<ILoginState>({
     userId: "",
     userName: "",
     company: "",
+    trade_cd: "",
   },
   effects_UNSTABLE: [persistAtom],
 });

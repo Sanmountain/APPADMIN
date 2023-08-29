@@ -4,6 +4,7 @@ export interface ILoginState {
   userId: string;
   userName: string;
   company: string;
+  trade_cd: string;
 }
 
 export interface ILoginResponse {

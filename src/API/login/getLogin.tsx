@@ -23,6 +23,7 @@ export const getLogin = (userId: string, userPw: string) => {
             userId: data.user_id,
             userName: data.user_name,
             company: data.company,
+            trade_cd: data.trade_cd,
           });
           navigate("/notice/list");
         } else if (data.result === "05") {

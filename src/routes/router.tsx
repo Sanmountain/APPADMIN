@@ -11,6 +11,7 @@ import TalkSend from "../pages/mms/TalkSend";
 import PhotoCheck from "../pages/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
 import Layout from "../components/layout";
+import NoticeDetail from "../pages/notice/NoticeDetail";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -20,7 +21,9 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/notice/list", element: <NoticeList /> },
+      { path: "/notice/:noticeId", element: <NoticeDetail /> },
       { path: "/notice/write", element: <NoticeWrite /> },
+      { path: "/notice/:noticeId/edit", element: <NoticeWrite /> },
     ],
   },
 
