@@ -32,14 +32,22 @@ export const Title = styled.div`
   margin-bottom: 20px;
 `;
 
-export const InfoContainer = styled.div`
+export const TopContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 
-  width: 100%;
+  width: 95%;
   height: 40px;
-  gap: 30px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  width: 50%;
+  gap: 50px;
+  margin-left: 10px;
 `;
 
 export const Info = styled.div`
@@ -50,7 +58,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 15%;
+  width: 22%;
   gap: 10px;
   margin-right: 10px;
 `;
@@ -67,6 +75,7 @@ export const EditDeleteButton = styled.button`
 `;
 
 export const DetailContainer = styled.div`
-  width: 100%;
+  width: 95%;
   height: fit-content;
+  padding: 10px;
 `;
