@@ -1,9 +1,9 @@
 import "../../styles/appSet/appVer.css";
 import { ChangeEvent, useEffect, useState } from "react";
-import { getAppInfoList } from "../../api/appSet/getAppInfoList";
-import { getAppInfoRegist } from "../../api/appSet/getAppInfoRegist";
-import { getAppInfoDelete } from "../../api/appSet/getAppInfoDelete";
-import { getAppInfoModify } from "../../api/appSet/getAppInfoModify";
+import { getAppInfoList } from "../../api/appSet/appVer/getAppInfoList";
+import { getAppInfoRegist } from "../../api/appSet/appVer/getAppInfoRegist";
+import { getAppInfoDelete } from "../../api/appSet/appVer/getAppInfoDelete";
+import { getAppInfoModify } from "../../api/appSet/appVer/getAppInfoModify";
 import {
   IAppInfoEdit,
   IAppInfoListData,

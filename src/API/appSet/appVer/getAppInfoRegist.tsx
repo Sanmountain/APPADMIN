@@ -1,10 +1,10 @@
 import { MutateOptions, useMutation } from "react-query";
-import { instance } from "../instance";
+import { instance } from "../../instance";
 import {
   IAppInfoListResponse,
   IAppInfoRegistResponse,
-} from "../../types/appSet/appInfoList.types";
-import { loginState } from "../../stores/loginState";
+} from "../../../types/appSet/appInfoList.types";
+import { loginState } from "../../../stores/loginState";
 import { useRecoilValue } from "recoil";
 import { Dispatch, SetStateAction } from "react";
 import Swal from "sweetalert2";
