@@ -40,7 +40,7 @@ export default function NoticeList() {
             <S.Contents>{item.title}</S.Contents>
             <S.Contents>{item.reg_date}</S.Contents>
             <S.Contents>{item.user_id}</S.Contents>
-            <S.Contents>{item.expire}</S.Contents>
+            <S.Contents>{item.popup === "Y" ? item.expire : ""}</S.Contents>
             <S.Contents>{item.popup}</S.Contents>
           </S.ContentsContainer>
         ))}
