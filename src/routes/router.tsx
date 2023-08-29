@@ -23,6 +23,7 @@ export const router = createBrowserRouter([
       { path: "/notice/list", element: <NoticeList /> },
       { path: "/notice/:noticeId", element: <NoticeDetail /> },
       { path: "/notice/write", element: <NoticeWrite /> },
+      { path: "/notice/:noticeId/edit", element: <NoticeWrite /> },
     ],
   },
 

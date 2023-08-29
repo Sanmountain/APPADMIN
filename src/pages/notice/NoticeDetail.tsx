@@ -22,6 +22,10 @@ export default function NoticeDetail() {
     noticeDetailMutate();
   }, []);
 
+  const onClickEditNotice = () => {
+    navigate(`/notice/${params.noticeId}/edit`);
+  };
+
   const onClickDeleteNotice = () => {
     noticeDeleteMutate(params.noticeId);
   };
@@ -40,7 +44,9 @@ export default function NoticeDetail() {
             <S.Info>2023-08-28 09:00:00</S.Info>
           </S.InfoContainer>
           <S.ButtonContainer>
-            <S.EditDeleteButton>수정</S.EditDeleteButton>
+            <S.EditDeleteButton onClick={onClickEditNotice}>
+              수정
+            </S.EditDeleteButton>
             <S.EditDeleteButton onClick={onClickDeleteNotice}>
               삭제
             </S.EditDeleteButton>

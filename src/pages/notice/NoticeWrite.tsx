@@ -8,8 +8,12 @@ import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 // Toast 한글 플러그인
 import "@toast-ui/editor/dist/i18n/ko-kr";
 import * as S from "../../styles/notice/NoticeWrite.styles";
-import { useRef, useState, ChangeEvent } from "react";
+import { useRef, useState, ChangeEvent, useEffect } from "react";
 import { getNoticeWrite } from "../../api/notice/getNoticeWrite";
+import { getNoticeDetail } from "../../api/notice/getNoticeDetail";
+import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
+import { useLocation, useParams } from "react-router";
+import { getNoticeModify } from "../../api/notice/getNoticeModify";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -21,10 +25,34 @@ export default function NoticeWrite() {
   ];
 
   const [title, setTitle] = useState("");
+  const [contents, setContents] = useState<INoticeDetailResponse>();
 
   const editorRef = useRef<Editor | null>(null);
 
+  const params = useParams();
+  const location = useLocation();
+
+  const EDIT_PAGE = location.pathname.includes("edit");
+
   const { mutate: noticeWriteMutate } = getNoticeWrite(title);
+  const { mutate: noticeDetailMutate } = getNoticeDetail(
+    Number(params.noticeId),
+    setContents,
+  );
+  const { mutate: noticeModifyMutate } = getNoticeModify(title);
+
+  // NOTE 수정 페이지 detail 불러오기
+  useEffect(() => {
+    if (EDIT_PAGE) noticeDetailMutate();
+  }, []);
+
+  // NOTE 수정 페이지 toast UI 값 가져오기
+  useEffect(() => {
+    if (contents) {
+      const htmlString = contents?.content;
+      editorRef.current?.getInstance().setHTML(htmlString);
+    }
+  }, [contents]);
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -64,9 +92,21 @@ export default function NoticeWrite() {
     }
   };
 
+  const onClickEditButton = () => {
+    if (editorRef.current) {
+      const editorInstance = editorRef.current.getInstance();
+      const htmlContent = editorInstance.getHTML();
+      noticeModifyMutate({ id: Number(params.noticeId), htmlContent });
+    }
+  };
+
   return (
     <S.Container>
-      <S.TitleInput placeholder="제목을 입력해주세요." onChange={handleTitle} />
+      <S.TitleInput
+        placeholder="제목을 입력해주세요."
+        onChange={handleTitle}
+        defaultValue={contents ? contents.title : ""}
+      />
       <S.EditorContainer>
         <Editor
           ref={editorRef}
@@ -81,7 +121,11 @@ export default function NoticeWrite() {
         />
       </S.EditorContainer>
       <S.ButtonContainer>
-        <S.WriteButton onClick={onClickWriteButton}>작성하기</S.WriteButton>
+        <S.WriteButton
+          onClick={EDIT_PAGE ? onClickEditButton : onClickWriteButton}
+        >
+          {EDIT_PAGE ? "수정하기" : "작성하기"}
+        </S.WriteButton>
       </S.ButtonContainer>
     </S.Container>
   );
