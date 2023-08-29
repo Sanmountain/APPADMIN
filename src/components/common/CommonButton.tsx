@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 interface ICommonButtonProps {
-  contents: string;
+  contents: any;
   onClickFn: any;
 }
 
