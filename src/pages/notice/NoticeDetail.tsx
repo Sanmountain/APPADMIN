@@ -37,11 +37,11 @@ export default function NoticeDetail() {
   return (
     <S.Container>
       <S.HeadContainer>
-        <S.Title>제목</S.Title>
+        <S.Title>{contents?.title}</S.Title>
         <S.TopContainer>
           <S.InfoContainer>
-            <S.Info>작성자: 작성자</S.Info>
-            <S.Info>2023-08-28 09:00:00</S.Info>
+            <S.Info>작성자: {contents?.user_id}</S.Info>
+            <S.Info>{contents?.reg_date}</S.Info>
           </S.InfoContainer>
           <S.ButtonContainer>
             <S.EditDeleteButton onClick={onClickEditNotice}>
