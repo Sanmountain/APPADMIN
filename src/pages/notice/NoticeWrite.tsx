@@ -73,7 +73,7 @@ export default function NoticeWrite() {
 
     try {
       const res = await getFileUpload(formDataArray);
-      callback(res.data.url, "공지사항 이미지");
+      callback(res.data.list[0], "공지사항 이미지");
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
