@@ -1,20 +1,25 @@
 import { useRecoilValue } from "recoil";
 import * as S from "../../../styles/appSet/AppScanDetail.styles";
 import { scanUserListState } from "../../../stores/scanUserListState";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function AppScanDetail() {
   const scanUserList = useRecoilValue(scanUserListState);
 
+  const navigate = useNavigate();
   const params = useParams<{ scanDate?: string }>();
   const scanDate = params.scanDate;
 
   const scanDetailList = scanUserList?.[scanDate || ""] || [];
 
+  const onClickBack = () => {
+    navigate(-1);
+  };
+
   return (
     <S.Container>
       <S.TopContainer>
-        <S.BackIcon />
+        <S.BackIcon onClick={onClickBack} />
         <S.TextContainer>날짜 : {scanDate}</S.TextContainer>
         <S.TextContainer>사용자수 : {scanDetailList.length} 명</S.TextContainer>
       </S.TopContainer>
