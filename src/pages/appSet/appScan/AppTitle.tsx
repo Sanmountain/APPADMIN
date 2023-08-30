@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import * as S from "../../styles/appSet/AppTitle.styles";
-import { getMainWord } from "../../api/appSet/appTitle/getMainWord";
-import { getMainWordWrite } from "../../api/appSet/appTitle/getMainWordWrite";
-import CommonButton from "../../components/common/CommonButton";
+import * as S from "../../../styles/appSet/AppTitle.styles";
+import { getMainWord } from "../../../api/appSet/appTitle/getMainWord";
+import { getMainWordWrite } from "../../../api/appSet/appTitle/getMainWordWrite";
+import CommonButton from "../../../components/common/CommonButton";
 
 export default function AppTitle() {
   const [mainWord, setMainWord] = useState("");
