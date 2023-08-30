@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import CommonButton from "../../components/common/CommonButton";
-import * as S from "../../styles/appSet/AppScan.styles";
-import { IAppScanCountListData } from "../../types/appSet/appScanList.types";
-import { getScanUserList } from "../../api/appSet/appScan/getScanUserList";
-import Loading from "../../components/common/Loading";
+import CommonButton from "../../../components/common/CommonButton";
+import * as S from "../../../styles/appSet/AppScan.styles";
+import { IAppScanCountListData } from "../../../types/appSet/appScanList.types";
+import { getScanUserList } from "../../../api/appSet/appScan/getScanUserList";
+import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
 
 export default function AppScan() {
