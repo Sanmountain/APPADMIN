@@ -1,12 +1,9 @@
 import { useMutation } from "react-query";
 import { instance } from "../instance";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
-import { Dispatch, SetStateAction } from "react";
-import {
-  IMMSHistoryData,
-  IMMSHistoryResponse,
-} from "../../types/mms/MMSHistory.types";
+import { IMMSHistoryResponse } from "../../types/mms/MMSHistory.types";
+import { MMSSendListState } from "../../stores/MMSSendListState";
 
 export const getMMSSendList = (
   page: number,
@@ -16,9 +13,9 @@ export const getMMSSendList = (
   startDate: string,
   endDate: string,
   state: string,
-  setMMSSendList: Dispatch<SetStateAction<IMMSHistoryData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
+  const setMMSSendList = useSetRecoilState(MMSSendListState);
 
   return useMutation<IMMSHistoryResponse, unknown, void, unknown>(
     "getMMSSendList",
@@ -37,6 +34,7 @@ export const getMMSSendList = (
       onSuccess: (data) => {
         if (data.result === "00" || data.result === "25") {
           // NOTE data.result 25는 데이터 없는 경우
+          console.log("data", data.list);
           setMMSSendList(data.list);
         }
       },

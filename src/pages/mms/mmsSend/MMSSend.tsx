@@ -1,18 +1,18 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../../../styles/mms/MMSSend.styles";
 import CommonButton from "../../../components/common/CommonButton";
-import { IMMSHistoryData } from "../../../types/mms/MMSHistory.types";
 import { getMMSSendList } from "../../../api/mms/getMMSSendList";
 import Pagination from "../../../components/common/Pagination";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { MMSSendFilterState } from "../../../stores/filter/MMSSendFilterState";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
+import { MMSSendListState } from "../../../stores/MMSSendListState";
 
 export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
   const [filter, setFilter] = useRecoilState(MMSSendFilterState);
-  const [MMSSendList, setMMSSendList] = useState<IMMSHistoryData[]>([]);
+  const MMSSendList = useRecoilValue(MMSSendListState);
   const [page, setPage] = useState(1);
 
   const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
@@ -23,7 +23,6 @@ export default function MMSSend() {
     filter.startDate,
     filter.endDate,
     filter.state,
-    setMMSSendList,
   );
 
   const navigate = useNavigate();
