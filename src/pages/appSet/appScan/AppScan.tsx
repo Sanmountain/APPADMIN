@@ -5,22 +5,16 @@ import { IAppScanCountListData } from "../../../types/appSet/appScanList.types";
 import { getScanUserList } from "../../../api/appSet/appScan/getScanUserList";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
+import { useRecoilState } from "recoil";
+import {
+  appScanFilterState,
+  months,
+  years,
+} from "../../../stores/filter/appScanFilterState";
 
 export default function AppScan() {
-  // NOTE 현재부터 2018년까지 selectBox
-  const currentYear = new Date().getFullYear();
-  const years = Array.from(
-    { length: currentYear - 2017 },
-    (_, i) => 2018 + i,
-  ).reverse();
-  // NOTE 월 selectBox
-  const months = Array.from({ length: 12 }, (_, i) => 1 + i);
-
   const [buttonOption, setButtonOption] = useState("search");
-  const [filter, setFilter] = useState({
-    year: years[0].toString(),
-    month: months[0].toString(),
-  });
+  const [filter, setFilter] = useRecoilState(appScanFilterState);
   const [scanUserCountList, setScanUserCountList] = useState<
     IAppScanCountListData[]
   >([]);
@@ -70,14 +64,14 @@ export default function AppScan() {
           <S.FilterTitle>월별 사용자수 조회</S.FilterTitle>
           <S.FilterContainer>
             <S.ExcelIcon onClick={onClickIcon} />
-            <S.YearSelectBox onChange={handleYearChange}>
+            <S.YearSelectBox onChange={handleYearChange} value={filter.year}>
               {years.map((year) => (
                 <option key={year} value={year}>
                   {year}년
                 </option>
               ))}
             </S.YearSelectBox>
-            <S.MonthSelectBox onChange={handleMonthChange}>
+            <S.MonthSelectBox onChange={handleMonthChange} value={filter.month}>
               {months.map((month) => (
                 <option key={month} value={month}>
                   {month}월
