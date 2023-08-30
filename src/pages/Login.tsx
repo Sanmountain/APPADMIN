@@ -222,14 +222,22 @@ export default function Login() {
             <div className="overlay-panel overlay-left">
               <h1>Welcome Back!</h1>
               <p>이미 계정이 있으신가요?</p>
-              <button className="ghost" id="signIn" onClick={togglePanel}>
+              <button
+                className="loginBtn ghost"
+                id="signIn"
+                onClick={togglePanel}
+              >
                 로그인
               </button>
             </div>
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
               <p>계정이 없으신가요?</p>
-              <button className="ghost" id="signUp" onClick={togglePanel}>
+              <button
+                className="loginBtn ghost"
+                id="signUp"
+                onClick={togglePanel}
+              >
                 회원가입
               </button>
             </div>
