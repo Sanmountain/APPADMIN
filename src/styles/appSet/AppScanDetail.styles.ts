@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
-import { SiMicrosoftexcel } from "react-icons/si";
-import { FaUsers } from "react-icons/fa";
+import { IoMdArrowBack } from "react-icons/io";
 
 export const Container = styled.div`
   display: flex;
@@ -9,7 +8,7 @@ export const Container = styled.div`
 
   width: 1100px;
   max-width: 100%;
-  min-height: 400px;
+  min-height: 500px;
   height: fit-content;
 
   background-color: #fff;
@@ -21,19 +20,18 @@ export const Container = styled.div`
 
 export const TopContainer = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   width: 100%;
   height: 50px;
+  gap: 50px;
   padding: 0 10px;
   margin-top: 10px;
 `;
 
-export const ExcelIcon = styled(SiMicrosoftexcel)`
+export const BackIcon = styled(IoMdArrowBack)`
   font-size: 25px;
   font-weight: 700;
-  margin-right: 10px;
   cursor: pointer;
 
   &:hover {
@@ -41,49 +39,15 @@ export const ExcelIcon = styled(SiMicrosoftexcel)`
   }
 `;
 
-export const UserIcon = styled(FaUsers)`
-  font-size: 25px;
-  font-weight: 700;
-  margin-right: 10px;
-  cursor: pointer;
-
-  &:hover {
-    color: #ff435e;
-  }
-`;
-
-export const FilterTitle = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
-export const FilterContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  width: 50%;
-  gap: 10px;
-`;
-
-export const YearSelectBox = styled.select`
-  width: 100px;
-  height: 35px;
+export const TextContainer = styled.div`
   font-size: 16px;
-  border-radius: 5px;
-`;
-
-export const MonthSelectBox = styled.select`
-  width: 80px;
-  height: 35px;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-right: 10px;
+  font-weight: 600;
+  width: fit-content;
 `;
 
 export const TitleContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
   background-color: #f8f9fa;
@@ -109,20 +73,9 @@ export const ContentsListContainer = styled.div`
   }
 `;
 
-export const NoDataContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 250px;
-  font-size: 16px;
-  font-weight: 500;
-`;
-
 export const ContentsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
   border: 0.3px solid #bdbdbd;

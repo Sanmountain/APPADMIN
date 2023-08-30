@@ -4,7 +4,7 @@ import NoticeList from "../pages/notice/NoticeList";
 import NoticeWrite from "../pages/notice/NoticeWrite";
 import AppTitle from "../pages/appSet/AppTitle";
 import AppVer from "../pages/appSet/AppVer";
-import AppScan from "../pages/appSet/AppScan";
+import AppScan from "../pages/appSet/appScan/AppScan";
 import AppVideo from "../pages/appSet/AppVideo";
 import MMSSend from "../pages/mms/MMSSend";
 import TalkSend from "../pages/mms/TalkSend";
@@ -12,6 +12,7 @@ import PhotoCheck from "../pages/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
 import Layout from "../components/layout";
 import NoticeDetail from "../pages/notice/NoticeDetail";
+import AppScanDetail from "../pages/appSet/appScan/AppScanDetail";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: "/app/title", element: <AppTitle /> },
       { path: "/app/ver", element: <AppVer /> },
       { path: "/app/scan", element: <AppScan /> },
+      { path: "/app/scan/:scanDate", element: <AppScanDetail /> },
       { path: "/app/video", element: <AppVideo /> },
     ],
   },
