@@ -7,7 +7,7 @@ export interface IMMSHistoryData {
   update_date: string;
   mms_content: string;
   img_uri: string;
-  success: number;
+  success: string;
   company: string;
 }
 

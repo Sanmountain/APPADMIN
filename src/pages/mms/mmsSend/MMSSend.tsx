@@ -15,15 +15,7 @@ export default function MMSSend() {
   const MMSSendList = useRecoilValue(MMSSendListState);
   const [page, setPage] = useState(1);
 
-  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
-    page,
-    filter.invoiceNumber,
-    filter.tradeSubCode,
-    filter.telephone,
-    filter.startDate,
-    filter.endDate,
-    filter.state,
-  );
+  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(page);
 
   const navigate = useNavigate();
 
@@ -51,7 +43,7 @@ export default function MMSSend() {
   };
 
   const onClickMoveToDetail = (id: string) => {
-    navigate(`/mms/mmsSend/${id}`);
+    navigate(`/mms/mmsSend/${id}/${page}`);
   };
 
   return (
@@ -174,7 +166,13 @@ export default function MMSSend() {
             <S.ContentsContainer key={item.id}>
               <S.Contents>{item.update_date}</S.Contents>
               <S.Contents>{item.iv_no}</S.Contents>
-              <S.Contents>{item.state}</S.Contents>
+              <S.Contents>
+                {item.state === "DU"
+                  ? "미배송"
+                  : item.state === "DS"
+                  ? "배송출발"
+                  : "배송완료"}
+              </S.Contents>
               <S.Contents>{item.tradesub_cd}</S.Contents>
               <S.Contents>{item.dv_tel}</S.Contents>
               <S.Contents>

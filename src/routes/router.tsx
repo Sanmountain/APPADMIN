@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/mms/mmsSend", element: <MMSSend /> },
-      { path: "/mms/mmsSend/:id", element: <MMSSendDetail /> },
+      { path: "/mms/mmsSend/:id/:page", element: <MMSSendDetail /> },
       { path: "/mms/talkSend", element: <TalkSend /> },
     ],
   },
