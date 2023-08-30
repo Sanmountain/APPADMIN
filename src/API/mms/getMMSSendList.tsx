@@ -35,7 +35,8 @@ export const getMMSSendList = (
       }),
     {
       onSuccess: (data) => {
-        if (data.result === "00") {
+        if (data.result === "00" || data.result === "25") {
+          // NOTE data.result 25는 데이터 없는 경우
           setMMSSendList(data.list);
         }
       },

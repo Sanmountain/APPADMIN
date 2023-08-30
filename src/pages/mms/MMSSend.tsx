@@ -3,23 +3,19 @@ import * as S from "../../styles/mms/MMSSend.styles";
 import CommonButton from "../../components/common/CommonButton";
 import { IMMSHistoryData } from "../../types/mms/MMSHistory.types";
 import { getMMSSendList } from "../../api/mms/getMMSSendList";
-import dayjs from "dayjs";
 import Pagination from "../../components/common/Pagination";
+import { useRecoilState } from "recoil";
+import { MMSSendFilterState } from "../../stores/filter/MMSSendFilterState";
+import Loading from "../../components/common/Loading";
+import { useNavigate } from "react-router";
 
 export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
-  const [filter, setFilter] = useState({
-    startDate: dayjs().format("YYYY-MM-DD"),
-    endDate: dayjs().format("YYYY-MM-DD"),
-    state: "",
-    invoiceNumber: null,
-    telephone: "",
-    tradeSubCode: null,
-  });
+  const [filter, setFilter] = useRecoilState(MMSSendFilterState);
   const [MMSSendList, setMMSSendList] = useState<IMMSHistoryData[]>([]);
   const [page, setPage] = useState(1);
 
-  const { mutate: MMSSendListMutate } = getMMSSendList(
+  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
     page,
     filter.invoiceNumber,
     filter.tradeSubCode,
@@ -29,6 +25,8 @@ export default function MMSSend() {
     filter.state,
     setMMSSendList,
   );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     MMSSendListMutate();
@@ -51,6 +49,10 @@ export default function MMSSend() {
 
   const onClickSearch = () => {
     MMSSendListMutate();
+  };
+
+  const onClickMoveToDetail = (id: string) => {
+    navigate(`/mms/mmsSend/${id}`);
   };
 
   return (
@@ -78,13 +80,15 @@ export default function MMSSend() {
                   onChange={handleFilterChange}
                 />
               </S.DateContainer>
-              <S.WorkSelectBox name="state" onChange={handleFilterChange}>
-                <option disabled hidden selected>
-                  업무구분
-                </option>
-                <option>미배송</option>
-                <option>배송출발</option>
-                <option>배송완료</option>
+              <S.WorkSelectBox
+                name="state"
+                onChange={handleFilterChange}
+                value={filter.state}
+              >
+                <option value="">업무구분</option>
+                <option value="DU">미배송</option>
+                <option value="DS">배송출발</option>
+                <option value="DC">배송완료</option>
               </S.WorkSelectBox>
               <S.Input
                 placeholder="송장번호"
@@ -120,16 +124,29 @@ export default function MMSSend() {
           <S.FilterContainer>
             <S.FirstFilterContainer>
               <S.DateContainer>
-                <S.DateInput type="date" /> ~
-                <S.DateInput type="date" />
+                <S.DateInput
+                  type="date"
+                  name="startDate"
+                  value={filter.startDate}
+                  onChange={handleFilterChange}
+                />{" "}
+                ~
+                <S.DateInput
+                  type="date"
+                  name="endDate"
+                  value={filter.endDate}
+                  onChange={handleFilterChange}
+                />
               </S.DateContainer>
-              <S.WorkSelectBox>
-                <option disabled hidden selected>
-                  업무구분
-                </option>
-                <option>미배송</option>
-                <option>배송출발</option>
-                <option>배송완료</option>
+              <S.WorkSelectBox
+                name="state"
+                onChange={handleFilterChange}
+                value={filter.state}
+              >
+                <option value="">업무구분</option>
+                <option value="DU">미배송</option>
+                <option value="DS">배송출발</option>
+                <option value="DC">배송완료</option>
               </S.WorkSelectBox>
               <S.Input placeholder="전송량 1" />
               <S.Input placeholder="전송량 2" />
@@ -148,7 +165,9 @@ export default function MMSSend() {
         <S.Title>상세</S.Title>
       </S.TitleContainer>
 
-      {MMSSendList.length < 1 ? (
+      {isLoading ? (
+        <Loading />
+      ) : MMSSendList.length < 1 ? (
         <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
       ) : (
         <S.ContentsListContainer>
@@ -162,7 +181,7 @@ export default function MMSSend() {
               <S.Contents>
                 <CommonButton
                   contents="상세"
-                  onClickFn={() => console.log("ddd")}
+                  onClickFn={() => onClickMoveToDetail(item.id)}
                 />
               </S.Contents>
             </S.ContentsContainer>
