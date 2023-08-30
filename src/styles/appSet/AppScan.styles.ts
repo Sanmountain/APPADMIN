@@ -109,6 +109,17 @@ export const ContentsListContainer = styled.div`
   }
 `;
 
+export const NoDataContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 250px;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
 export const ContentsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
