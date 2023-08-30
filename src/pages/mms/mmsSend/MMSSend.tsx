@@ -1,12 +1,12 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import * as S from "../../styles/mms/MMSSend.styles";
-import CommonButton from "../../components/common/CommonButton";
-import { IMMSHistoryData } from "../../types/mms/MMSHistory.types";
-import { getMMSSendList } from "../../api/mms/getMMSSendList";
-import Pagination from "../../components/common/Pagination";
+import * as S from "../../../styles/mms/MMSSend.styles";
+import CommonButton from "../../../components/common/CommonButton";
+import { IMMSHistoryData } from "../../../types/mms/MMSHistory.types";
+import { getMMSSendList } from "../../../api/mms/getMMSSendList";
+import Pagination from "../../../components/common/Pagination";
 import { useRecoilState } from "recoil";
-import { MMSSendFilterState } from "../../stores/filter/MMSSendFilterState";
-import Loading from "../../components/common/Loading";
+import { MMSSendFilterState } from "../../../stores/filter/MMSSendFilterState";
+import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
 
 export default function MMSSend() {

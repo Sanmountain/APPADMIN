@@ -6,13 +6,14 @@ import AppTitle from "../pages/appSet/AppTitle";
 import AppVer from "../pages/appSet/AppVer";
 import AppScan from "../pages/appSet/appScan/AppScan";
 import AppVideo from "../pages/appSet/AppVideo";
-import MMSSend from "../pages/mms/MMSSend";
+import MMSSend from "../pages/mms/mmsSend/MMSSend";
 import TalkSend from "../pages/mms/TalkSend";
 import PhotoCheck from "../pages/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
 import Layout from "../components/layout";
 import NoticeDetail from "../pages/notice/NoticeDetail";
 import AppScanDetail from "../pages/appSet/appScan/AppScanDetail";
+import MMSSendDetail from "../pages/mms/mmsSend/MMSSendDetail";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/mms/mmsSend", element: <MMSSend /> },
+      { path: "/mms/mmsSend/:id", element: <MMSSendDetail /> },
       { path: "/mms/talkSend", element: <TalkSend /> },
     ],
   },
