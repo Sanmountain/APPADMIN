@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login";
 import NoticeList from "../pages/notice/NoticeList";
 import NoticeWrite from "../pages/notice/NoticeWrite";
-import AppTitle from "../pages/appSet/AppTitle";
+import AppTitle from "../pages/appSet/appScan/AppTitle";
 import AppVer from "../pages/appSet/AppVer";
 import AppScan from "../pages/appSet/appScan/AppScan";
 import AppVideo from "../pages/appSet/AppVideo";

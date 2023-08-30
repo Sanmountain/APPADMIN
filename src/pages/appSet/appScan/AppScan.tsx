@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import CommonButton from "../../../components/common/CommonButton";
 import * as S from "../../../styles/appSet/AppScan.styles";
-import { IAppScanCountListData } from "../../../types/appSet/appScanList.types";
+import { IAppScanListData } from "../../../types/appSet/appScanList.types";
 import { getScanUserList } from "../../../api/appSet/appScan/getScanUserList";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
@@ -11,12 +11,13 @@ import {
   months,
   years,
 } from "../../../stores/filter/appScanFilterState";
+import { numberWithCommas } from "../../../utils/numberWithCommas";
 
 export default function AppScan() {
   const [buttonOption, setButtonOption] = useState("search");
   const [filter, setFilter] = useRecoilState(appScanFilterState);
   const [scanUserCountList, setScanUserCountList] = useState<
-    IAppScanCountListData[]
+    IAppScanListData[]
   >([]);
 
   const { mutate: scanUserListMutate, isLoading } = getScanUserList(
@@ -118,13 +119,13 @@ export default function AppScan() {
           <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
         ) : (
           scanUserCountList?.map((item) => (
-            <S.ContentsContainer key={item.scanDate}>
-              <S.Contents>{item.scanDate}</S.Contents>
-              <S.Contents>{item.userCount}</S.Contents>
+            <S.ContentsContainer key={item.scan_ymd2}>
+              <S.Contents>{item.scan_ymd2}</S.Contents>
+              <S.Contents>{numberWithCommas(item.count)}</S.Contents>
               <S.Contents>
                 <CommonButton
                   contents="상세"
-                  onClickFn={() => onClickMoveToDetail(item.scanDate)}
+                  onClickFn={() => onClickMoveToDetail(item.scan_ymd2)}
                 />
               </S.Contents>
             </S.ContentsContainer>
