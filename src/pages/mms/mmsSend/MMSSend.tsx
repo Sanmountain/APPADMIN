@@ -1,30 +1,21 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../../../styles/mms/MMSSend.styles";
 import CommonButton from "../../../components/common/CommonButton";
-import { IMMSHistoryData } from "../../../types/mms/MMSHistory.types";
 import { getMMSSendList } from "../../../api/mms/getMMSSendList";
 import Pagination from "../../../components/common/Pagination";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { MMSSendFilterState } from "../../../stores/filter/MMSSendFilterState";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
+import { MMSSendListState } from "../../../stores/MMSSendListState";
 
 export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
   const [filter, setFilter] = useRecoilState(MMSSendFilterState);
-  const [MMSSendList, setMMSSendList] = useState<IMMSHistoryData[]>([]);
+  const MMSSendList = useRecoilValue(MMSSendListState);
   const [page, setPage] = useState(1);
 
-  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
-    page,
-    filter.invoiceNumber,
-    filter.tradeSubCode,
-    filter.telephone,
-    filter.startDate,
-    filter.endDate,
-    filter.state,
-    setMMSSendList,
-  );
+  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(page);
 
   const navigate = useNavigate();
 
@@ -52,7 +43,7 @@ export default function MMSSend() {
   };
 
   const onClickMoveToDetail = (id: string) => {
-    navigate(`/mms/mmsSend/${id}`);
+    navigate(`/mms/mmsSend/${id}/${page}`);
   };
 
   return (
@@ -175,7 +166,13 @@ export default function MMSSend() {
             <S.ContentsContainer key={item.id}>
               <S.Contents>{item.update_date}</S.Contents>
               <S.Contents>{item.iv_no}</S.Contents>
-              <S.Contents>{item.state}</S.Contents>
+              <S.Contents>
+                {item.state === "DU"
+                  ? "미배송"
+                  : item.state === "DS"
+                  ? "배송출발"
+                  : "배송완료"}
+              </S.Contents>
               <S.Contents>{item.tradesub_cd}</S.Contents>
               <S.Contents>{item.dv_tel}</S.Contents>
               <S.Contents>

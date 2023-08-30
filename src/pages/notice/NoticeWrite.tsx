@@ -63,17 +63,19 @@ export default function NoticeWrite() {
   // NOTE Editor에 이미지 업로드 시 이미지 업로드 API
   const handleImageUpload = async (
     blob: Blob | File,
-    callback: (url: string, alt: string) => void,
+    callback: (url: string, alt?: string) => void,
   ) => {
+    // NOTE blob 자체가 file
     const formData = new FormData();
+    // NOTE formData {image:blob} 형태로 바꿈
     formData.append("image", blob);
 
-    const formDataArray = [];
-    formDataArray.push(formData);
-
     try {
-      const res = await getFileUpload(formDataArray);
-      callback(res.data.list[0], "공지사항 이미지");
+      const res = await getFileUpload(formData);
+      callback(
+        res.data.list[0],
+        `${contents ? contents.title : title} 공지사항 이미지`,
+      );
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
