@@ -65,15 +65,18 @@ export default function NoticeWrite() {
     blob: Blob | File,
     callback: (url: string, alt?: string) => void,
   ) => {
+    console.log("blob", blob);
     // NOTE blob 자체가 file
     const formData = new FormData();
     // NOTE formData {image:blob} 형태로 바꿈
-    formData.append("image", blob);
+    formData.append("multiFile", blob);
 
     try {
-      const res = await getFileUpload(formData);
+      const res: any = await getFileUpload(formData);
+
+      console.log("res", res);
       callback(
-        res.data.list[0],
+        res.list[0],
         `${contents ? contents.title : title} 공지사항 이미지`,
       );
     } catch (error) {
