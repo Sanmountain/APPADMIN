@@ -73,10 +73,10 @@ export default function NoticeWrite() {
 
     try {
       const res: any = await getFileUpload(formData);
+      const imageUrl = `${process.env.REACT_APP_API_URL}/images/${res.list[0]}`;
 
-      console.log("res", res);
       callback(
-        res.list[0],
+        imageUrl,
         `${contents ? contents.title : title} 공지사항 이미지`,
       );
     } catch (error) {
