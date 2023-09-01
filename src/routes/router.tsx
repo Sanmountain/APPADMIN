@@ -5,7 +5,7 @@ import NoticeWrite from "../pages/notice/NoticeWrite";
 import AppTitle from "../pages/appSet/appScan/AppTitle";
 import AppVer from "../pages/appSet/AppVer";
 import AppScan from "../pages/appSet/appScan/AppScan";
-import AppVideo from "../pages/appSet/AppVideo";
+import AppVideo from "../pages/appSet/appVideo/AppVideo";
 import MMSSend from "../pages/mms/mmsSend/MMSSend";
 import TalkSend from "../pages/mms/TalkSend";
 import PhotoCheck from "../pages/photo/PhotoCheck";
