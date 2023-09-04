@@ -15,6 +15,7 @@ import NoticeDetail from "../pages/notice/NoticeDetail";
 import AppScanDetail from "../pages/appSet/appScan/AppScanDetail";
 import MMSSendDetail from "../pages/mms/mmsSend/MMSSendDetail";
 import AppVideoDetail from "../pages/appSet/appVideo/AppVideoDetail";
+import AppVideoWrite from "../pages/appSet/appVideo/AppVideoWrite";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
       { path: "/app/scan/:scanDate", element: <AppScanDetail /> },
       { path: "/app/video", element: <AppVideo /> },
       { path: "/app/video/:videoId", element: <AppVideoDetail /> },
+      { path: "/app/video/write", element: <AppVideoWrite /> },
     ],
   },
 

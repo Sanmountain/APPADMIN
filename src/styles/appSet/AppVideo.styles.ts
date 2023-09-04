@@ -17,6 +17,17 @@ export const Container = styled.div`
     0 10px 10px rgba(0, 0, 0, 0.22);
 `;
 
+export const WriteButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  margin-top: 10px;
+`;
+
 export const ContentsListContainer = styled.div`
   display: flex;
   flex-direction: column;
