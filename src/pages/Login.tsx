@@ -7,6 +7,7 @@ import { getLogin } from "../api/login/getLogin";
 import { getRegist } from "../api/login/getRegist";
 import { useRecoilState } from "recoil";
 import { loginState } from "../stores/loginState";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const [isRightPanelActive, setRightPanelActive] = useState(false);
@@ -32,6 +33,15 @@ export default function Login() {
     placeCode,
     company,
   );
+
+  const navigate = useNavigate();
+
+  // NOTE 로그인 되어 있는 user의 경우 자동 로그인
+  useEffect(() => {
+    if (login.isLogin) {
+      navigate("/notice/list");
+    }
+  }, [login]);
 
   useEffect(() => {
     if (login.isUserIdStored) {
