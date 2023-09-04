@@ -10,12 +10,12 @@ export default function Loading() {
 }
 
 const Spinner = styled.div`
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 13%;
-  height: 22%;
+  height: 28%;
   z-index: 3;
 `;
 

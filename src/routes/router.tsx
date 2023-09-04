@@ -7,7 +7,7 @@ import AppVer from "../pages/appSet/AppVer";
 import AppScan from "../pages/appSet/appScan/AppScan";
 import AppVideo from "../pages/appSet/appVideo/AppVideo";
 import MMSSend from "../pages/mms/mmsSend/MMSSend";
-import TalkSend from "../pages/mms/TalkSend";
+import TalkSend from "../pages/mms/talkSend/TalkSend";
 import PhotoCheck from "../pages/photo/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
 import Layout from "../components/layout";
@@ -16,6 +16,8 @@ import AppScanDetail from "../pages/appSet/appScan/AppScanDetail";
 import MMSSendDetail from "../pages/mms/mmsSend/MMSSendDetail";
 import AppVideoDetail from "../pages/appSet/appVideo/AppVideoDetail";
 import AppVideoWrite from "../pages/appSet/appVideo/AppVideoWrite";
+import TalkSendDetail from "../pages/mms/talkSend/TalkSendDetail";
+import TalkSendPhoto from "../pages/mms/talkSend/TalkSendPhoto";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -52,6 +54,11 @@ export const router = createBrowserRouter([
       { path: "/mms/mmsSend", element: <MMSSend /> },
       { path: "/mms/mmsSend/:id/:page", element: <MMSSendDetail /> },
       { path: "/mms/talkSend", element: <TalkSend /> },
+      { path: "/mms/talkSend/photo/:id", element: <TalkSendPhoto /> },
+      {
+        path: "/mms/talkSend/detail/:id/:page/:limit",
+        element: <TalkSendDetail />,
+      },
     ],
   },
 

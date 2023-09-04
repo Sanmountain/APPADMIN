@@ -10,8 +10,7 @@ export const Container = styled.div`
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
-  width: 1100px;
-  max-width: 100%;
+  width: 85%;
   height: 400px;
 `;
 

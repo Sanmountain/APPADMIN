@@ -5,8 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 1100px;
-  height: fit-content;
+  width: 85%;
   max-width: 100%;
   min-height: 750px;
   padding: 25px;
