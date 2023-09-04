@@ -7,7 +7,7 @@ import AppVer from "../pages/appSet/AppVer";
 import AppScan from "../pages/appSet/appScan/AppScan";
 import AppVideo from "../pages/appSet/appVideo/AppVideo";
 import MMSSend from "../pages/mms/mmsSend/MMSSend";
-import TalkSend from "../pages/mms/TalkSend";
+import TalkSend from "../pages/mms/talkSend/TalkSend";
 import PhotoCheck from "../pages/photo/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
 import Layout from "../components/layout";

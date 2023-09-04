@@ -14,5 +14,11 @@ export default function Layout() {
 }
 
 const OutletContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   margin-top: 130px;
+  width: 100vw;
+  height: 100%;
 `;
