@@ -5,6 +5,7 @@ import { getAppVideoList } from "../../../api/appSet/appVideo/getAppVideoList";
 import Pagination from "../../../components/common/Pagination";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
+import CommonButton from "../../../components/common/CommonButton";
 
 export default function AppVideo() {
   const [page, setPage] = useState(1);
@@ -21,16 +22,23 @@ export default function AppVideo() {
     videoListMutate();
   }, []);
 
+  const onClickMoveToWrite = () => {
+    navigate("/app/video/write");
+  };
+
   const onClickMoveToDetail = (id: string) => {
     navigate(`/app/video/${id}`);
   };
 
   return (
     <S.Container>
-      {videoList.length < 1 ? (
-        <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
-      ) : isLoading ? (
+      <S.WriteButtonContainer>
+        <CommonButton contents="동영상 등록" onClickFn={onClickMoveToWrite} />
+      </S.WriteButtonContainer>
+      {isLoading ? (
         <Loading />
+      ) : videoList.length < 1 ? (
+        <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
       ) : (
         <S.ContentsListContainer>
           {videoList.map((item) => (
