@@ -20,5 +20,4 @@ const OutletContainer = styled.div`
 
   margin-top: 130px;
   width: 100vw;
-  height: 100%;
 `;
