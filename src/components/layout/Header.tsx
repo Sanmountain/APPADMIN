@@ -4,6 +4,7 @@ import "../../styles/header.css";
 import DropdownMenu from "./DropdownMenu";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState("");
@@ -80,9 +81,17 @@ const Header = () => {
             />
           )}
         </div>
-        <div className="headerButton">
-          <div onClick={handleUserEdit}>정보수정</div>
-          <div onClick={handleLogout}>LOGOUT</div>
+        <div className="headerButtonContainer">
+          <div className="userInfo">
+            <FaUserCircle style={{ marginTop: "2px" }} />
+            {login.userId}
+          </div>
+          <button className="headerButton" onClick={handleUserEdit}>
+            정보수정
+          </button>
+          <button className="headerButton" onClick={handleLogout}>
+            LOGOUT
+          </button>
         </div>
       </div>
     </div>
