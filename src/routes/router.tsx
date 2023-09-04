@@ -18,6 +18,9 @@ import AppVideoDetail from "../pages/appSet/appVideo/AppVideoDetail";
 import AppVideoWrite from "../pages/appSet/appVideo/AppVideoWrite";
 import TalkSendDetail from "../pages/mms/talkSend/TalkSendDetail";
 import TalkSendPhoto from "../pages/mms/talkSend/TalkSendPhoto";
+import AppDeliveryTime from "../pages/appSet/appDeliveryTime";
+import AppPaymentUser from "../pages/appSet/appPaymentUser";
+import AppProduct from "../pages/appSet/appProduct";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -41,6 +44,9 @@ export const router = createBrowserRouter([
       { path: "/app/ver", element: <AppVer /> },
       { path: "/app/scan", element: <AppScan /> },
       { path: "/app/scan/:scanDate", element: <AppScanDetail /> },
+      { path: "/app/deliveryTime", element: <AppDeliveryTime /> },
+      { path: "/app/paymentUser", element: <AppPaymentUser /> },
+      { path: "/app/product", element: <AppProduct /> },
       { path: "/app/video", element: <AppVideo /> },
       { path: "/app/video/:videoId", element: <AppVideoDetail /> },
       { path: "/app/video/write", element: <AppVideoWrite /> },

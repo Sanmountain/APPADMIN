@@ -1,11 +1,13 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import Header from "./Header";
 import { styled } from "styled-components";
 
 export default function Layout() {
+  const location = useLocation();
+
   return (
     <>
-      <Header />
+      {location.pathname !== "/" && <Header />}
       <OutletContainer>
         <Outlet />
       </OutletContainer>

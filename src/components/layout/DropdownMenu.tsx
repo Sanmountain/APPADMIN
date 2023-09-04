@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import "../../styles/dropdown.css";
+import { IDropdownMenuProps } from "../../types/DropdownMenu.types";
 
 function DropdownMenu({
   buttonLabel,
@@ -8,18 +9,18 @@ function DropdownMenu({
   menuPaths,
   isOpen,
   setIsOpen,
-}) {
-  const node = useRef();
+}: IDropdownMenuProps) {
+  const node = useRef<HTMLDivElement | null>(null);
 
   const handleLinkClick = () => {
-    setIsOpen(null);
+    setIsOpen("");
   };
 
   return (
     <div className="dropdown" ref={node}>
       <div
         className="btnMenu"
-        onClick={() => setIsOpen(isOpen === buttonLabel ? null : buttonLabel)}
+        onClick={() => setIsOpen(isOpen === buttonLabel ? "" : buttonLabel)}
       >
         {buttonLabel}
       </div>

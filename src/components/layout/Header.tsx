@@ -1,19 +1,35 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/header.css";
 import DropdownMenu from "./DropdownMenu";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(null);
+  const [isOpen, setIsOpen] = useState("");
   const [login, setLogin] = useRecoilState(loginState);
   const resetLogin = useResetRecoilState(loginState);
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const appMenu = ["메인문구", "버전관리", "스캔사용자", "동영상관리"];
+  const appMenuPath = ["/app/title", "/app/ver", "/app/scan", "/app/video"];
+  const LogenMenu = [
+    "메인문구",
+    "버전관리",
+    "배송시간관리",
+    "결제사용자관리",
+    "장비연결내역",
+    "동영상관리",
+  ];
+  const LogenMenuPath = [
+    "/app/title",
+    "/app/ver",
+    "/app/deliveryTime",
+    "/app/paymentUser",
+    "/app/product",
+    "/app/video",
+  ];
 
-  if (location.pathname === "/") return null;
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     if (login.isUserIdStored) {
@@ -42,8 +58,8 @@ const Header = () => {
           />
           <DropdownMenu
             buttonLabel="앱 관리"
-            menuItems={["메인문구", "버전관리", "스캔사용자", "동영상관리"]}
-            menuPaths={["/app/title", "/app/ver", "/app/scan", "/app/video"]}
+            menuItems={login.company === "LOGEN" ? LogenMenu : appMenu}
+            menuPaths={login.company === "LOGEN" ? LogenMenuPath : appMenuPath}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
@@ -54,13 +70,15 @@ const Header = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
-          <DropdownMenu
-            buttonLabel="사진확인"
-            menuItems={["배송사진"]}
-            menuPaths={["/photoCheck"]}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
+          {login.company !== "LOGEN" && (
+            <DropdownMenu
+              buttonLabel="사진확인"
+              menuItems={["배송사진"]}
+              menuPaths={["/photoCheck"]}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          )}
         </div>
         <div className="headerButton">
           <div onClick={handleUserEdit}>정보수정</div>
