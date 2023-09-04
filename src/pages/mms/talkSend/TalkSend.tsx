@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import CommonButton from "../../../components/common/CommonButton";
-import * as S from "../../../styles/mms/TaskSend.styles";
+import * as S from "../../../styles/mms/TalkSend.styles";
 import { IAlimtokTotalData } from "../../../types/mms/alimtokTotal.types";
 import { getAlimtokTotal } from "../../../api/mms/getAlimtokTotal";
 import Loading from "../../../components/common/Loading";

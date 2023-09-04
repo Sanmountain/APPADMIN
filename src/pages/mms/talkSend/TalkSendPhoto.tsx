@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import CommonButton from "../../../components/common/CommonButton";
-import * as S from "../../../styles/mms/TaskSendPhoto.styles";
+import * as S from "../../../styles/mms/TalkSendPhoto.styles";
 import { useRecoilValue } from "recoil";
 import { talkSendListState } from "../../../stores/talkSendListState";
 import NotFound from "../../../assets/image/img_notFound.jpg";
