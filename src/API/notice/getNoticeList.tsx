@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export const getNoticeList = (
   page: number,
+  setTotal: Dispatch<SetStateAction<number>>,
   setNoticeList: Dispatch<SetStateAction<INoticeListData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
@@ -26,6 +27,7 @@ export const getNoticeList = (
       onSuccess: (data) => {
         if (data.result === "00") {
           setNoticeList(data.list);
+          setTotal(data.lastPage);
         }
       },
       onError: (error) => {

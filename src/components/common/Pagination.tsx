@@ -2,11 +2,11 @@ import { useState, memo, useEffect } from "react";
 import * as S from "../../styles/Pagination.styles";
 import { IPaginationProps } from "../../types/Pagination.types";
 
-function Pagination({ total, page, setPage }: IPaginationProps) {
+function Pagination({ total, page, setPage, mutate }: IPaginationProps) {
   const [currentPageGroup, setCurrentPageGroup] = useState(0);
 
   // NOTE 총 페이지 수
-  const numPages = Math.ceil(total / 10);
+  const numPages = Math.max(total, 1);
   // NOTE 한 그룹 당 보여줄 페이지 수
   const pagesPerGroup = 10;
   // NOTE 페이지네이션이 갖고 있는 페이지 그룹의 수
@@ -14,11 +14,12 @@ function Pagination({ total, page, setPage }: IPaginationProps) {
 
   // NOTE 그룹의 마지막 페이지를 보고 있을 때 다음 그룹으로 넘어갈 경우
   useEffect(() => {
-    setCurrentPageGroup(Math.floor(page / pagesPerGroup));
+    setCurrentPageGroup(Math.floor((page - 1) / pagesPerGroup));
+    mutate();
   }, [page, pagesPerGroup]);
 
   const onClickFirstButton = () => {
-    setPage(0);
+    setPage(1);
     setCurrentPageGroup(0);
   };
 
@@ -48,7 +49,7 @@ function Pagination({ total, page, setPage }: IPaginationProps) {
   };
 
   const onClickLastButton = () => {
-    setPage(numPages - 1);
+    setPage(numPages);
     setCurrentPageGroup(numPageGroups - 1);
   };
 
@@ -77,9 +78,7 @@ function Pagination({ total, page, setPage }: IPaginationProps) {
           return (
             <S.PaginationButton
               key={actualPageNumber}
-              onClick={() =>
-                onClickPageButton(index + currentPageGroup * pagesPerGroup)
-              }
+              onClick={() => onClickPageButton(index + 1)}
               aria-current={page === actualPageNumber ? "page" : undefined}
             >
               {actualPageNumber}

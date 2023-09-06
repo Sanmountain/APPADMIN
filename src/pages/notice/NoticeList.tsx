@@ -8,8 +8,13 @@ import Pagination from "../../components/common/Pagination";
 export default function NoticeList() {
   const [noticeList, setNoticeList] = useState<INoticeListData[]>([]);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  const { mutate: noticeListMutate } = getNoticeList(page, setNoticeList);
+  const { mutate: noticeListMutate } = getNoticeList(
+    page,
+    setTotal,
+    setNoticeList,
+  );
 
   const navigate = useNavigate();
 
@@ -49,7 +54,12 @@ export default function NoticeList() {
       </S.ContentsListContainer>
 
       <S.PaginationContainer>
-        <Pagination total={10} page={page} setPage={setPage} />
+        <Pagination
+          total={total}
+          page={page}
+          setPage={setPage}
+          mutate={noticeListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );

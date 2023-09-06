@@ -11,6 +11,7 @@ import {
 
 export const getPaymentUserList = (
   page: number,
+  setTotal: Dispatch<SetStateAction<number>>,
   paymentFilter: IPaymentFilter,
   setPaymentUserList: Dispatch<SetStateAction<IAppPaymentUserData[]>>,
 ) => {
@@ -30,6 +31,7 @@ export const getPaymentUserList = (
       onSuccess: (data) => {
         if (data.result === "00") {
           setPaymentUserList(data.list);
+          setTotal(data.lastPage);
         }
       },
       onError: (error) => {

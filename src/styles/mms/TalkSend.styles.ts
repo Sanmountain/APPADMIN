@@ -44,15 +44,6 @@ export const ContentsListContainer = styled.div`
   }
 `;
 
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 350px;
-`;
-
 export const TotalContentsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

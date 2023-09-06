@@ -10,6 +10,7 @@ import {
 
 export const getAppVideoList = (
   page: number,
+  setTotal: Dispatch<SetStateAction<number>>,
   setVideoList: Dispatch<SetStateAction<IAppVideoListData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
@@ -25,6 +26,7 @@ export const getAppVideoList = (
       onSuccess: (data) => {
         if (data.result === "00") {
           setVideoList(data.list);
+          setTotal(data.lastPage);
         }
       },
       onError: (error) => {
