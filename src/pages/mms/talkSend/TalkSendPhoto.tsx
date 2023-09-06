@@ -6,7 +6,6 @@ import { talkSendListState } from "../../../stores/talkSendListState";
 import NotFound from "../../../assets/image/img_notFound.jpg";
 import { loginState } from "../../../stores/loginState";
 import { ChangeEvent, useEffect, useState } from "react";
-import { getAlimtokInvoice } from "../../../api/mms/getAlimtokInvoice";
 
 export default function TalkSendPhoto() {
   const [imageUrl, setImageUrl] = useState("");
@@ -27,18 +26,14 @@ export default function TalkSendPhoto() {
     if (matchingTalkSend) setImageUrl(matchingTalkSend.image_uri);
   }, []);
 
-  // NOTE 다른 송장번호 검색
-  const { mutate: invoiceMutate } = getAlimtokInvoice(
-    invoiceNumber,
-    setImageUrl,
-  );
-
   const handleInvoiceNumber = (e: ChangeEvent<HTMLInputElement>) => {
     setInvoiceNumber(Number(e.target.value));
   };
 
   const onClickSearch = () => {
-    invoiceMutate();
+    setImageUrl(
+      `https://jhcfile.jhcon.net/FILE_SERVER/slx/file_download?fileName=${login.company}_${invoiceNumber}.jpg`,
+    );
   };
 
   return (
@@ -52,11 +47,15 @@ export default function TalkSendPhoto() {
         <S.Input
           defaultValue={invoiceNumber || undefined}
           onChange={handleInvoiceNumber}
+          placeholder="송장번호"
         />
         <CommonButton contents="검색" onClickFn={onClickSearch} />
       </S.TopContainer>
       <S.ImageContainer>
-        <S.Image src={imageUrl || NotFound} />
+        <S.Image
+          src={imageUrl || NotFound}
+          onError={(e) => (e.currentTarget.src = NotFound)}
+        />
       </S.ImageContainer>
     </S.Container>
   );

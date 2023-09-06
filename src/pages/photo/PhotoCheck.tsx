@@ -42,6 +42,7 @@ export default function PhotoCheck() {
         <S.WorkInput
           name="invoiceNumber"
           onChange={(e) => handleOptionChange(e)}
+          placeholder="송장번호"
         />
         <CommonButton contents="검색" onClickFn={onClickSearchButton} />
       </S.FilterContainer>

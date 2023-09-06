@@ -21,7 +21,7 @@ export const FilterContainer = styled.div`
   flex-direction: row;
 
   width: 95%;
-  height: 40px;
+  height: 35px;
   margin-bottom: 20px;
   gap: 20px;
 `;
