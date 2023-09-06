@@ -53,7 +53,6 @@ export const TotalContentsContainer = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 40px;
-  cursor: pointer;
 `;
 
 export const Contents = styled.div`
@@ -150,7 +149,6 @@ export const ContentsContainer = styled.div`
   width: 100%;
   height: 50px;
   text-align: center;
-  cursor: pointer;
 `;
 
 export const PaginationContainer = styled.div`
