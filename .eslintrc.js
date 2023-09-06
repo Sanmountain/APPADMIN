@@ -21,6 +21,7 @@ module.exports = {
     "regex/invalid": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
+    camelcase: "off",
   },
   settings: {
     react: {
