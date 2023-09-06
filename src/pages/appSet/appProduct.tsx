@@ -34,6 +34,7 @@ export default function AppProduct() {
   };
 
   const onClickSearch = () => {
+    setTotal(0);
     setPage(1);
     appProductListMutate();
   };

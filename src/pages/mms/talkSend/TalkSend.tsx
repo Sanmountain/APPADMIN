@@ -60,6 +60,7 @@ export default function TalkSend() {
   };
 
   const onClickSearchTalkSend = () => {
+    setTotal(0);
     setPage(1);
     talkSendListMutate();
   };
