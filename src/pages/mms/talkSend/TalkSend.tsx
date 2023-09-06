@@ -17,6 +17,7 @@ export default function TalkSend() {
   const [talkSendFilter, setTalkSendFilter] =
     useRecoilState(talkSendFilterState);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [limit] = useState(10);
   const [talkSendList, setTalkSendList] =
     useRecoilState<IAlimtokListData[]>(talkSendListState);
@@ -26,6 +27,7 @@ export default function TalkSend() {
   const { mutate: talkSendListMutate, isLoading: isTalkSendListLoading } =
     getAlimtokList(
       page,
+      setTotal,
       talkSendFilter.messageType,
       null,
       talkSendFilter.templateCode,
@@ -58,6 +60,7 @@ export default function TalkSend() {
   };
 
   const onClickSearchTalkSend = () => {
+    setPage(1);
     talkSendListMutate();
   };
 
@@ -211,7 +214,12 @@ export default function TalkSend() {
       </S.ContentsListContainer>
 
       <S.PaginationContainer>
-        <Pagination total={10} page={page} setPage={setPage} />
+        <Pagination
+          total={total}
+          page={page}
+          setPage={setPage}
+          mutate={talkSendListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );

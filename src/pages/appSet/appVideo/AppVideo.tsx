@@ -9,10 +9,12 @@ import CommonButton from "../../../components/common/CommonButton";
 
 export default function AppVideo() {
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [videoList, setVideoList] = useState<IAppVideoListData[]>([]);
 
   const { mutate: videoListMutate, isLoading } = getAppVideoList(
     page,
+    setTotal,
     setVideoList,
   );
 
@@ -62,7 +64,12 @@ export default function AppVideo() {
       )}
 
       <S.PaginationContainer>
-        <Pagination page={page} setPage={setPage} total={10} />
+        <Pagination
+          page={page}
+          setPage={setPage}
+          total={total}
+          mutate={videoListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );

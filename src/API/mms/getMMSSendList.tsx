@@ -5,8 +5,12 @@ import { loginState } from "../../stores/loginState";
 import { IMMSHistoryResponse } from "../../types/mms/MMSHistory.types";
 import { MMSSendListState } from "../../stores/MMSSendListState";
 import { MMSSendFilterState } from "../../stores/filter/MMSSendFilterState";
+import { Dispatch, SetStateAction } from "react";
 
-export const getMMSSendList = (page: number | undefined) => {
+export const getMMSSendList = (
+  page: number | undefined,
+  setTotal?: Dispatch<SetStateAction<number>>,
+) => {
   const login = useRecoilValue(loginState);
   const filter = useRecoilValue(MMSSendFilterState);
   const setMMSSendList = useSetRecoilState(MMSSendListState);
@@ -29,6 +33,7 @@ export const getMMSSendList = (page: number | undefined) => {
         if (data.result === "00" || data.result === "25") {
           // NOTE data.result 25는 데이터 없는 경우
           setMMSSendList(data.list);
+          if (setTotal) setTotal(data.lastPage);
         }
       },
       onError: (error) => {

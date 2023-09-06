@@ -10,6 +10,7 @@ import {
 
 export const getAlimtokList = (
   page: number,
+  setTotal: Dispatch<SetStateAction<number>>,
   messageType: string,
   mid: number | null,
   templateCd: string | null,
@@ -48,6 +49,7 @@ export const getAlimtokList = (
         if (data.result === "00") {
           // NOTE data.result 25는 데이터 없는 경우
           setTalkSendList(data.list);
+          setTotal(data.lastPage);
         } else if (data.result === "25") {
           setTalkSendList([]);
         }

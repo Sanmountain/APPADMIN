@@ -11,6 +11,7 @@ import {
 
 export const getAppProductList = (
   page: number,
+  setTotal: Dispatch<SetStateAction<number>>,
   filterOption: IFilterOption,
   setAppProductList: Dispatch<SetStateAction<IAppProductData[]>>,
 ) => {
@@ -31,6 +32,7 @@ export const getAppProductList = (
       onSuccess: (data) => {
         if (data.result === "00") {
           setAppProductList(data.list);
+          setTotal(data.lastPage);
         }
       },
       onError: (error) => {

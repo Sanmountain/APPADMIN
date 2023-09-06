@@ -14,8 +14,12 @@ export default function MMSSend() {
   const [filter, setFilter] = useRecoilState(MMSSendFilterState);
   const MMSSendList = useRecoilValue(MMSSendListState);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(page);
+  const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
+    page,
+    setTotal,
+  );
 
   const navigate = useNavigate();
 
@@ -39,6 +43,7 @@ export default function MMSSend() {
   };
 
   const onClickSearch = () => {
+    setPage(1);
     MMSSendListMutate();
   };
 
@@ -187,7 +192,12 @@ export default function MMSSend() {
       </S.ContentsListContainer>
 
       <S.PaginationContainer>
-        <Pagination total={10} page={page} setPage={setPage} />
+        <Pagination
+          total={total}
+          page={page}
+          setPage={setPage}
+          mutate={MMSSendListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );

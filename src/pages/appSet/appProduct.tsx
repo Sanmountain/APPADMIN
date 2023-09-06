@@ -11,6 +11,7 @@ import Loading from "../../components/common/Loading";
 
 export default function AppProduct() {
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [filterOption, setFilterOption] = useState<IFilterOption>({
     tradeSubTelephone: "",
     tradeSubCode: null,
@@ -20,7 +21,7 @@ export default function AppProduct() {
   const [appProductList, setAppProductList] = useState<IAppProductData[]>([]);
 
   const { mutate: appProductListMutate, isLoading: isAppProductListLoading } =
-    getAppProductList(page, filterOption, setAppProductList);
+    getAppProductList(page, setTotal, filterOption, setAppProductList);
 
   useEffect(() => {
     appProductListMutate();
@@ -33,6 +34,7 @@ export default function AppProduct() {
   };
 
   const onClickSearch = () => {
+    setPage(1);
     appProductListMutate();
   };
 
@@ -90,7 +92,12 @@ export default function AppProduct() {
       </S.ContentsListContainer>
 
       <S.PaginationContainer>
-        <Pagination total={10} page={page} setPage={setPage} />
+        <Pagination
+          total={total}
+          page={page}
+          setPage={setPage}
+          mutate={appProductListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );

@@ -22,6 +22,7 @@ dayjs.extend(duration);
 
 export default function AppPaymentUser() {
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [paymentFilter, setPaymentFilter] = useState<IPaymentFilter>({
     userId: null,
     phoneNumber: "",
@@ -41,6 +42,7 @@ export default function AppPaymentUser() {
   // NOTE list
   const { mutate: paymentUserListMutate } = getPaymentUserList(
     page,
+    setTotal,
     paymentFilter,
     setPaymentUserList,
   );
@@ -75,6 +77,7 @@ export default function AppPaymentUser() {
   };
 
   const onClickSearch = () => {
+    setPage(1);
     paymentUserListMutate();
   };
 
@@ -206,7 +209,12 @@ export default function AppPaymentUser() {
       </S.ContentsListContainer>
 
       <S.PaginationContainer>
-        <Pagination total={10} page={page} setPage={setPage} />
+        <Pagination
+          total={total}
+          page={page}
+          setPage={setPage}
+          mutate={paymentUserListMutate}
+        />
       </S.PaginationContainer>
     </S.Container>
   );
