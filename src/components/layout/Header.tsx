@@ -49,6 +49,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="headerWrapper">
+        <div className="hidden" />
         <div className="headerMenu">
           <DropdownMenu
             buttonLabel="공지사항"
@@ -85,10 +86,13 @@ const Header = () => {
           <div className="userInfo">
             <FaUserCircle style={{ marginTop: "2px" }} />
             {login.userId}
+            <button
+              className="headerButton editButton"
+              onClick={handleUserEdit}
+            >
+              정보수정
+            </button>
           </div>
-          <button className="headerButton" onClick={handleUserEdit}>
-            정보수정
-          </button>
           <button className="headerButton" onClick={handleLogout}>
             LOGOUT
           </button>
