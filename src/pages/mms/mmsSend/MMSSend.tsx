@@ -43,6 +43,7 @@ export default function MMSSend() {
   };
 
   const onClickSearch = () => {
+    setTotal(0);
     setPage(1);
     MMSSendListMutate();
   };

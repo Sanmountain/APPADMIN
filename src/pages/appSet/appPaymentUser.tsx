@@ -77,6 +77,7 @@ export default function AppPaymentUser() {
   };
 
   const onClickSearch = () => {
+    setTotal(0);
     setPage(1);
     paymentUserListMutate();
   };
