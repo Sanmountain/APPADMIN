@@ -80,9 +80,7 @@ export default function TalkSend() {
 
       <S.ContentsListContainer>
         {isTotalListLoading ? (
-          <S.LoadingContainer>
-            <Loading />
-          </S.LoadingContainer>
+          <Loading />
         ) : totalList.length < 1 ? (
           <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
         ) : (
@@ -179,9 +177,7 @@ export default function TalkSend() {
 
       <S.ContentsListContainer>
         {isTalkSendListLoading ? (
-          <S.LoadingContainer>
-            <Loading />
-          </S.LoadingContainer>
+          <Loading />
         ) : talkSendList.length < 1 ? (
           <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
         ) : (
