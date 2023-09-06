@@ -156,13 +156,13 @@ export default function MMSSend() {
         <S.Title>상세</S.Title>
       </S.TitleContainer>
 
-      {isLoading ? (
-        <Loading />
-      ) : MMSSendList.length < 1 ? (
-        <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
-      ) : (
-        <S.ContentsListContainer>
-          {MMSSendList?.map((item) => (
+      <S.ContentsListContainer>
+        {isLoading ? (
+          <Loading />
+        ) : MMSSendList.length < 1 ? (
+          <S.NoDataContainer>조회된 데이터가 없습니다.</S.NoDataContainer>
+        ) : (
+          MMSSendList?.map((item) => (
             <S.ContentsContainer key={item.id}>
               <S.Contents>{item.update_date}</S.Contents>
               <S.Contents>{item.iv_no}</S.Contents>
@@ -182,9 +182,9 @@ export default function MMSSend() {
                 />
               </S.Contents>
             </S.ContentsContainer>
-          ))}
-        </S.ContentsListContainer>
-      )}
+          ))
+        )}
+      </S.ContentsListContainer>
 
       <S.PaginationContainer>
         <Pagination total={10} page={page} setPage={setPage} />
