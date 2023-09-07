@@ -46,3 +46,14 @@ export interface IAlimtokListResponse {
   currentPage: number;
   list: IAlimtokListData[];
 }
+
+export interface IExcelFilter {
+  company: string;
+  startDate: string;
+  endDate: string;
+  transferRate: null | number;
+}
+
+export interface IMMSInvoiceList {
+  iv_no: number;
+}
