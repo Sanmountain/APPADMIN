@@ -21,11 +21,10 @@
   cursor: pointer;
   display: flex;
   align-self: center;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1;
-  margin: 10px;
-  padding: 1em 2em;
+  padding: 15px 40px;
   text-decoration: none;
   text-align: center;
   text-transform: uppercase;
@@ -40,7 +39,9 @@
 }
 
 .btnMenu {
-  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  transition:
+    box-shadow 300ms ease-in-out,
+    color 300ms ease-in-out;
 }
 
 .dropdownMenu:hover {
