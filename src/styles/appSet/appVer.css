@@ -47,18 +47,6 @@
   height: fit-content;
 }
 
-.appInfoTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 20px;
-  font-weight: 800;
-  width: 100%;
-  height: 40px;
-  padding: 30px 0;
-}
-
 .appInfoHeader {
   display: grid;
   grid-template-columns: 2fr 0.7fr 2.5fr 1.5fr 0.5fr 0.5fr;
