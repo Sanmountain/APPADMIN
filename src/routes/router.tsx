@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login";
 import NoticeList from "../pages/notice/NoticeList";
 import NoticeWrite from "../pages/notice/NoticeWrite";
@@ -10,7 +10,6 @@ import MMSSend from "../pages/mms/mmsSend/MMSSend";
 import TalkSend from "../pages/mms/talkSend/TalkSend";
 import PhotoCheck from "../pages/photo/PhotoCheck";
 import UserEdit from "../pages/UserEdit";
-import Layout from "../components/layout";
 import NoticeDetail from "../pages/notice/NoticeDetail";
 import AppScanDetail from "../pages/appSet/appScan/AppScanDetail";
 import MMSSendDetail from "../pages/mms/mmsSend/MMSSendDetail";
@@ -21,13 +20,22 @@ import TalkSendPhoto from "../pages/mms/talkSend/TalkSendPhoto";
 import AppDeliveryTime from "../pages/appSet/appDeliveryTime";
 import AppPaymentUser from "../pages/appSet/appPaymentUser";
 import AppProduct from "../pages/appSet/appProduct";
+import LoginRoute from "./loginRouter";
+import Layout from "../components/layout";
+import LogenRouter from "./LogenRouter";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
 
   {
     path: "/notice",
-    element: <Layout />,
+    element: (
+      <LoginRoute>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </LoginRoute>
+    ),
     children: [
       { path: "/notice/list", element: <NoticeList /> },
       { path: "/notice/:noticeId", element: <NoticeDetail /> },
@@ -38,7 +46,13 @@ export const router = createBrowserRouter([
 
   {
     path: "/app",
-    element: <Layout />,
+    element: (
+      <LoginRoute>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </LoginRoute>
+    ),
     children: [
       { path: "/app/title", element: <AppTitle /> },
       { path: "/app/ver", element: <AppVer /> },
@@ -55,7 +69,15 @@ export const router = createBrowserRouter([
 
   {
     path: "/mms",
-    element: <Layout />,
+    element: (
+      <LoginRoute>
+        <LogenRouter>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </LogenRouter>
+      </LoginRoute>
+    ),
     children: [
       { path: "/mms/mmsSend", element: <MMSSend /> },
       { path: "/mms/mmsSend/:id/:page", element: <MMSSendDetail /> },
@@ -70,13 +92,25 @@ export const router = createBrowserRouter([
 
   {
     path: "/photoCheck",
-    element: <Layout />,
-    children: [{ path: "/photoCheck", element: <PhotoCheck /> }],
+    element: (
+      <LoginRoute>
+        <LogenRouter>
+          <Layout>
+            <PhotoCheck />
+          </Layout>
+        </LogenRouter>
+      </LoginRoute>
+    ),
   },
 
   {
     path: "/userEdit",
-    element: <Layout />,
-    children: [{ path: "/userEdit", element: <UserEdit /> }],
+    element: (
+      <LoginRoute>
+        <Layout>
+          <UserEdit />
+        </Layout>
+      </LoginRoute>
+    ),
   },
 ]);
