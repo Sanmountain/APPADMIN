@@ -8,30 +8,126 @@ import { MMSSendFilterState } from "../../../stores/filter/MMSSendFilterState";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
 import { MMSSendListState } from "../../../stores/MMSSendListState";
+import dayjs from "dayjs";
+import { excelDownload } from "../../../utils/excelDownload";
+import { getAlimtokInvoiceList } from "../../../api/mms/getAlimtokInvoiceList";
+import { IMMSInvoiceList } from "../../../types/mms/alimtokList.types";
 
 export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
   const [filter, setFilter] = useRecoilState(MMSSendFilterState);
+  const [excelFilter, setExcelFilter] = useState({
+    company: "",
+    startDate: dayjs().format("YYYY-MM-DD"),
+    endDate: dayjs().format("YYYY-MM-DD"),
+    transferRate: null,
+  });
   const MMSSendList = useRecoilValue(MMSSendListState);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  // NOTE 엑셀을 다운로드 할 때 invoice list 불러오도록 하는 state
+  const [isDownloadExcel, setIsDownloadExcel] = useState(false);
+  // NOTE 배송완료 (알림톡)
+  const [finishAlimList, setFinishAlimList] = useState<IMMSInvoiceList[]>([]);
+  // NOTE 배송출발 (알림톡)
+  const [startAlimList, setStartAlimList] = useState<IMMSInvoiceList[]>([]);
+  // NOTE 배송완료 (LMS)
+  const [finishLMSList, setFinishLMSList] = useState<IMMSInvoiceList[]>([]);
+  // NOTE 배송출발 (LMS)
+  const [startLMSList, setStartLMSList] = useState<IMMSInvoiceList[]>([]);
+  // NOTE list 담긴 후 excel download 실행
+  const [readyCount, setReadyCount] = useState(0);
+  const [isExcelLoading, setIsExcelLoading] = useState(false);
 
   const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
     page,
     setTotal,
   );
+  // NOTE 배송완료 (알림톡) 송장 list
+  const { mutate: finishAlimListMutate } = getAlimtokInvoiceList(
+    excelFilter,
+    "dv_c",
+    "AT",
+    setFinishAlimList,
+  );
+  // NOTE 배송출발 (알림톡) 송장 list
+  const { mutate: startAlimListMutate } = getAlimtokInvoiceList(
+    excelFilter,
+    "dv_b",
+    "AT",
+    setStartAlimList,
+  );
+  // NOTE 배송완료 (LMS) 송장 list
+  const { mutate: finishLMSListMutate } = getAlimtokInvoiceList(
+    excelFilter,
+    "dv_c",
+    "LMS",
+    setFinishLMSList,
+  );
+  // NOTE 배송출발 (LMS) 송장 list
+  const { mutate: startLMSListMutate } = getAlimtokInvoiceList(
+    excelFilter,
+    "dv_b",
+    "LMS",
+    setStartLMSList,
+  );
 
   const navigate = useNavigate();
 
+  // NOTE MMS list 조회
   useEffect(() => {
     MMSSendListMutate();
   }, []);
+
+  // NOTE 엑셀 다운로드 버튼 눌렀을 때 알림톡 송장 리스트 불러오기
+  useEffect(() => {
+    if (isDownloadExcel) {
+      finishAlimListMutate();
+      startAlimListMutate();
+      finishLMSListMutate();
+      startLMSListMutate();
+    }
+  }, [isDownloadExcel]);
+
+  // NOTE list가 담길 때마다 readyCount +1씩 하기
+  useEffect(() => {
+    if (finishAlimList.length) setReadyCount((prev) => prev + 1);
+    if (startAlimList.length) setReadyCount((prev) => prev + 1);
+    if (finishLMSList.length) setReadyCount((prev) => prev + 1);
+    if (startLMSList.length) setReadyCount((prev) => prev + 1);
+  }, [finishAlimList, startAlimList, finishLMSList, startLMSList]);
+
+  // NOTE list 담긴거 확인 후 excelDownload
+  useEffect(() => {
+    if (readyCount === 4) {
+      excelDownload(
+        excelFilter,
+        finishAlimList,
+        startAlimList,
+        finishLMSList,
+        startLMSList,
+      );
+      setReadyCount(0);
+      setIsExcelLoading(false);
+    }
+    console.log("isExcel", isExcelLoading);
+  }, [readyCount, isExcelLoading]);
 
   const handleFilterChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFilter((prevFilter) => ({
+      ...prevFilter,
+      [name]: value,
+    }));
+  };
+
+  const handleExcelFilterChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setExcelFilter((prevFilter) => ({
       ...prevFilter,
       [name]: value,
     }));
@@ -46,6 +142,11 @@ export default function MMSSend() {
     setTotal(0);
     setPage(1);
     MMSSendListMutate();
+  };
+
+  const onClickDownloadExcel = () => {
+    setIsDownloadExcel(true);
+    setIsExcelLoading(true);
   };
 
   const onClickMoveToDetail = (id: string) => {
@@ -120,34 +221,38 @@ export default function MMSSend() {
 
           <S.FilterContainer>
             <S.FirstFilterContainer>
+              <S.WorkSelectBox
+                name="company"
+                onChange={(e) => handleExcelFilterChange(e)}
+              >
+                <option value="SLX">SLX</option>
+                <option value="LOGEN">LOGEN</option>
+              </S.WorkSelectBox>
               <S.DateContainer>
                 <S.DateInput
                   type="date"
                   name="startDate"
-                  value={filter.startDate}
-                  onChange={handleFilterChange}
+                  defaultValue={excelFilter.startDate}
+                  onChange={(e) => handleExcelFilterChange(e)}
                 />{" "}
                 ~
                 <S.DateInput
                   type="date"
                   name="endDate"
-                  value={filter.endDate}
-                  onChange={handleFilterChange}
+                  defaultValue={excelFilter.endDate}
+                  onChange={(e) => handleExcelFilterChange(e)}
                 />
               </S.DateContainer>
-              <S.WorkSelectBox
-                name="state"
-                onChange={handleFilterChange}
-                value={filter.state}
-              >
-                <option value="">업무구분</option>
-                <option value="DU">미배송</option>
-                <option value="DS">배송출발</option>
-                <option value="DC">배송완료</option>
-              </S.WorkSelectBox>
-              <S.Input placeholder="전송량 1" />
-              <S.Input placeholder="전송량 2" />
-              <CommonButton contents="엑셀 다운" onClickFn={onClickSearch} />
+              <S.Input
+                placeholder="전송량"
+                name="transferRate"
+                onChange={(e) => handleExcelFilterChange(e)}
+              />
+              <CommonButton
+                contents="엑셀 다운"
+                onClickFn={onClickDownloadExcel}
+              />
+              <div>{isExcelLoading && "엑셀 다운로드중"}</div>
             </S.FirstFilterContainer>
           </S.FilterContainer>
         </>
