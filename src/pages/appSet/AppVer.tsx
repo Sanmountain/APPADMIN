@@ -84,7 +84,6 @@ export default function AppVer() {
 
   return (
     <div className="appInfoFormDiv">
-      <div className="appInfoTitle">현재 버전 정보</div>
       <div className="appInfoHeader">
         <div className="headerItem">프로그램</div>
         <div className="headerItem">버전</div>
