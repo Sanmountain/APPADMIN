@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import * as XLSX from "xlsx-color";
-import { saveAs } from "file-saver";
 import { IExcelFilter, IMMSInvoiceList } from "../types/mms/alimtokList.types";
 
 const merges = [
@@ -68,9 +67,7 @@ export const excelDownload = (
   const excelSheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet([]);
 
   // NOTE 파일 생성한 날짜 가져와서 파일명 만들기
-  const year = dayjs(excelFilter.startDate).year();
   const month = dayjs(excelFilter.startDate).month() + 1;
-  const fileName = `${excelFilter.company}_계산서 발행(MMS APP이용)_${year}_${month}월.xlsx`;
 
   // NOTE 엑셀 영역 설정
   excelSheet["!ref"] = `A1:T999999`;
@@ -531,5 +528,6 @@ export const excelDownload = (
   const blob = new Blob([buffer], {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
-  saveAs(blob, `${fileName}.xlsx`);
+
+  return blob;
 };
