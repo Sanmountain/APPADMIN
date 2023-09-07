@@ -36,6 +36,17 @@ body {
   }
 }
 
+.logenHeaderWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  width: 100%;
+
+  @media screen and (max-width: 1439px) {
+    grid-template-columns: 0.1fr 2fr 2fr;
+  }
+}
+
 .hidden {
   width: 100%;
   opacity: 0;
