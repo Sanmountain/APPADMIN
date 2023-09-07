@@ -48,7 +48,11 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="headerWrapper">
+      <div
+        className={
+          login.company === "LOGEN" ? "logenHeaderWrapper" : "headerWrapper"
+        }
+      >
         <div className="hidden" />
         <div className="headerMenu">
           <DropdownMenu
@@ -65,13 +69,17 @@ const Header = () => {
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
-          <DropdownMenu
-            buttonLabel="MMS"
-            menuItems={["MMS전송내역", "알림톡내역"]}
-            menuPaths={["/mms/mmsSend", "/mms/talkSend"]}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
+
+          {login.company !== "LOGEN" && (
+            <DropdownMenu
+              buttonLabel="MMS"
+              menuItems={["MMS전송내역", "알림톡내역"]}
+              menuPaths={["/mms/mmsSend", "/mms/talkSend"]}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          )}
+
           {login.company !== "LOGEN" && (
             <DropdownMenu
               buttonLabel="사진확인"
