@@ -17,7 +17,7 @@ export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
   const [filter, setFilter] = useRecoilState(MMSSendFilterState);
   const [excelFilter, setExcelFilter] = useState({
-    company: "",
+    company: "SLX",
     startDate: dayjs().format("YYYY-MM-DD"),
     endDate: dayjs().format("YYYY-MM-DD"),
     transferRate: null,
@@ -111,7 +111,7 @@ export default function MMSSend() {
       setIsExcelLoading(false);
     }
     console.log("isExcel", isExcelLoading);
-  }, [readyCount, isExcelLoading]);
+  }, [excelFilter, readyCount, isExcelLoading]);
 
   const handleFilterChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -226,7 +226,6 @@ export default function MMSSend() {
                 onChange={(e) => handleExcelFilterChange(e)}
               >
                 <option value="SLX">SLX</option>
-                <option value="LOGEN">LOGEN</option>
               </S.WorkSelectBox>
               <S.DateContainer>
                 <S.DateInput
@@ -252,7 +251,7 @@ export default function MMSSend() {
                 contents="엑셀 다운"
                 onClickFn={onClickDownloadExcel}
               />
-              <div>{isExcelLoading && "엑셀 다운로드중"}</div>
+              <div>{isExcelLoading && <Loading />}</div>
             </S.FirstFilterContainer>
           </S.FilterContainer>
         </>
