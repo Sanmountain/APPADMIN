@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { excelDownload } from "../../../utils/excelDownload";
 import { getAlimtokInvoiceList } from "../../../api/mms/getAlimtokInvoiceList";
 import { IMMSInvoiceList } from "../../../types/mms/alimtokList.types";
+import { saveAs } from "file-saver";
 
 export default function MMSSend() {
   const [buttonOption, setButtonOption] = useState("search");
@@ -100,17 +101,24 @@ export default function MMSSend() {
   // NOTE list 담긴거 확인 후 excelDownload
   useEffect(() => {
     if (readyCount === 4) {
-      excelDownload(
+      const year = dayjs(excelFilter.startDate).year();
+      const month = dayjs(excelFilter.startDate).month() + 1;
+      const fileName = `${excelFilter.company}_계산서 발행(MMS APP이용)_${year}_${month}월.xlsx`;
+
+      const excelData = excelDownload(
         excelFilter,
         finishAlimList,
         startAlimList,
         finishLMSList,
         startLMSList,
       );
-      setReadyCount(0);
-      setIsExcelLoading(false);
+      saveAs(excelData, `${fileName}.xlsx`);
+
+      if (excelData) {
+        setReadyCount(0);
+        setIsExcelLoading(false);
+      }
     }
-    console.log("isExcel", isExcelLoading);
   }, [excelFilter, readyCount, isExcelLoading]);
 
   const handleFilterChange = (
