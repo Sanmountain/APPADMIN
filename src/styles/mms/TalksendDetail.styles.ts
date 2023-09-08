@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { IoMdArrowBack } from "react-icons/io";
 
 export const Container = styled.div`
   display: flex;
@@ -18,6 +19,26 @@ export const Container = styled.div`
   padding: 10px;
 `;
 
+export const BackButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 30px;
+  margin-top: 20px;
+  padding: 10px;
+`;
+
+export const BackIcon = styled(IoMdArrowBack)`
+  font-size: 25px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff435e;
+  }
+`;
+
 export const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -25,8 +46,8 @@ export const TopContainer = styled.div`
 
   width: 100%;
   height: 500px;
-  margin: 20px 0px;
   padding: 10px;
+  margin-bottom: 20px;
 `;
 
 export const SeparateContainer = styled.div`
