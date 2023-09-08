@@ -5,15 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 85%;
-  min-height: 400px;
-  height: fit-content;
-
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
+  width: 100%;
 `;
 
 export const TotalTitleContainer = styled.div`
@@ -24,7 +16,6 @@ export const TotalTitleContainer = styled.div`
   background-color: #f8f9fa;
   width: 100%;
   height: 50px;
-  margin-top: 10px;
 `;
 
 export const Title = styled.div`
