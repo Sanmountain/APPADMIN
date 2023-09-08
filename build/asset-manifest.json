@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.78f0a33c.css",
-    "main.js": "/static/js/main.6b9badbc.js",
+    "main.js": "/static/js/main.12743612.js",
     "static/media/index.cjs": "/static/media/index.c05687ef19f5bac24939.cjs",
     "static/media/Spinner.gif": "/static/media/Spinner.d5847cb72d9f61edce59.gif",
     "static/media/img_notFound.jpg": "/static/media/img_notFound.22bff5ce129d7674c04e.jpg",
@@ -9,6 +9,6 @@
   },
   "entrypoints": [
     "static/css/main.78f0a33c.css",
-    "static/js/main.6b9badbc.js"
+    "static/js/main.12743612.js"
   ]
 }
