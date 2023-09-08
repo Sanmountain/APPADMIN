@@ -62,7 +62,16 @@ export const FilterContainer = styled.div`
   align-items: center;
 
   width: 50%;
+  height: 100%;
   gap: 10px;
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 200px;
+  height: 200%;
 `;
 
 export const YearSelectBox = styled.select`
