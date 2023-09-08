@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 import * as XLSX from "xlsx-color";
-import { IExcelFilter, IMMSInvoiceList } from "../types/mms/alimtokList.types";
+import {
+  IExcelFilter,
+  IMMSInvoiceList,
+} from "../../types/mms/alimtokList.types";
 
 const merges = [
   // 타이틀
@@ -56,7 +59,7 @@ const merges = [
   { s: { r: 4, c: 19 }, e: { r: 5, c: 19 } }, // T5:T6
 ];
 
-export const excelDownload = (
+export const MMSExcelDownload = (
   excelFilter: IExcelFilter,
   finishAlimList: IMMSInvoiceList[],
   startAlimList: IMMSInvoiceList[],

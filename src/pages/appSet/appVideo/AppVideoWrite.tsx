@@ -7,10 +7,14 @@ import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 // Toast 한글 플러그인
 import "@toast-ui/editor/dist/i18n/ko-kr";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 import * as S from "../../../styles/appSet/AppVideoWrite.styles";
 import { getFileUpload } from "../../../api/getFileUpload";
 import CommonButton from "../../../components/common/CommonButton";
+import { IAppVideoDetailResponse } from "../../../types/appSet/appVideoDetail.types";
+import { useLocation, useParams } from "react-router";
+import { getAppVideoModify } from "../../../api/appSet/appVideo/getAppVideoModify";
+import { getAppVideoDetail } from "../../../api/appSet/appVideo/getAppVideoDetail";
 // import { getAppVideoWrite } from "../../../api/appSet/appVideo/getAppVideoWrite";
 
 export default function AppVideoWrite() {
@@ -22,11 +26,10 @@ export default function AppVideoWrite() {
     ["code", "codeblock"],
   ];
 
-  const formData = new FormData();
-
-  const [, setTitle] = useState("");
-  // const [contents, setContents] = useState();
-
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState<IAppVideoDetailResponse>();
+  // NOTE 동영상, 썸네일 file upload
+  const [formData, setFormData] = useState(new FormData());
   const [videoFileName, setVideoFileName] = useState("");
   const [thumbnailFileName, setThumbnailFileName] = useState("");
 
@@ -34,7 +37,29 @@ export default function AppVideoWrite() {
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
   const editorRef = useRef<Editor | null>(null);
 
+  const params = useParams();
+  const location = useLocation();
+
+  const EDIT_PAGE = location.pathname.includes("edit");
+
   // const { mutate: appVideoWriteMutate } = getAppVideoWrite(title);
+  const { mutate: appVideoDetailMutate } = getAppVideoDetail(setContents);
+  const { mutate: appVideoModifyMutate } = getAppVideoModify(title);
+
+  // NOTE 수정 페이지 detail 불러오기
+  useEffect(() => {
+    if (EDIT_PAGE) appVideoDetailMutate();
+  }, []);
+
+  console.log("contents", contents);
+
+  // NOTE 수정 페이지 toast UI 값 가져오기
+  useEffect(() => {
+    if (contents) {
+      const htmlString = contents?.content;
+      editorRef.current?.getInstance().setHTML(htmlString);
+    }
+  }, [contents]);
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -50,19 +75,39 @@ export default function AppVideoWrite() {
     if (thumbnailInputRef.current) thumbnailInputRef.current.click();
   };
 
-  // NOTE 비디오 업로드 시 file명 set
+  // NOTE 비디오 업로드 시 file set
   const handleVideo = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    const files = e.target.files;
+
+    if (files) {
       setVideoFileName(e.target.value);
-      formData.append("video", e.target.files[0]);
+      setFormData((prevFormData) => {
+        const newFormData = new FormData(); // 새로운 FormData 생성
+        for (const [key, value] of prevFormData.entries()) {
+          // 이전 값 복사
+          newFormData.append(key, value as Blob);
+        }
+        newFormData.append("video", files[0]);
+        return newFormData;
+      });
     }
   };
 
-  // NOTE 썸네일 업로드 시 file명 set
+  // NOTE 썸네일 업로드 시 file set
   const handleThumbnail = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    const files = e.target.files;
+
+    if (files) {
       setThumbnailFileName(e.target.value);
-      formData.append("thumbnail", e.target.files[0]);
+      setFormData((prevFormData) => {
+        const newFormData = new FormData(); // 새로운 FormData 생성
+        for (const [key, value] of prevFormData.entries()) {
+          // 이전 값 복사
+          newFormData.append(key, value as Blob);
+        }
+        newFormData.append("thumbnail", files[0]);
+        return newFormData;
+      });
     }
   };
 
@@ -87,10 +132,18 @@ export default function AppVideoWrite() {
   };
 
   // NOTE 등록하기
-  const onClickWriteVideo = () => {
+  const onClickWriteVideo = async () => {
     // NOTE 파일 업로드 (동영상, 썸네일, 이미지)
     try {
-      getFileUpload(formData);
+      // 'video'나 'thumbnail'이 없으면 null로 설정
+      if (!formData.has("video")) {
+        formData.append("video", null as any);
+      }
+      if (!formData.has("thumbnail")) {
+        formData.append("thumbnail", null as any);
+      }
+
+      await getFileUpload(formData);
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
@@ -102,9 +155,21 @@ export default function AppVideoWrite() {
     // }
   };
 
+  const onClickEditVideo = () => {
+    if (editorRef.current) {
+      const editorInstance = editorRef.current.getInstance();
+      const htmlContent = editorInstance.getHTML();
+      appVideoModifyMutate({ id: Number(params.videoId), htmlContent });
+    }
+  };
+
   return (
     <S.Container>
-      <S.TitleInput placeholder="제목을 입력해주세요." onChange={handleTitle} />
+      <S.TitleInput
+        placeholder="제목을 입력해주세요."
+        defaultValue={contents ? contents.title : ""}
+        onChange={handleTitle}
+      />
       <S.FileUploadContainer>
         <S.HiddenFileInput
           type="file"
@@ -118,15 +183,21 @@ export default function AppVideoWrite() {
         />
         <CommonButton contents="비디오 업로드" onClickFn={onClickVideoUpload} />
         <S.UploadFileName>
-          {videoFileName === "" ? "비디오를 업로드해주세요" : videoFileName}
+          {videoFileName === "" && !contents
+            ? "비디오를 업로드해주세요"
+            : contents
+            ? contents.file_name
+            : videoFileName}
         </S.UploadFileName>
         <CommonButton
           contents="썸네일 업로드"
           onClickFn={onClickThumbnailUpload}
         />
         <S.UploadFileName>
-          {thumbnailFileName === ""
+          {thumbnailFileName === "" && !contents
             ? "썸네일을 업로드해주세요"
+            : contents
+            ? contents.thumbnail_name
             : thumbnailFileName}
         </S.UploadFileName>
       </S.FileUploadContainer>
@@ -144,7 +215,10 @@ export default function AppVideoWrite() {
         />
       </S.EditorContainer>
       <S.ButtonContainer>
-        <CommonButton contents={"등록하기"} onClickFn={onClickWriteVideo} />
+        <CommonButton
+          contents={EDIT_PAGE ? "수정하기" : "등록하기"}
+          onClickFn={EDIT_PAGE ? onClickEditVideo : onClickWriteVideo}
+        />
       </S.ButtonContainer>
     </S.Container>
   );
