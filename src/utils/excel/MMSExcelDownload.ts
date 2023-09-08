@@ -241,7 +241,7 @@ export const MMSExcelDownload = (
   ) => {
     excelSheet[`${column}${startRow}`] = {
       t: "s",
-      f: isTitle && `COUNT(${column}9:${column}999999)`,
+      f: isTitle && `COUNTA(${column}9:${column}999999)`,
       v:
         startRow === 8
           ? "송장번호"
@@ -274,7 +274,7 @@ export const MMSExcelDownload = (
   const addKBToSheet = (column: string, startRow: number, isTitle: boolean) => {
     excelSheet[`${column}${startRow}`] = {
       t: "s",
-      f: isTitle && `COUNT(N9:N999999)`,
+      f: isTitle && `COUNTA(N9:N999999)`,
       v: startRow === 7 && "송장번호",
       s: {
         font: {
