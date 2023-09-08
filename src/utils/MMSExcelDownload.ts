@@ -56,7 +56,7 @@ const merges = [
   { s: { r: 4, c: 19 }, e: { r: 5, c: 19 } }, // T5:T6
 ];
 
-export const excelDownload = (
+export const MMSExcelDownload = (
   excelFilter: IExcelFilter,
   finishAlimList: IMMSInvoiceList[],
   startAlimList: IMMSInvoiceList[],

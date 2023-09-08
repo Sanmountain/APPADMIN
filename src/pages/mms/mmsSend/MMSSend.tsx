@@ -9,7 +9,7 @@ import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
 import { MMSSendListState } from "../../../stores/MMSSendListState";
 import dayjs from "dayjs";
-import { excelDownload } from "../../../utils/excelDownload";
+import { MMSExcelDownload } from "../../../utils/MMSExcelDownload";
 import { getAlimtokInvoiceList } from "../../../api/mms/getAlimtokInvoiceList";
 import { IMMSInvoiceList } from "../../../types/mms/alimtokList.types";
 import { saveAs } from "file-saver";
@@ -105,7 +105,7 @@ export default function MMSSend() {
       const month = dayjs(excelFilter.startDate).month() + 1;
       const fileName = `${excelFilter.company}_계산서 발행(MMS APP이용)_${year}_${month}월.xlsx`;
 
-      const excelData = excelDownload(
+      const excelData = MMSExcelDownload(
         excelFilter,
         finishAlimList,
         startAlimList,
