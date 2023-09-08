@@ -5,25 +5,28 @@ import { useEffect, useState } from "react";
 import { IAppVideoDetailResponse } from "../../../types/appSet/appVideoDetail.types";
 import { getAppVideoDetail } from "../../../api/appSet/appVideo/getAppVideoDetail";
 import { Viewer } from "@toast-ui/react-editor";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { getAppVideoDelete } from "../../../api/appSet/appVideo/getAppVideoDelete";
 
 export default function AppVideoDetail() {
   const [videoDetail, setVideoDetail] = useState<IAppVideoDetailResponse>();
 
   const { mutate: videoDetailMutate } = getAppVideoDetail(setVideoDetail);
+  const { mutate: videoDeleteMutate } = getAppVideoDelete();
 
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
     videoDetailMutate();
   }, []);
 
   const onClickEdit = () => {
-    console.log("ddd");
+    navigate(`/app/video/${params.videoId}/edit`);
   };
 
   const onClickDelete = () => {
-    console.log("ddd");
+    videoDeleteMutate(Number(params.videoId));
   };
 
   const onClickMoveToList = () => {

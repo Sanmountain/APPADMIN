@@ -6,3 +6,8 @@ export interface IAppVideoWriteResponse {
   success_list: string[] | [];
   fail_list: string[] | [];
 }
+
+export type IAppVideoModifyVariables = {
+  id: number;
+  htmlContent: string;
+};
