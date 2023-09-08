@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
 
-  width: 85%;
+  width: 100%;
   min-height: 750px;
   background-color: #fff;
   border-radius: 10px;
@@ -37,14 +37,7 @@
   flex-direction: column;
   align-items: center;
 
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
-  width: 85%;
-  min-height: 400px;
-  height: fit-content;
+  width: 100%;
 }
 
 .appInfoHeader {

@@ -5,15 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 85%;
-  max-width: 100%;
-  min-height: 750px;
-  padding: 25px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
+  width: 100%;
+  padding: 20px;
 `;
 
 export const FilterContainer = styled.div`
