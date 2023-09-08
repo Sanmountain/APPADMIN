@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import CommonButton from "../../../components/common/CommonButton";
 import * as S from "../../../styles/mms/TalkSendPhoto.styles";
 import { useRecoilValue } from "recoil";
@@ -13,6 +13,7 @@ export default function TalkSendPhoto() {
   const talkSendList = useRecoilValue(talkSendListState);
   const login = useRecoilValue(loginState);
 
+  const navigate = useNavigate();
   const params = useParams();
   const talkSendId = params.id;
 
@@ -25,6 +26,10 @@ export default function TalkSendPhoto() {
     if (matchingTalkSend) setInvoiceNumber(Number(matchingTalkSend.iv_no));
     if (matchingTalkSend) setImageUrl(matchingTalkSend.image_uri);
   }, []);
+
+  const onClickBackButton = () => {
+    navigate(-1);
+  };
 
   const handleInvoiceNumber = (e: ChangeEvent<HTMLInputElement>) => {
     setInvoiceNumber(Number(e.target.value));
@@ -39,6 +44,7 @@ export default function TalkSendPhoto() {
   return (
     <S.Container>
       <S.TopContainer>
+        <S.BackIcon onClick={onClickBackButton} />
         택배사 :{" "}
         <S.SelectBox value={login.company}>
           <option value="">회사</option>

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import * as S from "../../../styles/mms/TalksendDetail.styles";
 import { useRecoilValue } from "recoil";
 import { talkSendListState } from "../../../stores/talkSendListState";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { IAlimtokListData } from "../../../types/mms/alimtokList.types";
 
 export default function TalkSendDetail() {
   const talkSendList = useRecoilValue(talkSendListState);
   const [detail, setDetail] = useState<IAlimtokListData>();
 
+  const navigate = useNavigate();
   const params = useParams();
   const talkSendId = params.id;
 
@@ -19,8 +20,15 @@ export default function TalkSendDetail() {
     if (matchingTalkSend) setDetail(matchingTalkSend);
   }, []);
 
+  const onClickBackButton = () => {
+    navigate(-1);
+  };
+
   return (
     <S.Container>
+      <S.BackButtonContainer>
+        <S.BackIcon onClick={onClickBackButton} />
+      </S.BackButtonContainer>
       <S.TopContainer>
         <S.SeparateContainer>
           <S.ContentsContainer>

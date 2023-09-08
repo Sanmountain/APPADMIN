@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { IoMdArrowBack } from "react-icons/io";
 
 export const Container = styled.div`
   display: flex;
@@ -28,6 +29,16 @@ export const TopContainer = styled.div`
   font-weight: 600;
   margin: 20px 10px;
   gap: 15px;
+`;
+
+export const BackIcon = styled(IoMdArrowBack)`
+  font-size: 25px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff435e;
+  }
 `;
 
 export const SelectBox = styled.select`
