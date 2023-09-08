@@ -8,12 +8,33 @@ type ILayoutProps = {
 };
 
 export default function Layout({ children }: ILayoutProps) {
+  const titleName = {
+    "/notice/list": "공지사항 목록",
+    "/app/ver": "현재 버전 정보",
+    "/app/scan": "스캔 사용자",
+    "/app/deliveryTime": "배송시간 관리",
+    "/app/paymentUser": "사용자 관리",
+    "/app/product": "제품 사용내역",
+    "/app/video": "영업소 App 영상 메뉴얼",
+    "/mms/mmsSend": "MMS 전송내역",
+    "/mms/talkSend": "알림톡 전송내역",
+    "/photoCheck": "Photo View",
+  };
+
   const location = useLocation();
+
+  const currentTitle =
+    titleName[location.pathname as keyof typeof titleName] || "";
 
   return (
     <>
       {location.pathname !== "/" && <Header />}
-      <OutletContainer>{children}</OutletContainer>
+      <OutletContainer>
+        <Outlet>
+          {currentTitle ? <Title>{currentTitle}</Title> : <></>}
+          {children}
+        </Outlet>
+      </OutletContainer>
     </>
   );
 }
@@ -25,4 +46,26 @@ const OutletContainer = styled.div`
 
   margin-top: 130px;
   width: 100vw;
+`;
+
+const Outlet = styled.div`
+  width: 85%;
+  min-height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ff435e;
+  padding: 20px;
 `;

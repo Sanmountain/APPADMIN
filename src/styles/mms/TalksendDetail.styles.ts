@@ -7,16 +7,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 85%;
-  min-height: 400px;
-  height: fit-content;
-
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
 `;
 
 export const BackButtonContainer = styled.div`
@@ -25,7 +17,6 @@ export const BackButtonContainer = styled.div`
 
   width: 100%;
   height: 30px;
-  margin-top: 20px;
   padding: 10px;
 `;
 
