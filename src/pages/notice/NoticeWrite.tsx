@@ -16,6 +16,7 @@ import { useLocation, useParams } from "react-router";
 import { getNoticeModify } from "../../api/notice/getNoticeModify";
 import CommonButton from "../../components/common/CommonButton";
 import { getFileUpload } from "../../api/getFileUpload";
+import { IFileUploadResponse } from "../../types/FileUpload.types";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -72,7 +73,7 @@ export default function NoticeWrite() {
     formData.append("multiFile", blob);
 
     try {
-      const res: any = await getFileUpload(formData);
+      const res: IFileUploadResponse = await getFileUpload(formData);
       const imageUrl = `${process.env.REACT_APP_API_URL}/images/${res.list[0]}`;
 
       callback(
