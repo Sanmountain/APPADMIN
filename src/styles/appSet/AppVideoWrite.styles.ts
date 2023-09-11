@@ -7,6 +7,19 @@ export const Container = styled.div`
 
   width: 100%;
   padding: 20px;
+  position: relative;
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  position: absolute;
 `;
 
 export const TitleInput = styled.input`
