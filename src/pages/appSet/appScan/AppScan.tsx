@@ -149,6 +149,7 @@ export default function AppScan() {
       if (excelData) {
         setReadyCount(0);
         setIsExcelLoading(false);
+        setIsDownloadExcel(false);
       }
     }
   }, [excelFilter, readyCount, isExcelLoading]);
