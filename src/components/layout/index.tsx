@@ -23,17 +23,24 @@ export default function Layout({ children }: ILayoutProps) {
 
   const location = useLocation();
 
+  const LOGIN_PAGE = location.pathname === "/";
+  const USER_EDIT_PAGE = location.pathname === "/useredit";
+
   const currentTitle =
     titleName[location.pathname as keyof typeof titleName] || "";
 
   return (
     <>
-      {location.pathname !== "/" && <Header />}
+      {!LOGIN_PAGE && <Header />}
       <OutletContainer>
-        <Outlet>
-          {currentTitle ? <Title>{currentTitle}</Title> : <></>}
-          {children}
-        </Outlet>
+        {!USER_EDIT_PAGE ? (
+          <Outlet>
+            {currentTitle ? <Title>{currentTitle}</Title> : <></>}
+            {children}
+          </Outlet>
+        ) : (
+          children
+        )}
       </OutletContainer>
     </>
   );
