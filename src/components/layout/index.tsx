@@ -45,7 +45,7 @@ const OutletContainer = styled.div`
   align-items: center;
 
   margin-top: 130px;
-  width: 100vw;
+  width: 99vw;
 `;
 
 const Outlet = styled.div`
