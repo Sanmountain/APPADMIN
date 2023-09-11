@@ -42,7 +42,7 @@ export const UploadFileName = styled.div`
   align-items: center;
 
   font-size: 14px;
-  width: 170px;
+  width: 250px;
   height: 100%;
   margin-left: 10px;
   margin-right: 50px;
