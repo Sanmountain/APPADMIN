@@ -16,6 +16,7 @@ import { useLocation, useParams } from "react-router";
 import { getNoticeModify } from "../../api/notice/getNoticeModify";
 import CommonButton from "../../components/common/CommonButton";
 import { getFileUpload } from "../../api/getFileUpload";
+import { extractFileResponse } from "../../utils/extractFileResponse";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -76,7 +77,9 @@ export default function NoticeWrite() {
 
     try {
       const res: any = await getFileUpload(formData);
-      const imageUrl = res.list[0];
+      const imageUrl = `${
+        process.env.REACT_APP_API_URL
+      }/images/${extractFileResponse(res.list, "image")}`;
 
       callback(
         imageUrl,
