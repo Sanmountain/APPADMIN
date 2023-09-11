@@ -15,7 +15,11 @@ import { IAppVideoDetailResponse } from "../../../types/appSet/appVideoDetail.ty
 import { useLocation, useParams } from "react-router";
 import { getAppVideoModify } from "../../../api/appSet/appVideo/getAppVideoModify";
 import { getAppVideoDetail } from "../../../api/appSet/appVideo/getAppVideoDetail";
-// import { getAppVideoWrite } from "../../../api/appSet/appVideo/getAppVideoWrite";
+import { onlyFileName } from "../../../utils/onlyFileName";
+import Loading from "../../../components/common/Loading";
+import { IFileUploadResponse } from "../../../types/FileUpload.types";
+import { extractFileResponse } from "../../../utils/extractFileResponse";
+import { getAppVideoWrite } from "../../../api/appSet/appVideo/getAppVideoWrite";
 
 export default function AppVideoWrite() {
   const toolbarItems = [
@@ -32,6 +36,8 @@ export default function AppVideoWrite() {
   const [formData, setFormData] = useState(new FormData());
   const [videoFileName, setVideoFileName] = useState("");
   const [thumbnailFileName, setThumbnailFileName] = useState("");
+  // NOTE fileUpload loading
+  const [isFileUploadLoading, setIsFileUploadLoading] = useState(false);
 
   const videoInputRef = useRef<HTMLInputElement | null>(null);
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null);
@@ -42,22 +48,30 @@ export default function AppVideoWrite() {
 
   const EDIT_PAGE = location.pathname.includes("edit");
 
-  // const { mutate: appVideoWriteMutate } = getAppVideoWrite(title);
+  const { mutate: appVideoWriteMutate } = getAppVideoWrite(
+    title,
+    videoFileName,
+    thumbnailFileName,
+  );
   const { mutate: appVideoDetailMutate } = getAppVideoDetail(setContents);
-  const { mutate: appVideoModifyMutate } = getAppVideoModify(title);
+  const { mutate: appVideoModifyMutate } = getAppVideoModify(
+    title,
+    videoFileName,
+    thumbnailFileName,
+  );
 
   // NOTE 수정 페이지 detail 불러오기
   useEffect(() => {
     if (EDIT_PAGE) appVideoDetailMutate();
   }, []);
 
-  console.log("contents", contents);
-
   // NOTE 수정 페이지 toast UI 값 가져오기
   useEffect(() => {
     if (contents) {
       const htmlString = contents?.content;
       editorRef.current?.getInstance().setHTML(htmlString);
+      setVideoFileName(contents.file_name);
+      setThumbnailFileName(contents.thumbnail_name);
     }
   }, [contents]);
 
@@ -80,7 +94,6 @@ export default function AppVideoWrite() {
     const files = e.target.files;
 
     if (files) {
-      setVideoFileName(e.target.value);
       setFormData((prevFormData) => {
         const newFormData = new FormData(); // 새로운 FormData 생성
         for (const [key, value] of prevFormData.entries()) {
@@ -90,6 +103,9 @@ export default function AppVideoWrite() {
         newFormData.append("video", files[0]);
         return newFormData;
       });
+
+      const fileName = onlyFileName(e.target.value);
+      setVideoFileName(fileName);
     }
   };
 
@@ -98,7 +114,6 @@ export default function AppVideoWrite() {
     const files = e.target.files;
 
     if (files) {
-      setThumbnailFileName(e.target.value);
       setFormData((prevFormData) => {
         const newFormData = new FormData(); // 새로운 FormData 생성
         for (const [key, value] of prevFormData.entries()) {
@@ -108,6 +123,9 @@ export default function AppVideoWrite() {
         newFormData.append("thumbnail", files[0]);
         return newFormData;
       });
+
+      const fileName = onlyFileName(e.target.value);
+      setThumbnailFileName(fileName);
     }
   };
 
@@ -116,16 +134,21 @@ export default function AppVideoWrite() {
     blob: Blob | File,
     callback: (url: string, alt?: string) => void,
   ) => {
-    console.log("blob", blob);
     // NOTE blob 자체가 file
     const imageFormData = new FormData();
+    // 비어있는 Blob 객체 생성 (image, video, thumbnail이 세트)
+    const emptyBlob = new Blob([], { type: "application/octet-stream" });
     imageFormData.append("image", blob);
+    imageFormData.append("video", emptyBlob);
+    imageFormData.append("thumbnail", emptyBlob);
 
     try {
       const res: any = await getFileUpload(imageFormData);
-      const imageUrl = `${process.env.REACT_APP_API_URL}/images/${res.list[0]}`;
+      const imageUrl = `${
+        process.env.REACT_APP_API_URL
+      }/images/${extractFileResponse(res.list, "image")}`;
 
-      callback(imageUrl, `alt`);
+      callback(imageUrl, `${contents ? contents.title : title} 동영상 이미지`);
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
@@ -133,26 +156,38 @@ export default function AppVideoWrite() {
 
   // NOTE 등록하기
   const onClickWriteVideo = async () => {
-    // NOTE 파일 업로드 (동영상, 썸네일, 이미지)
+    setIsFileUploadLoading(true);
+    // NOTE 파일 업로드 (동영상, 썸네일)
     try {
-      // 'video'나 'thumbnail'이 없으면 null로 설정
+      // 비어있는 Blob 객체 생성
+      const emptyBlob = new Blob([], { type: "application/octet-stream" });
+      // 'video'나 'thumbnail'이 없으면 빈 Blob을 추가
       if (!formData.has("video")) {
-        formData.append("video", null as any);
+        formData.append("video", emptyBlob);
       }
       if (!formData.has("thumbnail")) {
-        formData.append("thumbnail", null as any);
+        formData.append("thumbnail", emptyBlob);
+      }
+      // 'image' 자리에 빈 Blob 추가
+      formData.append("image", emptyBlob);
+
+      // const res: IFileUploadResponse = await getFileUpload(formData);
+      const fileUploadPromise = getFileUpload(formData);
+      const res: IFileUploadResponse = await fileUploadPromise;
+
+      setVideoFileName(extractFileResponse(res.list, "video"));
+      setThumbnailFileName(extractFileResponse(res.list, "thumbnail"));
+
+      if (editorRef.current) {
+        const editorInstance = editorRef.current.getInstance();
+        const htmlContent = editorInstance.getHTML();
+        appVideoWriteMutate(htmlContent);
       }
 
-      await getFileUpload(formData);
+      setIsFileUploadLoading(false);
     } catch (error) {
       console.error("Image upload failed: ", error);
     }
-
-    // if (editorRef.current) {
-    //   const editorInstance = editorRef.current.getInstance();
-    //   const htmlContent = editorInstance.getHTML();
-    //   appVideoWriteMutate(htmlContent);
-    // }
   };
 
   const onClickEditVideo = () => {
@@ -165,6 +200,11 @@ export default function AppVideoWrite() {
 
   return (
     <S.Container>
+      {isFileUploadLoading && (
+        <S.LoadingContainer>
+          <Loading />
+        </S.LoadingContainer>
+      )}
       <S.TitleInput
         placeholder="제목을 입력해주세요."
         defaultValue={contents ? contents.title : ""}
@@ -185,8 +225,6 @@ export default function AppVideoWrite() {
         <S.UploadFileName>
           {videoFileName === "" && !contents
             ? "비디오를 업로드해주세요"
-            : contents
-            ? contents.file_name
             : videoFileName}
         </S.UploadFileName>
         <CommonButton
@@ -196,8 +234,6 @@ export default function AppVideoWrite() {
         <S.UploadFileName>
           {thumbnailFileName === "" && !contents
             ? "썸네일을 업로드해주세요"
-            : contents
-            ? contents.thumbnail_name
             : thumbnailFileName}
         </S.UploadFileName>
       </S.FileUploadContainer>
