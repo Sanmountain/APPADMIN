@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/header.css";
 import DropdownMenu from "./DropdownMenu";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { FaUserCircle } from "react-icons/fa";
+import modalClose from "../../utils/modalClose";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState("");
@@ -30,7 +31,13 @@ const Header = () => {
     "/app/video",
   ];
 
+  const outSide = useRef<HTMLDivElement | null>(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    modalClose(isOpen, setIsOpen, outSide);
+  }, [isOpen]);
 
   const handleLogout = () => {
     if (login.isUserIdStored) {
@@ -52,6 +59,7 @@ const Header = () => {
         className={
           login.company === "LOGEN" ? "logenHeaderWrapper" : "headerWrapper"
         }
+        ref={outSide}
       >
         <div className="hidden" />
         <div className="headerMenu">
