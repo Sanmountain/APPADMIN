@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
 import "../../styles/dropdown.css";
 import { IDropdownMenuProps } from "../../types/DropdownMenu.types";
 
@@ -10,14 +9,12 @@ function DropdownMenu({
   isOpen,
   setIsOpen,
 }: IDropdownMenuProps) {
-  const node = useRef<HTMLDivElement | null>(null);
-
   const handleLinkClick = () => {
     setIsOpen("");
   };
 
   return (
-    <div className="dropdown" ref={node}>
+    <div className="dropdown">
       <div
         className="btnMenu"
         onClick={() => setIsOpen(isOpen === buttonLabel ? "" : buttonLabel)}

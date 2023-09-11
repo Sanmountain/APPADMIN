@@ -30,7 +30,7 @@ export default function AppVideoDetail() {
   };
 
   const onClickMoveToList = () => {
-    navigate(-1);
+    navigate("/app/video");
   };
 
   return (
