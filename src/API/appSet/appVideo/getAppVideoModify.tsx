@@ -9,7 +9,11 @@ import {
   IAppVideoWriteResponse,
 } from "../../../types/appSet/appVideoWrite.types";
 
-export const getAppVideoModify = (title: string) => {
+export const getAppVideoModify = (
+  title: string,
+  videoFileName: string,
+  thumbnailFileName: string,
+) => {
   const login = useRecoilValue(loginState);
 
   const navigate = useNavigate();
@@ -27,9 +31,9 @@ export const getAppVideoModify = (title: string) => {
         id,
         title,
         content: htmlContent,
-        file_name: "",
+        file_name: videoFileName,
         file_uuid: "",
-        thumbnail_name: "",
+        thumbnail_name: thumbnailFileName,
         thumbnail_uuid: "",
         user_id: login.userId,
         company: login.company,
@@ -43,7 +47,7 @@ export const getAppVideoModify = (title: string) => {
             confirmButtonText: "확인",
           });
 
-          navigate(`/notice/${params.noticeId}`);
+          navigate(`/app/video/${params.videoId}`);
         } else {
           Swal.fire({
             icon: "warning",
