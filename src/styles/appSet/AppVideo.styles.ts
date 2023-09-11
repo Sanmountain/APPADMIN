@@ -58,7 +58,7 @@ export const ContentsContainer = styled.div`
 `;
 
 export const ThumbnailContainer = styled.div`
-  width: 30%;
+  width: 25%;
   height: 100%;
 `;
 

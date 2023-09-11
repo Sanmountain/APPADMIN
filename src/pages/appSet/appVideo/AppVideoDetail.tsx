@@ -30,7 +30,7 @@ export default function AppVideoDetail() {
   };
 
   const onClickMoveToList = () => {
-    navigate(-1);
+    navigate("/app/video");
   };
 
   return (
@@ -49,16 +49,20 @@ export default function AppVideoDetail() {
           </S.ButtonContainer>
         </S.TopContainer>
       </S.HeadContainer>
-      <S.VideoContainer>
-        <ReactPlayer
-          url={`${process.env.REACT_APP_API_URL}/images/${videoDetail?.file_name}`}
-          controls={true}
-          muted={true}
-          playing={true}
-          width="100%"
-          height="100%"
-        />
-      </S.VideoContainer>
+      {videoDetail?.file_name ? (
+        <S.VideoContainer>
+          <ReactPlayer
+            url={`${process.env.REACT_APP_API_URL}/images/${videoDetail?.file_name}`}
+            controls={true}
+            muted={true}
+            playing={true}
+            width="100%"
+            height="100%"
+          />
+        </S.VideoContainer>
+      ) : (
+        <></>
+      )}
       <S.ContentsContainer>
         <Viewer
           key={videoDetail?.content}

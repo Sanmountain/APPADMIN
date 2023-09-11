@@ -16,6 +16,7 @@ import { useLocation, useParams } from "react-router";
 import { getNoticeModify } from "../../api/notice/getNoticeModify";
 import CommonButton from "../../components/common/CommonButton";
 import { getFileUpload } from "../../api/getFileUpload";
+import { extractFileResponse } from "../../utils/extractFileResponse";
 
 export default function NoticeWrite() {
   const toolbarItems = [
@@ -65,15 +66,20 @@ export default function NoticeWrite() {
     blob: Blob | File,
     callback: (url: string, alt?: string) => void,
   ) => {
-    console.log("blob", blob);
     // NOTE blob 자체가 file
     const formData = new FormData();
-    // NOTE formData {image:blob} 형태로 바꿈
+    // 비어있는 Blob 객체 생성 (image, video, thumbnail이 세트)
+    const emptyBlob = new Blob([], { type: "application/octet-stream" });
+    formData.append("image", blob);
+    formData.append("video", emptyBlob);
+    formData.append("thumbnail", emptyBlob);
     formData.append("multiFile", blob);
 
     try {
       const res: any = await getFileUpload(formData);
-      const imageUrl = `${process.env.REACT_APP_API_URL}/images/${res.list[0]}`;
+      const imageUrl = `${
+        process.env.REACT_APP_API_URL
+      }/images/${extractFileResponse(res.list, "image")}`;
 
       callback(
         imageUrl,
