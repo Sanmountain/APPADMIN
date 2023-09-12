@@ -32,7 +32,7 @@ export const SelectBox = styled.select`
 
 export const TitleContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.5fr;
+  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.7fr 0.5fr 0.5fr;
   align-items: center;
   justify-items: center;
   background-color: #f8f9fa;
@@ -57,17 +57,11 @@ export const ContentsListContainer = styled.div`
 
 export const ContentsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 0.7fr 0.7fr 0.5fr;
+  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.7fr 0.5fr 0.5fr;
   align-items: center;
   justify-items: center;
   width: 100%;
   height: 60px;
-
-  &.register {
-    border: 1px solid rgb(233, 233, 233);
-    border-radius: 10px;
-    margin: 10px 0;
-  }
 `;
 
 export const Contents = styled.input`
@@ -79,14 +73,7 @@ export const Contents = styled.input`
   background-color: rgb(233, 233, 233);
   font-size: 16px;
   text-align: center;
-`;
-
-export const ContentsTextContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 90%;
+  padding: 5px 10px;
 `;
 
 export const ContentsWithTitle = styled.input`
@@ -106,6 +93,7 @@ export const ContentsSelectBox = styled.select`
   border: none;
   border-radius: 10px;
   background-color: rgb(233, 233, 233);
+  text-align: center;
   outline: none;
   padding: 0 5px;
 `;

@@ -14,9 +14,9 @@ export const getPaymentUserChangeFromPayToFree = (
       | undefined,
   ) => void,
 ) => {
-  return useMutation<IAppPaymentUserRegistResponse, unknown, number, unknown>(
+  return useMutation<IAppPaymentUserRegistResponse, unknown, string, unknown>(
     "getPaymentUserChangeFromPayToFree",
-    async (id: number) =>
+    async (id: string) =>
       await instance.post("/payment_user/set_free_user", { id }),
     {
       onSuccess: (data) => {
@@ -45,9 +45,9 @@ export const getPaymentUserChangeFromFreeToPay = (
       | undefined,
   ) => void,
 ) => {
-  return useMutation<IAppPaymentUserRegistResponse, unknown, number, unknown>(
+  return useMutation<IAppPaymentUserRegistResponse, unknown, string, unknown>(
     "getPaymentUserChangeFromFreeToPay",
-    async (id: number) =>
+    async (id: string) =>
       await instance.post("/payment_user/set_pay_user", {
         id,
       }),

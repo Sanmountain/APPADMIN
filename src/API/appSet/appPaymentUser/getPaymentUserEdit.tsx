@@ -7,13 +7,18 @@ import { Dispatch, SetStateAction } from "react";
 import {
   IAppPaymentUserRegistResponse,
   IAppPaymentUserResponse,
-  IPaymentUser,
+  IPaymentUserEdit,
 } from "../../../types/appSet/appPaymentUser.types";
 import dayjs from "dayjs";
 
-export const getPaymentUserRegist = (
-  paymentUser: IPaymentUser,
-  setPaymentUser: Dispatch<SetStateAction<IPaymentUser>>,
+type IParams = {
+  id: string;
+  phoneNumber: string;
+};
+
+export const getPaymentUserEdit = (
+  paymentUserEdit: IPaymentUserEdit,
+  setPaymentUserEdit: Dispatch<SetStateAction<IPaymentUserEdit>>,
   paymentUserListMutate: (
     variables: void,
     options?:
@@ -23,17 +28,20 @@ export const getPaymentUserRegist = (
 ) => {
   const login = useRecoilValue(loginState);
 
-  return useMutation<IAppPaymentUserRegistResponse, unknown, void, unknown>(
-    "getPaymentUserRegist",
-    () =>
-      instance.post("/payment_user/regist", {
-        ...paymentUser,
-        payment_date: `${dayjs(paymentUser.payment_date).format(
-          "YYYY-MM-DD",
-        )} 00:00:00`,
-        expire_date: `${dayjs(paymentUser.expire_date).format(
+  return useMutation<IAppPaymentUserRegistResponse, unknown, IParams, unknown>(
+    "getPaymentUserEdit",
+    ({ id, phoneNumber }) =>
+      instance.post("/payment_user/update", {
+        user_id: paymentUserEdit[id].user_id,
+        expire_date: `${dayjs(paymentUserEdit[id].expire_date).format(
           "YYYY-MM-DD",
         )} 23:59:59`,
+        payment_date: `${dayjs(paymentUserEdit[id].payment_date).format(
+          "YYYY-MM-DD",
+        )} 00:00:00`,
+        phone_no: phoneNumber,
+        free_user: paymentUserEdit[id].free_user,
+        update_phone_no: paymentUserEdit[id].phone_no,
         company: login.company,
       }),
     {
@@ -41,17 +49,11 @@ export const getPaymentUserRegist = (
         if (data.result === "00") {
           paymentUserListMutate();
 
-          setPaymentUser({
-            user_id: "",
-            phone_no: "",
-            payment_date: dayjs().format("YYYY-MM-DD"),
-            expire_date: dayjs().format("YYYY-MM-DD"),
-            free_user: "",
-          });
+          setPaymentUserEdit({});
 
           Swal.fire({
             icon: "success",
-            title: "등록되었습니다",
+            title: "수정되었습니다",
             confirmButtonText: "확인",
           });
         }
