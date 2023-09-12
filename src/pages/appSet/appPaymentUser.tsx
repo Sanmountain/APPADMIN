@@ -32,6 +32,7 @@ export default function AppPaymentUser() {
     payment_date: dayjs().format("YYYY-MM-DD"),
     expire_date: dayjs().format("YYYY-MM-DD"),
     free_user: "",
+    month: 0,
   });
   // NOTE 수정
   const [paymentUserEdit, setPaymentUserEdit] = useState<IPaymentUserEdit>({});
@@ -86,10 +87,23 @@ export default function AppPaymentUser() {
   ) => {
     const { name, value } = e.target;
 
-    setPaymentUser({
+    let updatedPaymentUser = {
       ...paymentUser,
       [name]: value,
-    });
+    };
+
+    // NOTE 개월 수 설정 시 expire_date를 계산하여 expire_date 업데이트
+    if (name === "month") {
+      const newExpireDate = dayjs(paymentUser.payment_date)
+        .add(parseInt(value, 10), "month")
+        .format("YYYY-MM-DD");
+      updatedPaymentUser = {
+        ...updatedPaymentUser,
+        expire_date: newExpireDate,
+      };
+    }
+
+    setPaymentUser(updatedPaymentUser);
   };
 
   // NOTE 수정 값 onChange
@@ -99,12 +113,47 @@ export default function AppPaymentUser() {
   ) => {
     const { name, value } = e.target;
 
-    setPaymentUserEdit({
-      ...paymentUserEdit,
-      [item.id]: {
-        ...paymentUserEdit[item.id],
-        [name]: value,
-      },
+    // 현재 item의 수정 상태를 가져오기
+    const currentItemState = paymentUserEdit[item.id] || {};
+
+    // 새로운 수정 상태 생성
+    let updatedItemState = {
+      ...currentItemState,
+      [name]: value,
+    };
+
+    // 만약 수정하는 것이 'month' 필드라면, expire_date도 같이 계산하여 업데이트
+    if (name === "month") {
+      const paymentDate = currentItemState.payment_date
+        ? dayjs(currentItemState.payment_date)
+        : dayjs(item.payment_date);
+
+      const newExpireDate = paymentDate
+        .add(parseInt(value, 10), "month")
+        .format("YYYY-MM-DD");
+
+      updatedItemState = {
+        ...updatedItemState,
+        expire_date: newExpireDate,
+      };
+    }
+
+    // 만약 수정하는 것이 'expire_date' 필드라면, month도 같이 계산하여 업데이트
+    if (name === "expire_date") {
+      const paymentDate = currentItemState.payment_date
+        ? dayjs(currentItemState.payment_date)
+        : dayjs(item.payment_date);
+
+      const newMonth = dayjs(value).diff(paymentDate, "month");
+
+      updatedItemState = {
+        ...updatedItemState,
+        month: newMonth,
+      };
+    }
+
+    setPaymentUserEdit((prevState) => {
+      return { ...prevState, [item.id]: updatedItemState };
     });
   };
 
@@ -133,6 +182,7 @@ export default function AppPaymentUser() {
           placeholder="전화번호"
           name="phoneNumber"
           onChange={(e) => handleFilter(e)}
+          type="number"
         />
         <S.SelectBox name="isFreeUser" onChange={(e) => handleFilter(e)}>
           <option value="">무료 여부</option>
@@ -147,6 +197,7 @@ export default function AppPaymentUser() {
         <S.Title>전화번호</S.Title>
         <S.Title>결제일</S.Title>
         <S.Title>만료일</S.Title>
+        <S.Title>개월</S.Title>
         <S.Title>무료</S.Title>
         <S.Title>수정</S.Title>
         <S.Title>삭제</S.Title>
@@ -177,6 +228,15 @@ export default function AppPaymentUser() {
             value={paymentUser.expire_date}
             onChange={(e) => handleNewInputChange(e)}
           />
+          <S.InfoDiv>
+            <S.ContentsWithTitle
+              type="number"
+              name="month"
+              value={paymentUser.month}
+              onChange={(e) => handleNewInputChange(e)}
+            />{" "}
+            개월
+          </S.InfoDiv>
           <S.ContentsSelectBox
             name="free_user"
             value={paymentUser.free_user}
@@ -213,9 +273,25 @@ export default function AppPaymentUser() {
               <S.Contents
                 type="date"
                 name="expire_date"
-                defaultValue={dayjs(item.expire_date).format("YYYY-MM-DD")}
+                value={
+                  dayjs(paymentUserEdit[item.id]?.expire_date).format(
+                    "YYYY-MM-DD",
+                  ) || dayjs(item.expire_date).format("YYYY-MM-DD")
+                }
                 onChange={(e) => handleEditInputChange(item, e)}
               />
+              <S.InfoDiv>
+                <S.ContentsWithTitle
+                  type="number"
+                  name="month"
+                  value={dayjs(paymentUserEdit[item.id]?.expire_date).diff(
+                    dayjs(item.payment_date),
+                    "month",
+                  )}
+                  onChange={(e) => handleEditInputChange(item, e)}
+                />{" "}
+                개월
+              </S.InfoDiv>
               <S.ContentsSelectBox
                 name="free_user"
                 defaultValue={item.free_user}

@@ -47,8 +47,6 @@ export const getPaymentUserEdit = (
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          paymentUserListMutate();
-
           setPaymentUserEdit({});
 
           Swal.fire({
@@ -56,6 +54,8 @@ export const getPaymentUserEdit = (
             title: "수정되었습니다",
             confirmButtonText: "확인",
           });
+
+          paymentUserListMutate();
         }
       },
       onError: (error) => {
