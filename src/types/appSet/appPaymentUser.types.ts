@@ -41,6 +41,7 @@ export interface IPaymentUser {
   payment_date: string;
   expire_date: string;
   free_user: string;
+  month: number;
 }
 
 export interface IPaymentUserEdit {
@@ -50,5 +51,6 @@ export interface IPaymentUserEdit {
     payment_date: string;
     expire_date: string;
     free_user: string;
+    month: number;
   };
 }
