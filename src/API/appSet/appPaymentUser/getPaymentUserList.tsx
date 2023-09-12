@@ -14,6 +14,7 @@ export const getPaymentUserList = (
   setTotal: Dispatch<SetStateAction<number>>,
   paymentFilter: IPaymentFilter,
   setPaymentUserList: Dispatch<SetStateAction<IAppPaymentUserData[]>>,
+  setPaymentUserEdit: Dispatch<SetStateAction<any>>,
 ) => {
   const login = useRecoilValue(loginState);
 
@@ -32,6 +33,21 @@ export const getPaymentUserList = (
         if (data.result === "00") {
           setPaymentUserList(data.list);
           setTotal(data.lastPage);
+
+          const initialEditState = data.list.reduce(
+            (obj, item) => ({
+              ...obj,
+              [item.id]: {
+                user_id: item.user_id,
+                phone_no: item.phone_no,
+                payment_date: item.payment_date,
+                expire_date: item.expire_date,
+                free_user: item.free_user,
+              },
+            }),
+            {},
+          );
+          setPaymentUserEdit(initialEditState);
         }
       },
       onError: (error) => {

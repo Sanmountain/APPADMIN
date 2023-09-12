@@ -5,20 +5,14 @@ import {
   IAppPaymentUserData,
   IPaymentFilter,
   IPaymentUser,
+  IPaymentUserEdit,
 } from "../../types/appSet/appPaymentUser.types";
 import { getPaymentUserList } from "../../api/appSet/appPaymentUser/getPaymentUserList";
 import Pagination from "../../components/common/Pagination";
 import dayjs from "dayjs";
 import { getPaymentUserRegist } from "../../api/appSet/appPaymentUser/getPaymentUserRegist";
-import {
-  getPaymentUserChangeFromFreeToPay,
-  getPaymentUserChangeFromPayToFree,
-} from "../../api/appSet/appPaymentUser/getPaymentUserChangePay";
-import advancedFormat from "dayjs/plugin/advancedFormat";
-import duration from "dayjs/plugin/duration";
 import { getPaymentUserDelete } from "../../api/appSet/appPaymentUser/getPaymentUserDelete";
-dayjs.extend(advancedFormat);
-dayjs.extend(duration);
+import { getPaymentUserEdit } from "../../api/appSet/appPaymentUser/getPaymentUserEdit";
 
 export default function AppPaymentUser() {
   const [page, setPage] = useState(1);
@@ -35,9 +29,12 @@ export default function AppPaymentUser() {
   const [paymentUser, setPaymentUser] = useState<IPaymentUser>({
     user_id: "",
     phone_no: "",
+    payment_date: dayjs().format("YYYY-MM-DD"),
+    expire_date: dayjs().format("YYYY-MM-DD"),
     free_user: "",
-    qa: null,
   });
+  // NOTE 수정
+  const [paymentUserEdit, setPaymentUserEdit] = useState<IPaymentUserEdit>({});
 
   // NOTE list
   const { mutate: paymentUserListMutate } = getPaymentUserList(
@@ -45,6 +42,7 @@ export default function AppPaymentUser() {
     setTotal,
     paymentFilter,
     setPaymentUserList,
+    setPaymentUserEdit,
   );
   // NOTE 등록
   const { mutate: paymentUserRegistMutate } = getPaymentUserRegist(
@@ -52,12 +50,12 @@ export default function AppPaymentUser() {
     setPaymentUser,
     paymentUserListMutate,
   );
-  // NOTE 유료 사용자 무료 사용자로 전환
-  const { mutate: paymentUserChangeFreeMutate } =
-    getPaymentUserChangeFromPayToFree(paymentUserListMutate);
-  // NOTE 무료 사용자 유료 사용자로 전환
-  const { mutate: paymentUserChangePayMutate } =
-    getPaymentUserChangeFromFreeToPay(paymentUserListMutate);
+  // NOTE 수정
+  const { mutate: paymentUserEditMutate } = getPaymentUserEdit(
+    paymentUserEdit,
+    setPaymentUserEdit,
+    paymentUserListMutate,
+  );
   // NOTE 삭제
   const { mutate: paymentUserDeleteMutate } = getPaymentUserDelete(
     paymentUserListMutate,
@@ -94,21 +92,32 @@ export default function AppPaymentUser() {
     });
   };
 
+  // NOTE 수정 값 onChange
+  const handleEditInputChange = (
+    item: IAppPaymentUserData,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+
+    setPaymentUserEdit({
+      ...paymentUserEdit,
+      [item.id]: {
+        ...paymentUserEdit[item.id],
+        [name]: value,
+      },
+    });
+  };
+
   // NOTE 등록
   const onClickRegister = () => {
     paymentUserRegistMutate();
   };
 
-  // NOTE 유료, 무료 전환
-  const onClickChangePay = (id: number, isFreeUser: "Y" | "N") => {
-    if (isFreeUser === "Y") {
-      paymentUserChangePayMutate(id);
-    } else if (isFreeUser === "N") {
-      paymentUserChangeFreeMutate(id);
-    }
+  const onClickEdit = (id: string, phoneNumber: string) => {
+    paymentUserEditMutate({ id, phoneNumber });
   };
 
-  const onClickDelete = (id: number) => {
+  const onClickDelete = (id: string) => {
     paymentUserDeleteMutate(id);
   };
 
@@ -139,30 +148,35 @@ export default function AppPaymentUser() {
         <S.Title>결제일</S.Title>
         <S.Title>만료일</S.Title>
         <S.Title>무료</S.Title>
-        <S.Title>무료전환</S.Title>
+        <S.Title>수정</S.Title>
         <S.Title>삭제</S.Title>
       </S.TitleContainer>
 
       <S.ContentsListContainer>
-        <S.ContentsContainer className="register">
+        <S.ContentsContainer>
           <S.Contents
             name="user_id"
             value={paymentUser.user_id}
             onChange={(e) => handleNewInputChange(e)}
           />
           <S.Contents
+            placeholder="하이픈 포함 전체 입력"
             name="phone_no"
             value={paymentUser.phone_no}
             onChange={(e) => handleNewInputChange(e)}
           />
-          <S.ContentsTextContainer>
-            <S.ContentsWithTitle
-              name="qa"
-              value={paymentUser.qa || ""}
-              onChange={(e) => handleNewInputChange(e)}
-            />{" "}
-            개월
-          </S.ContentsTextContainer>
+          <S.Contents
+            type="date"
+            name="payment_date"
+            value={paymentUser.payment_date}
+            onChange={(e) => handleNewInputChange(e)}
+          />
+          <S.Contents
+            type="date"
+            name="expire_date"
+            value={paymentUser.expire_date}
+            onChange={(e) => handleNewInputChange(e)}
+          />
           <S.ContentsSelectBox
             name="free_user"
             value={paymentUser.free_user}
@@ -172,9 +186,6 @@ export default function AppPaymentUser() {
             <option value="Y">Y</option>
             <option value="N">N</option>
           </S.ContentsSelectBox>
-          <S.InfoDiv>
-            사용자를 등록하거나 <br /> 만기일을 조정합니다.
-          </S.InfoDiv>
           <CommonButton contents="등록" onClickFn={onClickRegister} />
           <S.HiddenDiv />
         </S.ContentsContainer>
@@ -183,22 +194,39 @@ export default function AppPaymentUser() {
         ) : (
           paymentUserList.map((item) => (
             <S.ContentsContainer key={item.id}>
-              <S.Contents value={item.user_id} readOnly />
-              <S.Contents value={item.phone_no} readOnly />
               <S.Contents
-                type="date"
-                readOnly
-                value={dayjs(item.payment_date).format("YYYY-MM-DD")}
+                name="user_id"
+                defaultValue={item.user_id}
+                onChange={(e) => handleEditInputChange(item, e)}
+              />
+              <S.Contents
+                name="phone_no"
+                defaultValue={item.phone_no}
+                onChange={(e) => handleEditInputChange(item, e)}
               />
               <S.Contents
                 type="date"
-                readOnly
-                value={dayjs(item.expire_date).format("YYYY-MM-DD")}
+                name="payment_date"
+                defaultValue={dayjs(item.payment_date).format("YYYY-MM-DD")}
+                onChange={(e) => handleEditInputChange(item, e)}
               />
-              <S.Contents value={item.free_user} readOnly />
+              <S.Contents
+                type="date"
+                name="expire_date"
+                defaultValue={dayjs(item.expire_date).format("YYYY-MM-DD")}
+                onChange={(e) => handleEditInputChange(item, e)}
+              />
+              <S.ContentsSelectBox
+                name="free_user"
+                defaultValue={item.free_user}
+                onChange={(e) => handleEditInputChange(item, e)}
+              >
+                <option value="Y">Y</option>
+                <option value="N">N</option>
+              </S.ContentsSelectBox>
               <CommonButton
-                contents={item.free_user === "Y" ? "과금전환" : "무료전환"}
-                onClickFn={() => onClickChangePay(item.id, item.free_user)}
+                contents="수정"
+                onClickFn={() => onClickEdit(item.id, item.phone_no)}
               />
               <CommonButton
                 contents="삭제"

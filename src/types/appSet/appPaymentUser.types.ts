@@ -1,5 +1,5 @@
 export interface IAppPaymentUserData {
-  id: number;
+  id: string;
   user_id: string;
   phone_no: string;
   free_user: "Y" | "N";
@@ -38,6 +38,17 @@ export interface IAppPaymentUserRegistResponse {
 export interface IPaymentUser {
   user_id: string;
   phone_no: string;
+  payment_date: string;
+  expire_date: string;
   free_user: string;
-  qa: null | number;
+}
+
+export interface IPaymentUserEdit {
+  [id: string]: {
+    user_id: string;
+    phone_no: string;
+    payment_date: string;
+    expire_date: string;
+    free_user: string;
+  };
 }
