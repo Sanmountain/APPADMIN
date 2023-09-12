@@ -43,6 +43,7 @@ export const getPaymentUserList = (
                 payment_date: item.payment_date,
                 expire_date: item.expire_date,
                 free_user: item.free_user,
+                month: 0,
               },
             }),
             {},

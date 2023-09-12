@@ -32,7 +32,7 @@ export const SelectBox = styled.select`
 
 export const TitleContainer = styled.div`
   display: grid;
-  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.7fr 0.5fr 0.5fr;
+  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.5fr 0.7fr 0.5fr 0.5fr;
   align-items: center;
   justify-items: center;
   background-color: #f8f9fa;
@@ -57,7 +57,7 @@ export const ContentsListContainer = styled.div`
 
 export const ContentsContainer = styled.div`
   display: grid;
-  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.7fr 0.5fr 0.5fr;
+  grid-template-columns: 0.7fr 1fr 1fr 1fr 0.5fr 0.7fr 0.5fr 0.5fr;
   align-items: center;
   justify-items: center;
   width: 100%;
