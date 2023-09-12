@@ -14,9 +14,9 @@ export const getPaymentUserDelete = (
       | undefined,
   ) => void,
 ) => {
-  return useMutation<IAppPaymentUserRegistResponse, unknown, number, unknown>(
+  return useMutation<IAppPaymentUserRegistResponse, unknown, string, unknown>(
     "getPaymentUserDelete",
-    (id: number) =>
+    (id: string) =>
       instance.post("/payment_user/delete", {
         id,
       }),
