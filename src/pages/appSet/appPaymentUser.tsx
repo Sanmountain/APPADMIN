@@ -284,10 +284,9 @@ export default function AppPaymentUser() {
                 <S.ContentsWithTitle
                   type="number"
                   name="month"
-                  value={dayjs(paymentUserEdit[item.id]?.expire_date).diff(
-                    dayjs(item.payment_date),
-                    "month",
-                  )}
+                  defaultValue={dayjs(
+                    paymentUserEdit[item.id]?.expire_date,
+                  ).diff(dayjs(item.payment_date), "month")}
                   onChange={(e) => handleEditInputChange(item, e)}
                 />{" "}
                 개월
