@@ -182,7 +182,6 @@ export default function AppPaymentUser() {
           placeholder="전화번호"
           name="phoneNumber"
           onChange={(e) => handleFilter(e)}
-          type="number"
         />
         <S.SelectBox name="isFreeUser" onChange={(e) => handleFilter(e)}>
           <option value="">무료 여부</option>
