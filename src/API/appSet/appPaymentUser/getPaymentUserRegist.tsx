@@ -55,6 +55,13 @@ export const getPaymentUserRegist = (
             title: "등록되었습니다",
             confirmButtonText: "확인",
           });
+        } else if (data.result === "04") {
+          Swal.fire({
+            title: "Error!",
+            text: "등록 오류",
+            icon: "error",
+            confirmButtonText: "확인",
+          });
         }
       },
       onError: (error) => {
