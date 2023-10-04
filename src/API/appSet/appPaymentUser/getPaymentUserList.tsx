@@ -8,6 +8,7 @@ import {
   IAppPaymentUserResponse,
   IPaymentFilter,
 } from "../../../types/appSet/appPaymentUser.types";
+import Swal from "sweetalert2";
 
 export const getPaymentUserList = (
   page: number,
@@ -49,6 +50,12 @@ export const getPaymentUserList = (
             {},
           );
           setPaymentUserEdit(initialEditState);
+        } else if (data.result === "25") {
+          Swal.fire({
+            icon: "warning",
+            title: "조회 결과가 없습니다.",
+            confirmButtonText: "확인",
+          });
         }
       },
       onError: (error) => {
