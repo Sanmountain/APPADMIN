@@ -5,6 +5,7 @@ import {
   FiChevronRight,
   FiChevronsRight,
 } from "react-icons/fi";
+import { mediaQuery } from "./mediaQuery";
 
 export const Container = styled.nav`
   display: flex;
@@ -45,20 +46,37 @@ export const PaginationButton = styled.button`
     cursor: revert;
     transform: revert;
   }
+
+  ${mediaQuery.small`
+    font-size: 14px;
+    padding: 0px;
+  `}
 `;
 
 export const FirstIcon = styled(FiChevronsLeft)`
   font-size: 16px;
+  ${mediaQuery.small`
+    font-size: 14px;
+  `}
 `;
 
 export const PrevIcon = styled(FiChevronLeft)`
   font-size: 16px;
+  ${mediaQuery.small`
+    font-size: 14px;
+  `}
 `;
 
 export const NextIcon = styled(FiChevronRight)`
   font-size: 16px;
+  ${mediaQuery.small`
+    font-size: 14px;
+  `}
 `;
 
 export const LastIcon = styled(FiChevronsRight)`
   font-size: 16px;
+  ${mediaQuery.small`
+    font-size: 14px;
+  `}
 `;

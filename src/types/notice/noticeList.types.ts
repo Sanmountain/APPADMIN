@@ -17,6 +17,7 @@ export interface INoticeListResponse {
   message: string;
   result: string;
   startPage: number;
+  endPage: number;
   lastPage: number;
   currentpage: number;
   list: INoticeListData[];
