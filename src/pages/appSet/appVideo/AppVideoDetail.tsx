@@ -7,8 +7,11 @@ import { getAppVideoDetail } from "../../../api/appSet/appVideo/getAppVideoDetai
 import { Viewer } from "@toast-ui/react-editor";
 import { useNavigate, useParams } from "react-router";
 import { getAppVideoDelete } from "../../../api/appSet/appVideo/getAppVideoDelete";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function AppVideoDetail() {
+  const login = useRecoilValue(loginState);
   const [videoDetail, setVideoDetail] = useState<IAppVideoDetailResponse>();
 
   const { mutate: videoDetailMutate } = getAppVideoDetail(setVideoDetail);
@@ -43,8 +46,12 @@ export default function AppVideoDetail() {
             <S.Info>{videoDetail?.reg_date}</S.Info>
           </S.InfoContainer>
           <S.ButtonContainer>
-            <CommonButton contents="수정" onClickFn={onClickEdit} />
-            <CommonButton contents="삭제" onClickFn={onClickDelete} />
+            {login.isLogin && (
+              <>
+                <CommonButton contents="수정" onClickFn={onClickEdit} />
+                <CommonButton contents="삭제" onClickFn={onClickDelete} />
+              </>
+            )}
             <CommonButton contents="목록" onClickFn={onClickMoveToList} />
           </S.ButtonContainer>
         </S.TopContainer>

@@ -19,7 +19,7 @@ export const getAppVideoList = (
     "getAppVideoList",
     () =>
       instance.post("/video/list", {
-        company: login.company,
+        company: login.isLogin ? login.company : "LOGEN",
         page,
       }),
     {
