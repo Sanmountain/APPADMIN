@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import {
-  FaComputer,
+  FaBox,
   FaWarehouse,
   FaTruckFast,
-  FaHouseChimney,
+  FaBoxesStacked,
   FaHouseCircleCheck,
 } from "react-icons/fa6";
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,9 +47,18 @@ export const Input = styled.input`
   height: 100%;
 `;
 
+export const LoadingContainer = styled.div`
+  position: absolute;
+  left: 45%;
+  top: 120px;
+  width: 100%;
+  height: 800px;
+  z-index: 2;
+`;
+
 export const TitleContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr 1fr 1.5fr 1.2fr 1.2fr;
   align-items: center;
   justify-items: center;
   background-color: #f8f9fa;
@@ -95,20 +105,22 @@ export const ContentsListContainer = styled.div`
 
 export const ContentsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr 1fr 1.5fr 1.2fr 1.2fr;
   align-items: center;
   justify-items: center;
   border: 0.3px solid #bdbdbd;
   border-radius: 5px;
   width: 100%;
-  height: 40px;
+  height: 70px;
 
   &.tracking {
     grid-template-columns: 1fr 1fr 1fr;
+    height: 40px;
   }
 
   &.log {
     grid-template-columns: 0.5fr 1fr 2fr 1fr;
+    height: 40px;
   }
 `;
 
@@ -121,7 +133,7 @@ export const ShipmentContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 85%;
+  width: 90%;
   height: 150px;
   margin-top: 50px;
   margin-bottom: 70px;
@@ -163,7 +175,7 @@ export const IconTitle = styled.div`
   margin-top: 10px;
 `;
 
-export const ComputerIcon = styled(FaComputer)`
+export const BoxIcon = styled(FaBox)`
   width: 50px;
   height: 50px;
   color: black;
@@ -193,7 +205,7 @@ export const TruckIcon = styled(FaTruckFast)`
   }
 `;
 
-export const HouseIcon = styled(FaHouseChimney)`
+export const StackedIcon = styled(FaBoxesStacked)`
   width: 50px;
   height: 50px;
   color: black;

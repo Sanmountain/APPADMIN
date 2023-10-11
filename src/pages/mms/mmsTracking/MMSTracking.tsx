@@ -8,6 +8,7 @@ import {
   ITrackingLogList,
 } from "../../../types/mms/tracking.types";
 import Swal from "sweetalert2";
+import Loading from "../../../components/common/Loading";
 
 export default function MMSTracking() {
   const [trackingDetail, setTrackingDetail] = useState<ITrackingDetail>();
@@ -20,7 +21,7 @@ export default function MMSTracking() {
   const [deliveryStatus, setDeliveryStatus] = useState("");
   const [barcode, setBarcode] = useState("");
 
-  const { mutate: trackingListMutate } = getTracking(
+  const { mutate: trackingListMutate, isLoading } = getTracking(
     barcode,
     setTrackingDetail,
     setTrackingInfoList,
@@ -52,12 +53,20 @@ export default function MMSTracking() {
         </S.FilterContainer>
       </S.TopContainer>
 
-      {trackingDetail && (
+      {isLoading && (
+        <S.LoadingContainer>
+          <Loading />
+        </S.LoadingContainer>
+      )}
+
+      {trackingDetail && !isLoading && (
         <>
           <S.TitleContainer>
             <S.Title>운송장번호</S.Title>
             <S.Title>보내는 분</S.Title>
             <S.Title>받는 분</S.Title>
+            <S.Title>고객 주소</S.Title>
+            <S.Title>고객 번호</S.Title>
             <S.Title>상품 정보</S.Title>
           </S.TitleContainer>
           <S.ContentsListContainer>
@@ -65,6 +74,8 @@ export default function MMSTracking() {
               <S.Contents>{trackingDetail?.iv_no}</S.Contents>
               <S.Contents>{trackingDetail?.pk_nm}</S.Contents>
               <S.Contents>{trackingDetail?.dv_nm}</S.Contents>
+              <S.Contents>{trackingDetail?.dv_addr_string}</S.Contents>
+              <S.Contents>{trackingDetail?.dv_tel1}</S.Contents>
               <S.Contents>{trackingDetail?.th_nm}</S.Contents>
             </S.ContentsContainer>
           </S.ContentsListContainer>
@@ -72,7 +83,7 @@ export default function MMSTracking() {
           <S.ShipmentContainer>
             <S.IconTitleContainer>
               <S.IconContainer>
-                <S.ComputerIcon
+                <S.BoxIcon
                   className={deliveryStatus === "집하" ? "active" : ""}
                 />
               </S.IconContainer>
@@ -88,7 +99,7 @@ export default function MMSTracking() {
             </S.IconTitleContainer>
             <S.IconTitleContainer>
               <S.IconContainer>
-                <S.HouseIcon
+                <S.StackedIcon
                   className={deliveryStatus === "도착" ? "active" : ""}
                 />
               </S.IconContainer>

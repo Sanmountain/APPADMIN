@@ -94,7 +94,20 @@ export const router = createBrowserRouter([
       { path: "/app/video/:videoId/edit", element: <AppVideoWrite /> },
     ],
   },
+  // NOTE mms 로그인 없이 접근 가능 메뉴
+  {
+    path: "/mms",
+    element: (
+      <LogenRouter>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </LogenRouter>
+    ),
+    children: [{ path: "/mms/tracking", element: <MMSTracking /> }],
+  },
 
+  // NOTE mms 로그인 필요한 메뉴
   {
     path: "/mms",
     element: (
