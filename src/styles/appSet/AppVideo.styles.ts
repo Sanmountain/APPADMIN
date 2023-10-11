@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaQuery } from "../mediaQuery";
 
 export const Container = styled.div`
   display: flex;
@@ -55,11 +56,19 @@ export const ContentsContainer = styled.div`
   border: 1px solid gray;
   border-radius: 5px;
   cursor: pointer;
+
+  ${mediaQuery.small`
+    height: 100px;
+  `}
 `;
 
 export const ThumbnailContainer = styled.div`
   width: 25%;
   height: 100%;
+
+  ${mediaQuery.small`
+    display: none;
+  `}
 `;
 
 export const ThumbnailImage = styled.img`
@@ -76,17 +85,31 @@ export const InfoContainer = styled.div`
   height: 100%;
   padding: 5px;
   gap: 5px;
+
+  ${mediaQuery.small`
+    width: 100%;
+    padding: 0;
+  `}
 `;
 
 export const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 30px;
+
+  ${mediaQuery.small`
+    font-size: 18px;
+    margin-bottom: 10px;
+  `}
 `;
 
 export const UploadDate = styled.div`
   font-size: 16px;
   font-weight: 500;
+
+  ${mediaQuery.small`
+    font-size: 14px;
+  `}
 `;
 
 export const UploadUser = styled.div`
