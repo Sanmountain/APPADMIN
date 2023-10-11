@@ -29,6 +29,21 @@ import MMSTrackingDetail from "../pages/mms/mmsTracking/MMSTrackingDetail";
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
 
+  // NOTE 공지사항 로그인 없이 접근 가능 메뉴
+  {
+    path: "/notice",
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      { path: "/notice/list", element: <NoticeList /> },
+      { path: "/notice/:noticeId", element: <NoticeDetail /> },
+    ],
+  },
+
+  // NOTE 공지사항 로그인 필요한 메뉴
   {
     path: "/notice",
     element: (
@@ -39,13 +54,26 @@ export const router = createBrowserRouter([
       </LoginRoute>
     ),
     children: [
-      { path: "/notice/list", element: <NoticeList /> },
-      { path: "/notice/:noticeId", element: <NoticeDetail /> },
       { path: "/notice/write", element: <NoticeWrite /> },
       { path: "/notice/:noticeId/edit", element: <NoticeWrite /> },
     ],
   },
 
+  // NOTE 앱관리 로그인 없이 접근 가능 메뉴
+  {
+    path: "/app",
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    children: [
+      { path: "/app/video", element: <AppVideo /> },
+      { path: "/app/video/:videoId", element: <AppVideoDetail /> },
+    ],
+  },
+
+  // NOTE 앱관리 로그인 필요한 메뉴
   {
     path: "/app",
     element: (
@@ -63,8 +91,6 @@ export const router = createBrowserRouter([
       { path: "/app/deliveryTime", element: <AppDeliveryTime /> },
       { path: "/app/paymentUser", element: <AppPaymentUser /> },
       { path: "/app/product", element: <AppProduct /> },
-      { path: "/app/video", element: <AppVideo /> },
-      { path: "/app/video/:videoId", element: <AppVideoDetail /> },
       { path: "/app/video/write", element: <AppVideoWrite /> },
       { path: "/app/video/:videoId/edit", element: <AppVideoWrite /> },
     ],

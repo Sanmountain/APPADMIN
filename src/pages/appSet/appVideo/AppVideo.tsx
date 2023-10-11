@@ -6,8 +6,11 @@ import Pagination from "../../../components/common/Pagination";
 import Loading from "../../../components/common/Loading";
 import { useNavigate } from "react-router";
 import CommonButton from "../../../components/common/CommonButton";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function AppVideo() {
+  const login = useRecoilValue(loginState);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [videoList, setVideoList] = useState<IAppVideoListData[]>([]);
@@ -34,9 +37,12 @@ export default function AppVideo() {
 
   return (
     <S.Container>
-      <S.WriteButtonContainer>
-        <CommonButton contents="동영상 등록" onClickFn={onClickMoveToWrite} />
-      </S.WriteButtonContainer>
+      {login.isLogin && (
+        <S.WriteButtonContainer>
+          <CommonButton contents="동영상 등록" onClickFn={onClickMoveToWrite} />
+        </S.WriteButtonContainer>
+      )}
+
       {isLoading ? (
         <Loading />
       ) : videoList.length < 1 ? (

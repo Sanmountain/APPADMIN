@@ -2,6 +2,7 @@ import { useLocation } from "react-router";
 import Header from "./Header";
 import { styled } from "styled-components";
 import { ReactNode } from "react";
+import { mediaQuery } from "../../styles/mediaQuery";
 
 type ILayoutProps = {
   children: ReactNode;
@@ -54,6 +55,11 @@ const OutletContainer = styled.div`
 
   margin-top: 130px;
   width: 99vw;
+
+  ${mediaQuery.small`
+    margin-top: 0px;
+    width: 100vw;
+  `}
 `;
 
 const Outlet = styled.div`
@@ -64,6 +70,12 @@ const Outlet = styled.div`
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
+
+  ${mediaQuery.small`
+    width: 98%;
+    margin-left: 1%;
+    margin-top: 50px;
+  `}
 `;
 
 const Title = styled.div`

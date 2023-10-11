@@ -27,7 +27,7 @@ export const getNoticeList = (
       onSuccess: (data) => {
         if (data.result === "00") {
           setNoticeList(data.list);
-          setTotal(data.lastPage);
+          setTotal(data.endPage);
         }
       },
       onError: (error) => {
