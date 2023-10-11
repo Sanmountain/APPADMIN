@@ -29,12 +29,12 @@ export default function NoticeList() {
   return (
     <S.Container>
       <S.TitleContainer>
-        <S.Title>id</S.Title>
+        <S.Title className="hide-on-small">id</S.Title>
         <S.Title>제목</S.Title>
         <S.Title>작성일</S.Title>
-        <S.Title>작성자</S.Title>
-        <S.Title>팝업만기일</S.Title>
-        <S.Title>팝업여부</S.Title>
+        <S.Title className="hide-on-small">작성자</S.Title>
+        <S.Title className="hide-on-small">팝업만기일</S.Title>
+        <S.Title className="hide-on-small">팝업여부</S.Title>
       </S.TitleContainer>
 
       <S.ContentsListContainer>
@@ -43,12 +43,14 @@ export default function NoticeList() {
             key={item.id}
             onClick={() => onClickNotice(item.id)}
           >
-            <S.Contents>{item.id}</S.Contents>
-            <S.Contents>{item.title}</S.Contents>
-            <S.Contents>{item.reg_date}</S.Contents>
-            <S.Contents>{item.user_id}</S.Contents>
-            <S.Contents>{item.popup === "Y" ? item.expire : ""}</S.Contents>
-            <S.Contents>{item.popup}</S.Contents>
+            <S.Contents className="hide-on-small">{item.id}</S.Contents>
+            <S.Contents className="title">{item.title}</S.Contents>
+            <S.Contents className="date">{item.reg_date}</S.Contents>
+            <S.Contents className="hide-on-small">{item.user_id}</S.Contents>
+            <S.Contents className="hide-on-small">
+              {item.popup === "Y" ? item.expire : ""}
+            </S.Contents>
+            <S.Contents className="hide-on-small">{item.popup}</S.Contents>
           </S.ContentsContainer>
         ))}
       </S.ContentsListContainer>

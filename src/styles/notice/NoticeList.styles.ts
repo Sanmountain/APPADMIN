@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaQuery } from "../mediaQuery";
 
 export const Container = styled.div`
   display: flex;
@@ -16,11 +17,21 @@ export const TitleContainer = styled.div`
   background-color: #f8f9fa;
   width: 100%;
   height: 50px;
+
+  ${mediaQuery.small`
+    grid-template-columns: 2fr 1fr;
+  `}
 `;
 
 export const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
+
+  ${mediaQuery.small`
+    &.hide-on-small {
+      display: none;
+    }
+  `}
 `;
 
 export const ContentsListContainer = styled.div`
@@ -42,10 +53,32 @@ export const ContentsContainer = styled.div`
   width: 100%;
   height: 40px;
   cursor: pointer;
+
+  ${mediaQuery.small`
+    grid-template-columns: 2fr 1fr;
+    min-height: 60px;
+  `}
 `;
 
 export const Contents = styled.div`
   font-size: 16px;
+
+  &.date {
+    text-align: center;
+  }
+
+  ${mediaQuery.small`
+    font-size: 14px;
+
+    &.hide-on-small {
+      display: none;
+    }
+
+    &.title {
+      width: 93%;
+      font-size: 15px;
+    }
+  `}
 `;
 
 export const PaginationContainer = styled.div`

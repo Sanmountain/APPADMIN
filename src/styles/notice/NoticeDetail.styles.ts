@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaQuery } from "../mediaQuery";
 
 export const Container = styled.div`
   display: flex;
@@ -7,6 +8,10 @@ export const Container = styled.div`
 
   width: 100%;
   padding: 20px;
+
+  ${mediaQuery.small`
+    padding: 10px;
+  `}
 `;
 
 export const HeadContainer = styled.div`
@@ -16,12 +21,21 @@ export const HeadContainer = styled.div`
 
   width: 100%;
   height: 100px;
+
+  ${mediaQuery.small`
+    margin-top: 20px;
+    height: fit-content;
+  `}
 `;
 
 export const Title = styled.div`
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 20px;
+
+  ${mediaQuery.small`
+    font-size: 22px;
+  `}
 `;
 
 export const TopContainer = styled.div`
@@ -31,6 +45,14 @@ export const TopContainer = styled.div`
 
   width: 95%;
   height: 40px;
+
+  ${mediaQuery.small`
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 80px;
+    gap: 10px;
+  `}
 `;
 
 export const InfoContainer = styled.div`
@@ -40,10 +62,23 @@ export const InfoContainer = styled.div`
   width: 50%;
   gap: 50px;
   margin-left: 10px;
+
+  ${mediaQuery.small`
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    align-item: center;
+    margin-bottom: 10px;
+    gap: 0;
+  `}
 `;
 
 export const Info = styled.div`
   font-size: 20px;
+
+  ${mediaQuery.small`
+    font-size: 16px;
+  `}
 `;
 
 export const ButtonContainer = styled.div`
@@ -53,6 +88,10 @@ export const ButtonContainer = styled.div`
   width: 22%;
   gap: 10px;
   margin-right: 10px;
+
+  ${mediaQuery.small`
+    width: 100%;
+  `}
 `;
 
 export const EditDeleteButton = styled.button`
@@ -70,4 +109,8 @@ export const DetailContainer = styled.div`
   width: 95%;
   height: fit-content;
   padding: 10px;
+
+  ${mediaQuery.small`
+    margin-bottom: 10px;
+  `}
 `;
