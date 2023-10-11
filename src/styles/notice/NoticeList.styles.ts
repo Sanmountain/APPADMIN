@@ -56,7 +56,7 @@ export const ContentsContainer = styled.div`
 
   ${mediaQuery.small`
     grid-template-columns: 2fr 1fr;
-    height: 60px;
+    min-height: 60px;
   `}
 `;
 
@@ -72,6 +72,11 @@ export const Contents = styled.div`
 
     &.hide-on-small {
       display: none;
+    }
+
+    &.title {
+      width: 93%;
+      font-size: 15px;
     }
   `}
 `;

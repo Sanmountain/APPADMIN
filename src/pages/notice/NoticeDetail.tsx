@@ -6,8 +6,11 @@ import { Viewer } from "@toast-ui/react-editor";
 import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
 import { getNoticeDelete } from "../../api/notice/getNoticeDelete";
 import CommonButton from "../../components/common/CommonButton";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../stores/loginState";
 
 export default function NoticeDetail() {
+  const login = useRecoilValue(loginState);
   const [contents, setContents] = useState<INoticeDetailResponse>();
 
   const params = useParams();
@@ -45,8 +48,12 @@ export default function NoticeDetail() {
             <S.Info>{contents?.reg_date}</S.Info>
           </S.InfoContainer>
           <S.ButtonContainer>
-            <CommonButton contents="수정" onClickFn={onClickEditNotice} />
-            <CommonButton contents="삭제" onClickFn={onClickDeleteNotice} />
+            {login.isLogin && (
+              <>
+                <CommonButton contents="수정" onClickFn={onClickEditNotice} />
+                <CommonButton contents="삭제" onClickFn={onClickDeleteNotice} />
+              </>
+            )}
             <CommonButton contents="목록" onClickFn={onClickMoveToList} />
           </S.ButtonContainer>
         </S.TopContainer>
