@@ -19,6 +19,7 @@ export default function Layout({ children }: ILayoutProps) {
     "/app/video": "영업소 App 영상 메뉴얼",
     "/mms/mmsSend": "MMS 전송내역",
     "/mms/talkSend": "알림톡 전송내역",
+    "/mms/tracking": "MMS 추적",
     "/photoCheck": "Photo View",
   };
 

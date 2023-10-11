@@ -23,6 +23,7 @@ import AppProduct from "../pages/appSet/appProduct";
 import LoginRoute from "./loginRouter";
 import Layout from "../components/layout";
 import LogenRouter from "./LogenRouter";
+import MMSTracking from "../pages/mms/mmsTracking/MMSTracking";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -114,6 +115,7 @@ export const router = createBrowserRouter([
         path: "/mms/talkSend/detail/:id/:page/:limit",
         element: <TalkSendDetail />,
       },
+      { path: "/mms/tracking", element: <MMSTracking /> },
     ],
   },
 

@@ -81,8 +81,8 @@ const Header = () => {
           {login.company !== "LOGEN" && (
             <DropdownMenu
               buttonLabel="MMS"
-              menuItems={["MMS전송내역", "알림톡내역"]}
-              menuPaths={["/mms/mmsSend", "/mms/talkSend"]}
+              menuItems={["MMS전송내역", "알림톡내역", "MMS추적"]}
+              menuPaths={["/mms/mmsSend", "/mms/talkSend", "/mms/tracking"]}
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
