@@ -33,3 +33,20 @@ alimtokInstance.interceptors.response.use(
     console.log(error);
   },
 );
+
+// NOTE MMS 추적 API
+export const trackingInstance = axios.create({
+  baseURL: `${process.env.REACT_APP_TRACKING_API_URL}/slxNew`,
+});
+
+trackingInstance.interceptors.response.use(
+  (response) => {
+    if (response.status === 200) {
+      return response.data;
+    }
+  },
+
+  (error) => {
+    console.log(error);
+  },
+);
