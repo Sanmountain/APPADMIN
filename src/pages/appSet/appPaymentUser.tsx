@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import { getPaymentUserRegist } from "../../api/appSet/appPaymentUser/getPaymentUserRegist";
 import { getPaymentUserDelete } from "../../api/appSet/appPaymentUser/getPaymentUserDelete";
 import { getPaymentUserEdit } from "../../api/appSet/appPaymentUser/getPaymentUserEdit";
+import { getMonthAndDaysDifference } from "../../utils/getMonthAndDaysDifference";
 
 export default function AppPaymentUser() {
   const [page, setPage] = useState(1);
@@ -36,6 +37,7 @@ export default function AppPaymentUser() {
   });
   // NOTE 수정
   const [paymentUserEdit, setPaymentUserEdit] = useState<IPaymentUserEdit>({});
+  const [forceUpdateMonth, setForceUpdateMonth] = useState(0);
 
   // NOTE list
   const { mutate: paymentUserListMutate } = getPaymentUserList(
@@ -75,9 +77,12 @@ export default function AppPaymentUser() {
     setPaymentFilter({ ...paymentFilter, [name]: value });
   };
 
+  // NOTE 조회
   const onClickSearch = () => {
     setTotal(0);
     setPage(1);
+    setPaymentUserEdit({});
+    setForceUpdateMonth((prev) => prev + 1);
     paymentUserListMutate();
   };
 
@@ -281,11 +286,23 @@ export default function AppPaymentUser() {
               />
               <S.InfoDiv>
                 <S.ContentsWithTitle
+                  key={forceUpdateMonth}
                   type="number"
                   name="month"
-                  defaultValue={dayjs(
-                    paymentUserEdit[item.id]?.expire_date,
-                  ).diff(dayjs(item.payment_date), "month")}
+                  defaultValue={
+                    getMonthAndDaysDifference(
+                      dayjs(item.payment_date),
+                      dayjs(paymentUserEdit[item.id]?.expire_date),
+                    ).days === 0
+                      ? getMonthAndDaysDifference(
+                          dayjs(item.payment_date),
+                          dayjs(paymentUserEdit[item.id]?.expire_date),
+                        ).months + 1
+                      : getMonthAndDaysDifference(
+                          dayjs(item.payment_date),
+                          dayjs(paymentUserEdit[item.id]?.expire_date),
+                        ).months
+                  }
                   onChange={(e) => handleEditInputChange(item, e)}
                 />{" "}
                 개월
