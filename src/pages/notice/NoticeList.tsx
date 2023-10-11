@@ -44,7 +44,7 @@ export default function NoticeList() {
             onClick={() => onClickNotice(item.id)}
           >
             <S.Contents className="hide-on-small">{item.id}</S.Contents>
-            <S.Contents>{item.title}</S.Contents>
+            <S.Contents className="title">{item.title}</S.Contents>
             <S.Contents className="date">{item.reg_date}</S.Contents>
             <S.Contents className="hide-on-small">{item.user_id}</S.Contents>
             <S.Contents className="hide-on-small">
