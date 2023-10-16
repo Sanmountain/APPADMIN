@@ -131,7 +131,7 @@ export default function MMSTracking() {
               <S.Title>현재위치</S.Title>
             </S.TitleContainer>
             <S.ContentsListContainer>
-              {trackingInfoList?.reverse().map((item, index) => (
+              {trackingInfoList?.map((item, index) => (
                 <S.ContentsContainer key={index} className="tracking">
                   <S.Contents>{item.point_nm}</S.Contents>
                   <S.Contents>{item.scan_ymd}</S.Contents>
