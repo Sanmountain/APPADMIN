@@ -29,8 +29,10 @@ export const getTracking = (
           const { barcode_info_list, tracking_log_list, ...separateResponse } =
             response;
 
+          const reverseBarcodeInfoList = [...barcode_info_list].reverse();
+
           setTrackingDetail(separateResponse);
-          setTrackingInfoList(barcode_info_list);
+          setTrackingInfoList(reverseBarcodeInfoList);
           setTrackingLogList(tracking_log_list);
           setDeliveryStatus(barcode_info_list[0].point_nm);
         }
