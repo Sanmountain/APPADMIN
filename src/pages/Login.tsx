@@ -1,5 +1,5 @@
 import "../styles/login.css";
-import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
+import { useState, useEffect, ChangeEvent, MouseEvent, FormEvent } from "react";
 import { BiUser, BiKey, BiPhone, BiRename, BiUserCircle } from "react-icons/bi";
 import { BsBuilding, BsBoxSeam } from "react-icons/bs";
 import { MdKeyOff, MdKey } from "react-icons/md";
@@ -56,7 +56,7 @@ export default function Login() {
   };
 
   /* 로그인 실행 함수 */
-  const handleLogin = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     loginMutate();
   };
@@ -188,7 +188,7 @@ export default function Login() {
           </form>
         </div>
         <div className="form-container sign-in-container">
-          <form>
+          <form onSubmit={handleLogin}>
             <h1>LOGIN</h1>
             <span>로그인 정보를 입력해주세요.</span>
             <div className="container-icon">
@@ -222,9 +222,7 @@ export default function Login() {
               />
               ID 저장
             </label>
-            <button className="loginBtn" onClick={handleLogin}>
-              로그인
-            </button>
+            <button className="loginBtn">로그인</button>
           </form>
         </div>
         <div className="overlay-container">
