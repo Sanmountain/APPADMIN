@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../../../styles/mms/MMSSend.styles";
 import CommonButton from "../../../components/common/CommonButton";
 import { getMMSSendList } from "../../../api/mms/getMMSSendList";
@@ -36,47 +36,25 @@ export default function MMSSend() {
   const [finishLMSList, setFinishLMSList] = useState<IMMSInvoiceList[]>([]);
   // NOTE 배송출발 (LMS)
   const [startLMSList, setStartLMSList] = useState<IMMSInvoiceList[]>([]);
-  // NOTE list 담긴 후 excel download 실행
-  const [readyCount, setReadyCount] = useState(0);
+  // NOTE 엑셀 다운로드 로딩
   const [isExcelLoading, setIsExcelLoading] = useState(false);
-  // NOTE 엑셀 필터 변경 시 이전 list와 비교해서 list가 바뀔 경우 mutate되도록 하는 useRef
-  const prevFinishAlimListRef = useRef<[] | IMMSInvoiceList[]>([]);
-  const prevStartAlimListRef = useRef<[] | IMMSInvoiceList[]>([]);
-  const prevFinishLMSListRef = useRef<[] | IMMSInvoiceList[]>([]);
-  const prevStartLMSListRef = useRef<[] | IMMSInvoiceList[]>([]);
 
   const { mutate: MMSSendListMutate, isLoading } = getMMSSendList(
     page,
     setTotal,
   );
   // NOTE 배송완료 (알림톡) 송장 list
-  const { mutate: finishAlimListMutate } = getAlimtokInvoiceList(
-    excelFilter,
-    "dv_c",
-    "AT",
-    setFinishAlimList,
-  );
+  const { mutate: finishAlimListMutate, isSuccess: isFinishAlimListSuccess } =
+    getAlimtokInvoiceList(excelFilter, "dv_c", "AT", setFinishAlimList);
   // NOTE 배송출발 (알림톡) 송장 list
-  const { mutate: startAlimListMutate } = getAlimtokInvoiceList(
-    excelFilter,
-    "dv_b",
-    "AT",
-    setStartAlimList,
-  );
+  const { mutate: startAlimListMutate, isSuccess: isStartAlimListSuccess } =
+    getAlimtokInvoiceList(excelFilter, "dv_b", "AT", setStartAlimList);
   // NOTE 배송완료 (LMS) 송장 list
-  const { mutate: finishLMSListMutate } = getAlimtokInvoiceList(
-    excelFilter,
-    "dv_c",
-    "LMS",
-    setFinishLMSList,
-  );
+  const { mutate: finishLMSListMutate, isSuccess: isFinishLMSListSuccess } =
+    getAlimtokInvoiceList(excelFilter, "dv_c", "LMS", setFinishLMSList);
   // NOTE 배송출발 (LMS) 송장 list
-  const { mutate: startLMSListMutate } = getAlimtokInvoiceList(
-    excelFilter,
-    "dv_b",
-    "LMS",
-    setStartLMSList,
-  );
+  const { mutate: startLMSListMutate, isSuccess: isStartLMSListSuccess } =
+    getAlimtokInvoiceList(excelFilter, "dv_b", "LMS", setStartLMSList);
 
   const navigate = useNavigate();
 
@@ -85,7 +63,7 @@ export default function MMSSend() {
     MMSSendListMutate();
   }, []);
 
-  // NOTE 엑셀 다운로드 버튼 눌렀을 때 알림톡 송장 리스트 불러오기
+  // NOTE 엑셀 다운로드 버튼 눌렀을 때 알림톡 송장 리스트 병렬로 불러오기
   useEffect(() => {
     if (isDownloadExcel) {
       finishAlimListMutate();
@@ -95,33 +73,14 @@ export default function MMSSend() {
     }
   }, [isDownloadExcel]);
 
-  // NOTE list가 담길 때마다 readyCount +1씩 하기
+  // NOTE 알림톡 송장 리스트 다 불러오면 엑셀 생성
   useEffect(() => {
     if (
-      finishAlimList.length &&
-      JSON.stringify(prevFinishAlimListRef) !== JSON.stringify(finishAlimList)
-    )
-      setReadyCount((prev) => prev + 1);
-    if (
-      startAlimList.length &&
-      JSON.stringify(prevStartAlimListRef) !== JSON.stringify(startAlimList)
-    )
-      setReadyCount((prev) => prev + 1);
-    if (
-      finishLMSList.length &&
-      JSON.stringify(prevFinishLMSListRef) !== JSON.stringify(finishLMSList)
-    )
-      setReadyCount((prev) => prev + 1);
-    if (
-      startLMSList.length &&
-      JSON.stringify(prevStartLMSListRef) !== JSON.stringify(startLMSList)
-    )
-      setReadyCount((prev) => prev + 1);
-  }, [finishAlimList, startAlimList, finishLMSList, startLMSList]);
-
-  // NOTE list 담긴거 확인 후 excelDownload
-  useEffect(() => {
-    if (readyCount === 4) {
+      isFinishAlimListSuccess &&
+      isStartAlimListSuccess &&
+      isFinishLMSListSuccess &&
+      isStartLMSListSuccess
+    ) {
       const year = dayjs(excelFilter.startDate).year();
       const month = dayjs(excelFilter.startDate).month() + 1;
       const fileName = `${excelFilter.company}_계산서 발행(MMS APP이용)_${year}_${month}월.xlsx`;
@@ -136,12 +95,16 @@ export default function MMSSend() {
       saveAs(excelData, `${fileName}.xlsx`);
 
       if (excelData) {
-        setReadyCount(0);
         setIsExcelLoading(false);
         setIsDownloadExcel(false);
       }
     }
-  }, [excelFilter, readyCount, isExcelLoading]);
+  }, [
+    isFinishAlimListSuccess,
+    isStartAlimListSuccess,
+    isFinishLMSListSuccess,
+    isStartLMSListSuccess,
+  ]);
 
   const handleFilterChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
