@@ -41,7 +41,7 @@ export interface IPaymentUser {
   payment_date: string;
   expire_date: string;
   free_user: string;
-  month: number;
+  qa: number;
 }
 
 export interface IPaymentUserEdit {

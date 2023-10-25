@@ -33,7 +33,7 @@ export default function AppPaymentUser() {
     payment_date: dayjs().format("YYYY-MM-DD"),
     expire_date: dayjs().format("YYYY-MM-DD"),
     free_user: "",
-    month: 0,
+    qa: 0,
   });
   // NOTE 수정
   const [paymentUserEdit, setPaymentUserEdit] = useState<IPaymentUserEdit>({});
@@ -99,7 +99,7 @@ export default function AppPaymentUser() {
     };
 
     // NOTE 개월 수 설정 시 expire_date를 계산하여 expire_date 업데이트
-    if (name === "month") {
+    if (name === "qa") {
       const newExpireDate = dayjs(paymentUser.payment_date)
         .add(parseInt(value, 10), "month")
         .format("YYYY-MM-DD");
@@ -236,8 +236,8 @@ export default function AppPaymentUser() {
           <S.InfoDiv>
             <S.ContentsWithTitle
               type="number"
-              name="month"
-              value={paymentUser.month}
+              name="qa"
+              value={paymentUser.qa}
               onChange={(e) => handleNewInputChange(e)}
             />{" "}
             개월
