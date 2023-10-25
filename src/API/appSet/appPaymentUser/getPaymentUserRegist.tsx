@@ -47,7 +47,7 @@ export const getPaymentUserRegist = (
             payment_date: dayjs().format("YYYY-MM-DD"),
             expire_date: dayjs().format("YYYY-MM-DD"),
             free_user: "",
-            month: 0,
+            qa: 0,
           });
 
           Swal.fire({
