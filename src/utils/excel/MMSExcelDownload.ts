@@ -73,7 +73,7 @@ export const MMSExcelDownload = (
   const month = dayjs(excelFilter.startDate).month() + 1;
 
   // NOTE 엑셀 영역 설정
-  excelSheet["!ref"] = `A1:T999999`;
+  excelSheet["!ref"] = `A1:T9999`;
 
   // TODO 타이틀 삽입
   const addTitleToSheet = (column: string, row: number, title: string) => {
