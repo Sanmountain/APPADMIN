@@ -32,7 +32,7 @@ export default function AppPaymentUser() {
     phone_no: "",
     payment_date: dayjs().format("YYYY-MM-DD"),
     expire_date: dayjs().format("YYYY-MM-DD"),
-    free_user: "",
+    free_user: "N",
     qa: 0,
   });
   // NOTE 수정
@@ -244,7 +244,6 @@ export default function AppPaymentUser() {
           </S.InfoDiv>
           <S.ContentsSelectBox
             name="free_user"
-            value={paymentUser.free_user}
             onChange={(e) => handleNewInputChange(e)}
           >
             <option value="">무료 여부</option>
