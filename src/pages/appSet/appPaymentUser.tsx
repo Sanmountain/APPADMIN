@@ -244,9 +244,12 @@ export default function AppPaymentUser() {
           </S.InfoDiv>
           <S.ContentsSelectBox
             name="free_user"
+            value={paymentUser.free_user}
             onChange={(e) => handleNewInputChange(e)}
           >
-            <option value="">무료 여부</option>
+            <option value="N" disabled selected>
+              무료 여부
+            </option>
             <option value="Y">Y</option>
             <option value="N">N</option>
           </S.ContentsSelectBox>
