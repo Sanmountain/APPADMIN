@@ -46,7 +46,7 @@ export const getPaymentUserRegist = (
             phone_no: "",
             payment_date: dayjs().format("YYYY-MM-DD"),
             expire_date: dayjs().format("YYYY-MM-DD"),
-            free_user: "",
+            free_user: "N",
             qa: 0,
           });
 
