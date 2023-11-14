@@ -4,7 +4,8 @@ export const getMonthDifference = (
   startDate: dayjs.Dayjs,
   endDate: dayjs.Dayjs,
 ) => {
-  const difference = endDate.diff(startDate, "month");
+  const dayDifference = endDate.diff(startDate, "day");
+  const monthDifference = Math.floor(dayDifference / 30);
 
-  return Math.abs(difference);
+  return Math.abs(monthDifference);
 };

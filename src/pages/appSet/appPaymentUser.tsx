@@ -101,7 +101,7 @@ export default function AppPaymentUser() {
     // NOTE 개월 수 설정 시 expire_date를 계산하여 expire_date 업데이트
     if (name === "qa") {
       const newExpireDate = dayjs(paymentUser.payment_date)
-        .add(parseInt(value, 10), "month")
+        .add(parseInt(value, 10) * 30, "day")
         .format("YYYY-MM-DD");
       updatedPaymentUser = {
         ...updatedPaymentUser,
@@ -135,7 +135,7 @@ export default function AppPaymentUser() {
         : dayjs(item.payment_date);
 
       const newExpireDate = paymentDate
-        .add(parseInt(value, 10), "month")
+        .add(parseInt(value, 10) * 30, "day")
         .format("YYYY-MM-DD");
 
       updatedItemState = {
