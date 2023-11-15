@@ -14,6 +14,7 @@ import { getPaymentUserRegist } from "../../api/appSet/appPaymentUser/getPayment
 import { getPaymentUserDelete } from "../../api/appSet/appPaymentUser/getPaymentUserDelete";
 import { getPaymentUserEdit } from "../../api/appSet/appPaymentUser/getPaymentUserEdit";
 import { getMonthDifference } from "../../utils/getMonthDifference";
+import Swal from "sweetalert2";
 
 export default function AppPaymentUser() {
   const [page, setPage] = useState(1);
@@ -165,10 +166,29 @@ export default function AppPaymentUser() {
 
   // NOTE 등록
   const onClickRegister = () => {
+    if (!paymentUser.user_id) {
+      Swal.fire({
+        icon: "warning",
+        title: "아이디를 입력해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     paymentUserRegistMutate();
   };
 
+  // NOTE 수정
   const onClickEdit = (id: string, phoneNumber: string) => {
+    if (!paymentUserEdit[id].user_id) {
+      Swal.fire({
+        icon: "warning",
+        title: "아이디를 입력해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     paymentUserEditMutate({ id, phoneNumber });
   };
 
