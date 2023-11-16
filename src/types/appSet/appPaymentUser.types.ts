@@ -8,6 +8,7 @@ export interface IAppPaymentUserData {
   company: string;
   reg_date: string;
   update_date: string;
+  qa: string;
 }
 
 export interface IAppPaymentUserResponse {
@@ -41,7 +42,7 @@ export interface IPaymentUser {
   payment_date: string;
   expire_date: string;
   free_user: string;
-  qa: number;
+  qa: number | string;
 }
 
 export interface IPaymentUserEdit {
@@ -52,5 +53,6 @@ export interface IPaymentUserEdit {
     expire_date: string;
     free_user: string;
     month: number;
+    qa: string;
   };
 }

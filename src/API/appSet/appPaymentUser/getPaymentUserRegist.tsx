@@ -34,6 +34,7 @@ export const getPaymentUserRegist = (
         expire_date: `${dayjs(paymentUser.expire_date).format(
           "YYYY-MM-DD",
         )} 23:59:59`,
+        qa_count: paymentUser.qa,
         company: login.company,
       }),
     {
@@ -53,6 +54,25 @@ export const getPaymentUserRegist = (
           Swal.fire({
             icon: "success",
             title: "등록되었습니다",
+            confirmButtonText: "확인",
+          });
+        }
+        // NOTE 기존에 등록돼 있는 핸드폰번호 신규등록 시 수정으로 처리
+        else if (data.result === "77") {
+          paymentUserListMutate();
+
+          setPaymentUser({
+            user_id: "",
+            phone_no: "",
+            payment_date: dayjs().format("YYYY-MM-DD"),
+            expire_date: dayjs().format("YYYY-MM-DD"),
+            free_user: "N",
+            qa: 0,
+          });
+
+          Swal.fire({
+            icon: "success",
+            title: "수정되었습니다",
             confirmButtonText: "확인",
           });
         } else if (data.result === "04") {
