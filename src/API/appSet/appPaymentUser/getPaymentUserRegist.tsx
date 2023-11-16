@@ -34,6 +34,7 @@ export const getPaymentUserRegist = (
         expire_date: `${dayjs(paymentUser.expire_date).format(
           "YYYY-MM-DD",
         )} 23:59:59`,
+        qa_count: paymentUser.qa,
         company: login.company,
       }),
     {
