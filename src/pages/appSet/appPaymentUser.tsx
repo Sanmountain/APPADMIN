@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import { getPaymentUserRegist } from "../../api/appSet/appPaymentUser/getPaymentUserRegist";
 import { getPaymentUserDelete } from "../../api/appSet/appPaymentUser/getPaymentUserDelete";
 import { getPaymentUserEdit } from "../../api/appSet/appPaymentUser/getPaymentUserEdit";
-import { getMonthDifference } from "../../utils/getMonthDifference";
+import Swal from "sweetalert2";
 
 export default function AppPaymentUser() {
   const [page, setPage] = useState(1);
@@ -101,7 +101,7 @@ export default function AppPaymentUser() {
     // NOTE 개월 수 설정 시 expire_date를 계산하여 expire_date 업데이트
     if (name === "qa") {
       const newExpireDate = dayjs(paymentUser.payment_date)
-        .add(parseInt(value, 10), "month")
+        .add(parseInt(value, 10) * 30, "day")
         .format("YYYY-MM-DD");
       updatedPaymentUser = {
         ...updatedPaymentUser,
@@ -135,7 +135,7 @@ export default function AppPaymentUser() {
         : dayjs(item.payment_date);
 
       const newExpireDate = paymentDate
-        .add(parseInt(value, 10), "month")
+        .add(parseInt(value, 10) * 30, "day")
         .format("YYYY-MM-DD");
 
       updatedItemState = {
@@ -165,10 +165,29 @@ export default function AppPaymentUser() {
 
   // NOTE 등록
   const onClickRegister = () => {
+    if (!paymentUser.user_id) {
+      Swal.fire({
+        icon: "warning",
+        title: "아이디를 입력해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     paymentUserRegistMutate();
   };
 
+  // NOTE 수정
   const onClickEdit = (id: string, phoneNumber: string) => {
+    if (!paymentUserEdit[id].user_id) {
+      Swal.fire({
+        icon: "warning",
+        title: "아이디를 입력해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     paymentUserEditMutate({ id, phoneNumber });
   };
 
@@ -247,7 +266,7 @@ export default function AppPaymentUser() {
             value={paymentUser.free_user}
             onChange={(e) => handleNewInputChange(e)}
           >
-            <option value="N" disabled selected>
+            <option value="N" disabled>
               무료 여부
             </option>
             <option value="Y">Y</option>
@@ -263,18 +282,22 @@ export default function AppPaymentUser() {
             <S.ContentsContainer key={item.id}>
               <S.Contents
                 name="user_id"
-                defaultValue={item.user_id}
+                value={paymentUserEdit[item.id]?.user_id || item.user_id}
                 onChange={(e) => handleEditInputChange(item, e)}
               />
               <S.Contents
                 name="phone_no"
-                defaultValue={item.phone_no}
+                value={paymentUserEdit[item.id]?.phone_no || item.phone_no}
                 onChange={(e) => handleEditInputChange(item, e)}
               />
               <S.Contents
                 type="date"
                 name="payment_date"
-                defaultValue={dayjs(item.payment_date).format("YYYY-MM-DD")}
+                value={
+                  dayjs(paymentUserEdit[item.id]?.payment_date).format(
+                    "YYYY-MM-DD",
+                  ) || dayjs(item.payment_date).format("YYYY-MM-DD")
+                }
                 onChange={(e) => handleEditInputChange(item, e)}
               />
               <S.Contents
@@ -291,17 +314,14 @@ export default function AppPaymentUser() {
                 <S.ContentsWithTitle
                   type="number"
                   name="month"
-                  defaultValue={getMonthDifference(
-                    dayjs(item.payment_date),
-                    dayjs(paymentUserEdit[item.id]?.expire_date),
-                  )}
+                  value={paymentUserEdit[item.id]?.month || item.qa}
                   onChange={(e) => handleEditInputChange(item, e)}
                 />{" "}
                 개월
               </S.InfoDiv>
               <S.ContentsSelectBox
                 name="free_user"
-                defaultValue={item.free_user}
+                value={paymentUserEdit[item.id]?.free_user || item.free_user}
                 onChange={(e) => handleEditInputChange(item, e)}
               >
                 <option value="Y">Y</option>

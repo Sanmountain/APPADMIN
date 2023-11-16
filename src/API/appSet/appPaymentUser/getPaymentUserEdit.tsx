@@ -39,6 +39,7 @@ export const getPaymentUserEdit = (
         payment_date: `${dayjs(paymentUserEdit[id].payment_date).format(
           "YYYY-MM-DD",
         )} 00:00:00`,
+        qa: paymentUserEdit[id].month,
         phone_no: phoneNumber,
         free_user: paymentUserEdit[id].free_user,
         update_phone_no: paymentUserEdit[id].phone_no,
