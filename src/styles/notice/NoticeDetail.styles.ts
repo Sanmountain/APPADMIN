@@ -12,6 +12,10 @@ export const Container = styled.div`
   ${mediaQuery.small`
     padding: 10px;
   `}
+
+  &.popup {
+    padding: 10px;
+  }
 `;
 
 export const HeadContainer = styled.div`
@@ -113,6 +117,11 @@ export const DetailContainer = styled.div`
   ${mediaQuery.small`
     margin-bottom: 10px;
   `}
+
+  &.popup {
+    width: 100%;
+    padding: 0;
+  }
 `;
 
 export const DateContainer = styled.div`

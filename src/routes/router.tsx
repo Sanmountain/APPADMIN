@@ -24,6 +24,7 @@ import LoginRoute from "./loginRouter";
 import Layout from "../components/layout";
 import LogenRouter from "./LogenRouter";
 import MMSTracking from "../pages/mms/mmsTracking/MMSTracking";
+import NoticePopUp from "../pages/notice/NoticePopUp";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "/notice/list", element: <NoticeList /> },
       { path: "/notice/:noticeId", element: <NoticeDetail /> },
+      { path: "/notice/noticePopUp/:noticeId", element: <NoticePopUp /> },
     ],
   },
 
