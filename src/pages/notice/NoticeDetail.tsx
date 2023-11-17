@@ -90,22 +90,24 @@ export default function NoticeDetail() {
       <S.DetailContainer>
         <Viewer key={contents?.content} initialValue={contents?.content} />
       </S.DetailContainer>
-      <S.DateContainer>
-        {contents?.popup === "N" && (
-          <>
-            <S.DateInfo>만기일 : </S.DateInfo>
-            <S.DateInput
-              type="date"
-              value={popUpDate}
-              onChange={handlePopUpDate}
-            />
-          </>
-        )}
-        <CommonButton
-          contents={contents?.popup === "N" ? "팝업설정" : "팝업해제"}
-          onClickFn={() => onClickSettingPopUp(contents?.popup)}
-        />
-      </S.DateContainer>
+      {login.isLogin && (
+        <S.DateContainer>
+          {contents?.popup === "N" && (
+            <>
+              <S.DateInfo>만기일 : </S.DateInfo>
+              <S.DateInput
+                type="date"
+                value={popUpDate}
+                onChange={handlePopUpDate}
+              />
+            </>
+          )}
+          <CommonButton
+            contents={contents?.popup === "N" ? "팝업설정" : "팝업해제"}
+            onClickFn={() => onClickSettingPopUp(contents?.popup)}
+          />
+        </S.DateContainer>
+      )}
     </S.Container>
   );
 }
