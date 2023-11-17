@@ -1,17 +1,27 @@
 import { useNavigate, useParams } from "react-router";
 import { getNoticeDetail } from "../../api/notice/getNoticeDetail";
 import * as S from "../../styles/notice/NoticeDetail.styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { Viewer } from "@toast-ui/react-editor";
 import { INoticeDetailResponse } from "../../types/notice/noticeDetail.types";
 import { getNoticeDelete } from "../../api/notice/getNoticeDelete";
 import CommonButton from "../../components/common/CommonButton";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
+import dayjs from "dayjs";
+import {
+  getNoticePopUpSettingNo,
+  getNoticePopUpSettingYes,
+} from "../../api/notice/getNoticePopUpSetting";
 
 export default function NoticeDetail() {
   const login = useRecoilValue(loginState);
   const [contents, setContents] = useState<INoticeDetailResponse>();
+  const [popUpDate, setPopUpDate] = useState(
+    contents?.popup === "N"
+      ? dayjs().format("YYYY-MM-DD")
+      : dayjs(contents?.expire).format("YYYY-MM-DD"),
+  );
 
   const params = useParams();
   const navigate = useNavigate();
@@ -21,6 +31,12 @@ export default function NoticeDetail() {
     setContents,
   );
   const { mutate: noticeDeleteMutate } = getNoticeDelete();
+  const { mutate: noticePopUpYesMutate } = getNoticePopUpSettingYes(
+    popUpDate,
+    noticeDetailMutate,
+  );
+  const { mutate: noticePopUpNoMutate } =
+    getNoticePopUpSettingNo(noticeDetailMutate);
 
   useEffect(() => {
     noticeDetailMutate();
@@ -36,6 +52,19 @@ export default function NoticeDetail() {
 
   const onClickMoveToList = () => {
     navigate("/notice/list");
+  };
+
+  const handlePopUpDate = (e: ChangeEvent<HTMLInputElement>) => {
+    setPopUpDate(e.target.value);
+  };
+
+  const onClickSettingPopUp = (popUp: string | undefined) => {
+    if (popUp === "N") {
+      noticePopUpYesMutate();
+      setPopUpDate(dayjs().format("YYYY-MM-DD"));
+    } else {
+      noticePopUpNoMutate();
+    }
   };
 
   return (
@@ -61,6 +90,22 @@ export default function NoticeDetail() {
       <S.DetailContainer>
         <Viewer key={contents?.content} initialValue={contents?.content} />
       </S.DetailContainer>
+      <S.DateContainer>
+        {contents?.popup === "N" && (
+          <>
+            <S.DateInfo>만기일 : </S.DateInfo>
+            <S.DateInput
+              type="date"
+              value={popUpDate}
+              onChange={handlePopUpDate}
+            />
+          </>
+        )}
+        <CommonButton
+          contents={contents?.popup === "N" ? "팝업설정" : "팝업해제"}
+          onClickFn={() => onClickSettingPopUp(contents?.popup)}
+        />
+      </S.DateContainer>
     </S.Container>
   );
 }

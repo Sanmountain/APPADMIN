@@ -39,19 +39,21 @@ export const ContentsListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 650px;
+  min-height: 550px;
   gap: 5px;
 `;
 
-export const ContentsContainer = styled.div`
+export const ContentsContainer = styled.div<{ $isPopUp: boolean }>`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
-  border: 0.3px solid #bdbdbd;
+  border: ${(props) => (props.$isPopUp ? "none" : "0.3px solid #bdbdbd")};
   border-radius: 5px;
   width: 100%;
   height: 40px;
+  background-color: ${(props) =>
+    props.$isPopUp ? "rgba(255, 105, 126, 0.5)" : ""};
   cursor: pointer;
 
   ${mediaQuery.small`
