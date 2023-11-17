@@ -27,25 +27,29 @@ export default function Layout({ children }: ILayoutProps) {
 
   const LOGIN_PAGE = location.pathname === "/";
   const USER_EDIT_PAGE = location.pathname === "/useredit";
+  const NOTICE_POPUP_PAGE = location.pathname.includes("/notice/noticePopUp");
 
   const currentTitle =
     titleName[location.pathname as keyof typeof titleName] || "";
 
-  return (
-    <>
-      {!LOGIN_PAGE && <Header />}
-      <OutletContainer>
-        {!USER_EDIT_PAGE ? (
-          <Outlet>
-            {currentTitle ? <Title>{currentTitle}</Title> : <></>}
-            {children}
-          </Outlet>
-        ) : (
-          children
-        )}
-      </OutletContainer>
-    </>
-  );
+  if (NOTICE_POPUP_PAGE) {
+    return <Outlet className="popup">{children}</Outlet>;
+  } else
+    return (
+      <>
+        {!LOGIN_PAGE && <Header />}
+        <OutletContainer>
+          {!USER_EDIT_PAGE ? (
+            <Outlet>
+              {currentTitle ? <Title>{currentTitle}</Title> : <></>}
+              {children}
+            </Outlet>
+          ) : (
+            children
+          )}
+        </OutletContainer>
+      </>
+    );
 }
 
 const OutletContainer = styled.div`
@@ -76,6 +80,13 @@ const Outlet = styled.div`
     margin-left: 1%;
     margin-top: 50px;
   `}
+
+  &.popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
 `;
 
 const Title = styled.div`
