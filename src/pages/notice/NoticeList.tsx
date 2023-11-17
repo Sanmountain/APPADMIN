@@ -42,6 +42,7 @@ export default function NoticeList() {
           <S.ContentsContainer
             key={item.id}
             onClick={() => onClickNotice(item.id)}
+            $isPopUp={item.popup === "Y"}
           >
             <S.Contents className="hide-on-small">{item.id}</S.Contents>
             <S.Contents className="title">{item.title}</S.Contents>

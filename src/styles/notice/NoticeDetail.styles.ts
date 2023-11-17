@@ -114,3 +114,24 @@ export const DetailContainer = styled.div`
     margin-bottom: 10px;
   `}
 `;
+
+export const DateContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 95%;
+  height: fit-content;
+  padding: 20px 10px;
+  gap: 15px;
+  margin-top: 20px;
+  border-top: 1px solid #bdbdbd;
+`;
+
+export const DateInfo = styled.div`
+  font-size: 1.2rem;
+  font-weight: 700;
+`;
+
+export const DateInput = styled.input`
+  width: 150px;
+  height: 35px;
+`;

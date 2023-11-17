@@ -11,6 +11,6 @@ export interface INoticeDetailResponse {
   update_date: string;
   company: string;
   trades: number;
-  popup: number;
+  popup: string;
   expire: string;
 }
