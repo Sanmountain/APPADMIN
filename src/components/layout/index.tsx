@@ -86,6 +86,12 @@ const Outlet = styled.div`
     justify-content: center;
     align-items: center;
     min-height: 400px;
+
+    ${mediaQuery.small`
+    width: 98%;
+    margin-left: 1%;
+    margin-top: 25px;
+  `}
   }
 `;
 
