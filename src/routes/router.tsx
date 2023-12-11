@@ -19,6 +19,7 @@ import TalkSendDetail from "../pages/mms/talkSend/TalkSendDetail";
 import TalkSendPhoto from "../pages/mms/talkSend/TalkSendPhoto";
 import AppDeliveryTime from "../pages/appSet/appDeliveryTime";
 import AppPaymentUser from "../pages/appSet/appPaymentUser";
+import AppPaymentHistory from "../pages/appSet/appPaymentHistory";
 import AppProduct from "../pages/appSet/appProduct";
 import LoginRoute from "./loginRouter";
 import Layout from "../components/layout";
@@ -91,6 +92,7 @@ export const router = createBrowserRouter([
       { path: "/app/scan/:scanDate", element: <AppScanDetail /> },
       { path: "/app/deliveryTime", element: <AppDeliveryTime /> },
       { path: "/app/paymentUser", element: <AppPaymentUser /> },
+      { path: "/app/paymentHistory", element: <AppPaymentHistory /> },
       { path: "/app/product", element: <AppProduct /> },
       { path: "/app/video/write", element: <AppVideoWrite /> },
       { path: "/app/video/:videoId/edit", element: <AppVideoWrite /> },
