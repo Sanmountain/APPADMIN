@@ -19,6 +19,7 @@ const Header = () => {
     "버전관리",
     "배송시간관리",
     "결제사용자관리",
+    "결제내역조회",
     "장비연결내역",
     "동영상관리",
   ];
@@ -27,6 +28,7 @@ const Header = () => {
     "/app/ver",
     "/app/deliveryTime",
     "/app/paymentUser",
+    "/app/paymentHistory",
     "/app/product",
     "/app/video",
   ];
