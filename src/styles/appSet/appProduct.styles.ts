@@ -33,6 +33,10 @@ export const TitleContainer = styled.div`
   width: 100%;
   height: 50px;
   margin-top: 10px;
+
+  &.history {
+    grid-template-columns: 0.7fr 0.7fr 1fr 1fr 1fr 1fr;
+  }
 `;
 
 export const Title = styled.div`
@@ -58,6 +62,10 @@ export const ContentsContainer = styled.div`
   height: 40px;
   border: 0.3px solid #bdbdbd;
   border-radius: 5px;
+
+  &.history {
+    grid-template-columns: 0.7fr 0.7fr 1fr 1fr 1fr 1fr;
+  }
 `;
 
 export const NoDataContainer = styled.div`

@@ -15,6 +15,7 @@ export default function Layout({ children }: ILayoutProps) {
     "/app/scan": "스캔 사용자",
     "/app/deliveryTime": "배송시간 관리",
     "/app/paymentUser": "사용자 관리",
+    "/app/paymentHistory": "결제 내역 조회",
     "/app/product": "제품 사용내역",
     "/app/video": "영업소 App 영상 메뉴얼",
     "/mms/mmsSend": "MMS 전송내역",
